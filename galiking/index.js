@@ -15,8 +15,8 @@ const DEFAULT_PORT = 9999
 
 const currentPort = process.env.PORT || DEFAULT_PORT
 
-app.get('/usuario', getListOfUsuario )
-app.get('/usuario/:id', getUsuario)
+//app.get('/usuario', getListOfUsuario )
+app.get('/usuario/:id_usuario', getUsuario)
 
 app.post('/usuario', createUsuario )
 

@@ -99,10 +99,10 @@ const updateUsuario = async (nif_cif, email, telefono, bio, foto, nombre, admini
         connection = await getConnection();
 
         await connection.query(`
-            UPDATE usario SET updateDate=?       ='' WHERE     =''
+            UPDATE usuario SET updateDate=?       ='' WHERE     =''
             
         `,
-            [eventDate.format('YYYY-MM-DD hh:mm:ss'), nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña])
+            [nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña])
     } catch (e) {
         throw new Error('database-error')
 
