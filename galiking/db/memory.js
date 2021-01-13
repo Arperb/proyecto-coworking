@@ -15,9 +15,25 @@ const createUsuario = (fecha_creacion, fecha_modificacion, nif_cif, email, telef
     })
 }
 
-const listUsuario = () => {
-    return usuario
+
+
+const listUsuario = (telefono, nombre) => {
+    const filterByNombre = usuario => usuario.nombre.toLowerCase().indexOf(nombre.toLowerCase()) !== -1
+    const filterByTelefono = usuario => usuario.telefono === telefono
+
+    let filteredUsuario = [...usuario]
+
+    if (telefono !== undefined) {
+        filteredUsuario = filteredUsuario.filter( filterByTelefono )
+    }
+
+    if (nombre !== undefined) {
+        filteredUsuario = filteredUsuario.filter( filterByNombre )
+    }
+
+    return filteredUsuario
 }
+
 
 module.exports = {
     createUsuario, 

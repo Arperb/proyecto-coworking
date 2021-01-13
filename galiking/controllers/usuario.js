@@ -46,7 +46,7 @@ const getListOfUsuario = async (req, res) => {
     // localhost:3000/events?type=music
     // localhost:3000/events
     // localhost:3000/events?name=xxxx&type=music
-    const { telefono, nombre } = req.body;
+    const { telefono, nombre } = req.query;
     try {
         let usuario = await db.listUsuario(telefono, nombre)
         res.send(usuario)
@@ -57,17 +57,18 @@ const getListOfUsuario = async (req, res) => {
 
 
 const updateUsuario = async (req, res) => {
-    const {name, type, timestamp, place, description} = req.body
-    const { id } = req.params
+    const {nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña} = req.body
+    const { id_usuario } = req.params
 
     // TODO: considerar el caso en el que el ID pasado no existe
     // y enviar un 404
     try {
-        await eventValidator.validateAsync(req.body)
+        await usuarioValidator.validateAsync(req.body)
 
-        await db.updateUsuario(id, name, type, timestamp, place, description)
+        await db.updateUsuario(id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña)
 
     } catch (e) {
+        
         let statusCode = 400;
         // averiguar el tipo de error para enviar un código u otro
         if (e.message === 'database-error') {
@@ -84,14 +85,14 @@ const updateUsuario = async (req, res) => {
 
 
 const deleteUsuario = async (req, res) => {
-    const { id } = req.params;
+    const { id_usuario } = req.params;
 
     try {
         // Para considerar el caso de que no existe el ID que nos 
         // pasamos podemos resolverlo aquí haciendo una petición
         // específica a la BBDD o bien resolverlo en el módulo de
         // BBDD leyendo la respuesta de la consulta (affectedRows)
-        const event = await db.getUsuario(id)
+        const usuario = await db.getUsuario(id_usuario)
 
         // Si nos piden eliminar un ID que no existe
         // tenemos que informar a quién hizo la llamada y lo
@@ -104,10 +105,11 @@ const deleteUsuario = async (req, res) => {
             return
         } 
 
-        await db.deleteUsuario(id)
+        await db.deleteUsuario(id_usuario)
 
         res.send()
     } catch (e) {
+       
 
         if (e.message === 'unknown-id') {
             res.status(404).send()

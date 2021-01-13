@@ -16,7 +16,7 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, admini
             [nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña])
 
     } catch (e) {
-        console.log(e)
+        
         throw new Error('database-error')
 
     } finally {
@@ -40,23 +40,23 @@ const listUsuario = async (nombre, telefono) => {
 
         if (telefono && nombre) {
             result = await connection.query(`
-                select id, telefono, nombre from usuario where telefono = ? and nombre = ?
+                select id_usuario, telefono, nombre from usuario where telefono = ? and nombre = ?
                 `, [telefono, nombre])
         } else if (!telefono && nombre) {
             result = await connection.query(`
-            select id, telefono, nombre from usuario where nombre = ?
+            select id_usuario, telefono, nombre from usuario where nombre = ?
             `, [nombre])
         } else if (telefono && !nombre) {
             result = await connection.query(`
-            select id, telefono, nombre from usuario where telefono = ?
+            select id_usuario, telefono, nombre from usuario where telefono = ?
             `, [telefono])
         } else {
             result = await connection.query(`
-            select id, telefono, nombre from usuario
+            select id_usuario, telefono, nombre from usuario
             `)
         }
-
-        return result[0]  // potential bug because connection is not released
+        console.log(result)
+        return result  // potential bug because connection is not released
     } catch (e) {
         throw new Error('database-error')
 
@@ -92,18 +92,20 @@ const getUsuario = async (id_usuario) => {
 }
 
 
-const updateUsuario = async (nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña) => {
+const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña) => {
     let connection;
+    
 
     try {
         connection = await getConnection();
 
         await connection.query(`
-            UPDATE usuario SET updateDate=?       ='' WHERE     =''
-            
+            update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, administrador=?, contraseña=?
+            where id_usuario=? 
         `,
-            [nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña])
+            [nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña, id_usuario])
     } catch (e) {
+        console.log(e)
         throw new Error('database-error')
 
     } finally {
@@ -122,12 +124,13 @@ const deleteUsuario = async (id_usuario) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            delete from usario where id = ?
+            delete from usuario where id_usuario = ?
         `,
             [id_usuario])
 
         return result  // potential bug because connection is not released
     } catch (e) {
+        console.log(e)
         throw new Error('database-error')
 
     } finally {
