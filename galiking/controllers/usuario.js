@@ -1,27 +1,52 @@
 const db = require('../db/mysql')
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const randomstring = require('randomstring');
+const {sendConfirmationMail} = require('../utils/utils')
 
 const { usuarioValidator } = require('../validators/usuario')
 
 
 const createUsuario = async (req, res) => {
-    const {nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña} = req.body
 
+   
+    
     try {
+        const { nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena } = req.body
+        const response  = await db.getUsuario(nif_cif)
+
+        console.log(response)
+        if(response.length > 0) {
+            return res.send({
+                ok: false,
+                message: 'el usuario ya existe'
+
+            })
+        }
         await usuarioValidator.validateAsync(req.body)
 
+        
+        
+        const contrasenaBcrypt = await bcrypt.hash(contrasena, 10);
+        const validationCode = randomstring.generate(40);
+        
 
-        let response = await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña)
-        console.log(response)
+        await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, administrador, contrasenaBcrypt, validationCode)
 
- 
+        try {
+            
+            sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
+        } catch(e) {
+            console.log(e)
+        }
         return res.status(200).send({
             status: 'ok',
             message: 'usuario registrado'})
         
 
     } catch (e) {
-        console.log(e.status)
-        return res.status(400).send({
+        console.log(e)
+        res.send({
             status: 'false',
             message: 'el usuario ya existe'
         })
@@ -29,8 +54,75 @@ const createUsuario = async (req, res) => {
 
 }
 
+
+ const validate = async (req, res) => {
+   
+     const { code } = req.params;
+
+     try {
+         db.checkValidationCode(code)
+         res.send('Validado correctamente')
+     } catch(e) {
+         res.status(401).send('Usuario no validado')
+     }
+
+ }   
+
+const login = async (req, res) => {
+   
+    const { email, contrasena } = req.body
+
+    //try {
+    const usuario = await db.getUsuario(email)
+
+    if(!usuario) {
+        res.status(401).send()
+        return
+    }
+
+    const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+        
+    if(!validContrasena) {
+        res.status(401).send()
+        return
+    }
+    const tokenPayload = {
+        isAdmin: usuario.administrador === 'si',
+        email: usuario.email
+
+    }
+    const token = jwt.sign(tokenPayload, process.env.SECRET, {
+        expiresIn: '1d'
+    });
+
+    res.json({
+        token
+    })
+}
+
+
+    // return res.status(200).send({
+    //     ok: true,
+    //     message: 'login correcto',
+    //     administrador: usuario.administrador,
+    //     email: usuario.email,
+    //     token: token
+
+    // });
+
+//     }catch(error){
+//         console.log(error)
+//         res.status(500).send({
+//             ok: false,
+//             message: "error servidor"
+//         })
+//     }
+// }
+
+
+
+
 const getUsuario = async (req, res) => {
-    // http://localhost:3000/908
 
      const { id_usuario } = req.params
 
@@ -46,9 +138,9 @@ const getListOfUsuario = async (req, res) => {
     // localhost:3000/events?type=music
     // localhost:3000/events
     // localhost:3000/events?name=xxxx&type=music
-    const { telefono, nombre } = req.query;
+    const { nombre, telefono } = req.query;
     try {
-        let usuario = await db.listUsuario(telefono, nombre)
+        let usuario = await db.listUsuario(nombre, telefono)
         res.send(usuario)
     } catch (e) {
         res.status(500).send()
@@ -57,7 +149,7 @@ const getListOfUsuario = async (req, res) => {
 
 
 const updateUsuario = async (req, res) => {
-    const {nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña} = req.body
+    const {nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena} = req.body
     const { id_usuario } = req.params
 
     // TODO: considerar el caso en el que el ID pasado no existe
@@ -65,7 +157,7 @@ const updateUsuario = async (req, res) => {
     try {
         await usuarioValidator.validateAsync(req.body)
 
-        await db.updateUsuario(id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña)
+        await db.updateUsuario(id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena)
 
     } catch (e) {
         
@@ -122,8 +214,13 @@ const deleteUsuario = async (req, res) => {
 
 
 
+
 module.exports = {
     createUsuario,
+    validate,
+    login,
+    //resetContrasena,
+    //recoverContrasena,
     getUsuario,
     getListOfUsuario,
     updateUsuario,

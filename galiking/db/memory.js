@@ -1,6 +1,6 @@
 let usuario = [];
 
-const createUsuario = (fecha_creacion, fecha_modificacion, nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña) => {
+const createUsuario = (fecha_creacion, fecha_modificacion, nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena) => {
     usuario.push({
         fecha_creacion,
         fecha_modificacion,
@@ -11,7 +11,7 @@ const createUsuario = (fecha_creacion, fecha_modificacion, nif_cif, email, telef
         foto,
         nombre,
         administrador,
-        contraseña
+        contrasena
     })
 }
 

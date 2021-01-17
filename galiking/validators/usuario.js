@@ -55,9 +55,8 @@ const usuarioValidator = Joi.object({
             new Error('administrador should be a string between 1 and 2 characters')
         ),
 
-    contraseña: Joi.string()
-        .min(9)
-        .max(100)
+    contrasena: Joi.string()
+        .required()
         .error(
             new Error('contraseña should be a string between 9 and 100 characters')
         ),

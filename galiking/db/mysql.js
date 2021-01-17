@@ -2,7 +2,26 @@ const moment = require('moment')
 
 const { getConnection } = require("./db");
 
-const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña) => {
+const performQuery = async (query, params) => {
+     let connection;
+
+    try {
+         connection = await getConnection();
+
+        const [result] = await connection.query(query, params)
+
+        return result;
+     } catch (e) {
+         throw new Error('database-error')
+     } finally {
+        if (connection) {
+             connection.release()
+         }
+     }
+ }
+
+
+const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, validationCode) => {
     let connection;
  
 
@@ -10,13 +29,13 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, admini
         connection = await getConnection();
 
        let SQL = await connection.query(`
-            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, validationCode)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña])
+            [nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, validationCode])
 
     } catch (e) {
-        
+        console.log(e)
         throw new Error('database-error')
 
     } finally {
@@ -27,11 +46,7 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, admini
 }
 
 const listUsuario = async (nombre, telefono) => {
-    // sin filtros: select * from events
-
-    // con filtros: 
-    //    select  * from events where name=...
-
+   
     let connection;
 
     try {
@@ -55,8 +70,8 @@ const listUsuario = async (nombre, telefono) => {
             select id_usuario, telefono, nombre from usuario
             `)
         }
-        console.log(result)
-        return result  // potential bug because connection is not released
+        
+        return result[0]  // potential bug because connection is not released
     } catch (e) {
         throw new Error('database-error')
 
@@ -92,7 +107,7 @@ const getUsuario = async (id_usuario) => {
 }
 
 
-const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña) => {
+const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena) => {
     let connection;
     
 
@@ -100,10 +115,10 @@ const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, no
         connection = await getConnection();
 
         await connection.query(`
-            update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, administrador=?, contraseña=?
+            update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, administrador=?, contrasena=?
             where id_usuario=? 
         `,
-            [nif_cif, email, telefono, bio, foto, nombre, administrador, contraseña, id_usuario])
+            [nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, id_usuario])
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -139,10 +154,35 @@ const deleteUsuario = async (id_usuario) => {
         }
     }
 }
+
+
+const checkValidationCode = async (code) => {
+     // comprobar si existe un usuario que esté pendiente de validación
+     const query = (`select * from usuario where validationCode = ?`)
+
+     const params = [code]
+    
+     const [result] = await performQuery(query, params)
+   
+
+     // si existe un usuario con ese código de validación
+     // lo marcamos como activo
+   
+     if (result) {
+         const query = (`update usuario set validado = true, validationCode =''`)
+         
+         await performQuery(query, [])
+    } else {
+         throw new Error('validation-error')
+    }
+
+ }
+
 module.exports = {
     createUsuario,
     getUsuario,
     listUsuario,
     updateUsuario,
-    deleteUsuario
+    deleteUsuario,
+    checkValidationCode
 }
