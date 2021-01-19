@@ -21,7 +21,7 @@ const performQuery = async (query, params) => {
  }
 
 
-const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, validationCode) => {
+const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode) => {
     let connection;
  
 
@@ -29,10 +29,10 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, admini
         connection = await getConnection();
 
        let SQL = await connection.query(`
-            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, validationCode)
+            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, validationCode])
+            [nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode])
 
     } catch (e) {
         console.log(e)
@@ -107,7 +107,7 @@ const getUsuario = async (id_usuario) => {
 }
 
 
-const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena) => {
+const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, nombre, rol, contrasena) => {
     let connection;
     
 
@@ -115,10 +115,10 @@ const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, no
         connection = await getConnection();
 
         await connection.query(`
-            update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, administrador=?, contrasena=?
+            update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, rol=?, contrasena=?
             where id_usuario=? 
         `,
-            [nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena, id_usuario])
+            [nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, id_usuario])
     } catch (e) {
         console.log(e)
         throw new Error('database-error')

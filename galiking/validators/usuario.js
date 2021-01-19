@@ -47,12 +47,12 @@ const usuarioValidator = Joi.object({
             new Error('nombre should be a string between 3 and 100 characters')
         ),
 
-    administrador: Joi.string()
+    rol: Joi.string()
         .min(1)
-        .max(2)
+        .max(13)
         .required()
         .error(
-            new Error('administrador should be a string between 1 and 2 characters')
+            new Error('rol should be a string between 1 and 13 characters')
         ),
 
     contrasena: Joi.string()

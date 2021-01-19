@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
 const {sendConfirmationMail} = require('../utils/utils')
 
-const { usuarioValidator } = require('../validators/usuario')
+const { usuarioValidator } = require('../validators/usuario');
+const { getConnection } = require('../db/db');
+
 
 
 const createUsuario = async (req, res) => {
@@ -12,7 +14,7 @@ const createUsuario = async (req, res) => {
    
     
     try {
-        const { nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena } = req.body
+        const { nif_cif, email, telefono, bio, foto, nombre, rol, contrasena } = req.body
         const response  = await db.getUsuario(nif_cif)
 
         console.log(response)
@@ -31,7 +33,7 @@ const createUsuario = async (req, res) => {
         const validationCode = randomstring.generate(40);
         
 
-        await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, administrador, contrasenaBcrypt, validationCode)
+        await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, rol, contrasenaBcrypt, validationCode)
 
         try {
             
@@ -61,63 +63,109 @@ const createUsuario = async (req, res) => {
 
      try {
          db.checkValidationCode(code)
-         res.send('Validado correctamente')
+         res.send('Usuario validado correctamente')
      } catch(e) {
-         res.status(401).send('Usuario no validado')
+         res.status(401).send('Usuario no validado correctamente')
      }
 
  }   
 
 const login = async (req, res) => {
+    
    
     const { email, contrasena } = req.body
+    
 
-    //try {
+try {
+
+
+  
+
     const usuario = await db.getUsuario(email)
+    
 
     if(!usuario) {
         res.status(401).send()
         return
     }
 
-    const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+    const validContrasena = bcrypt.compare(contrasena, usuario.contrasena);
         
     if(!validContrasena) {
         res.status(401).send()
         return
     }
-    const tokenPayload = {
-        isAdmin: usuario.administrador === 'si',
-        email: usuario.email
 
-    }
-    const token = jwt.sign(tokenPayload, process.env.SECRET, {
+     const tokenPayload = {
+         isAdmin: usuario.rol === 'administrador',
+         rol: usuario.rol,
+         email: usuario.email
+     }
+
+     const token = jwt.sign(tokenPayload, process.env.SECRET, {
         expiresIn: '1d'
-    });
+     });
 
-    res.json({
-        token
+     res.json({
+         status: "ok",
+         data: {
+         token,
+         },
+     });
+
+     return res.status(200).send({
+          ok: true,
+          message: 'login correcto',
+          rol: usuario.rol,
+          email: usuario.email,
+          token: token
+
+       });
+
+     
+
+    }catch(error){
+        
+          res.status(500).send({
+             ok: false,
+              message: "error servidor"
+          })
+    }
+  }
+
+  //const updateContrasena = async (req, res) => {}
+
+
+  const recoverContrasena = async (req, res) => {
+
+    const { email } = req.body;
+
+    usuario.findOne({email}, (err, usuario)) => {
+        if(err || !usuario) {
+            return res.status(400).json({error: "no existe un usuario con este email"});
+        }
+
+        const token = jwt.sign(tokenPayload, process.env.SECRET, {
+            expiresIn: '20m'
+         });
+
+         try {
+            
+            forgotPasswordEmail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/recover-contrasena/${token}`)
+        } catch(e) {
+            console.log(e)
+        }
+        return res.status(200).send({
+            status: 'ok',
+            message: 'usuario existente'})
     })
-}
 
+  }
 
-    // return res.status(200).send({
-    //     ok: true,
-    //     message: 'login correcto',
-    //     administrador: usuario.administrador,
-    //     email: usuario.email,
-    //     token: token
+  
 
-    // });
+  
 
-//     }catch(error){
-//         console.log(error)
-//         res.status(500).send({
-//             ok: false,
-//             message: "error servidor"
-//         })
-//     }
-// }
 
 
 
@@ -149,7 +197,7 @@ const getListOfUsuario = async (req, res) => {
 
 
 const updateUsuario = async (req, res) => {
-    const {nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena} = req.body
+    const {nif_cif, email, telefono, bio, foto, nombre, rol, contrasena} = req.body
     const { id_usuario } = req.params
 
     // TODO: considerar el caso en el que el ID pasado no existe
@@ -157,7 +205,7 @@ const updateUsuario = async (req, res) => {
     try {
         await usuarioValidator.validateAsync(req.body)
 
-        await db.updateUsuario(id_usuario, nif_cif, email, telefono, bio, foto, nombre, administrador, contrasena)
+        await db.updateUsuario(id_usuario, nif_cif, email, telefono, bio, foto, nombre, rol, contrasena)
 
     } catch (e) {
         
@@ -219,11 +267,11 @@ module.exports = {
     createUsuario,
     validate,
     login,
-    //resetContrasena,
+    updateContrasena,
     //recoverContrasena,
+    //resetContrasena,
     getUsuario,
     getListOfUsuario,
     updateUsuario,
-    deleteUsuario
-    
+    deleteUsuario   
 }
