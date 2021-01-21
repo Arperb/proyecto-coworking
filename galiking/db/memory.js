@@ -39,3 +39,22 @@ module.exports = {
     createUsuario, 
     listUsuario
 }
+
+
+let espacio_coworking = [];
+
+const createEspacio_coworking = (fecha_creacion, fecha_modificacion, nombre, telefono, localizacion, descripcion, web) => {
+    usuario.push({
+        fecha_creacion,
+        fecha_modificacion,
+        nombre,
+        telefono,
+        localizacion,
+        descripcion,
+        web
+    })
+}
+
+module.exports = {
+    createEspacio_coworking,
+}

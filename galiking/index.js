@@ -3,8 +3,8 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
 const { createUsuario, getUsuario, getListOfUsuario, updateUsuario, deleteUsuario, validate, login, updateContrasena, resetContrasena, recoverContrasena } = require('./controllers/usuario')
-const { isAdmin, isAuthenticated } = require('./middlewares/usuario')
-
+const { usuarioIsAdmin, usuarioIsOwner, usuarioIsUser, isAuthenticated, isSameUser } = require('./middlewares/auth')
+const { createEspacio_coworking, getEspacio_coworking, getListEspacio_coworking, updateEspacio_coworking, deleteEspacio_coworking, validateEspacio_coworking } = require('./controllers/espacioCoworking')
   
 
 
@@ -19,7 +19,13 @@ const DEFAULT_PORT = 9999
 
 const currentPort = process.env.PORT || DEFAULT_PORT
 
-//Crear una lista de datos a partir de unos parámetros dados
+
+//////////////////////////////////////////////////
+//////               USUARIO                 /////
+//////////////////////////////////////////////////
+
+
+//Crear una lista de datos de usuario a partir de unos parámetros dados
 
 app.get('/usuario', getListOfUsuario )
 
@@ -49,7 +55,7 @@ app.post('/usuario/login', login)
 
 //Actualizar la contraseña de un usuario
 
-app.put('/usuario/:id/contrasena', updateContrasena)
+//app.put('/usuario/:id/contrasena', updateContrasena)
 
 
 
@@ -60,6 +66,35 @@ app.put('/usuario/:id/contrasena', updateContrasena)
 //Actualizar la contraseña con el código de actualización al haber olvidado la contraseña(endopoint anterior)
 
 //app.put('/usuario/contrasena/reset', resetContrasena)
+
+//////////////////////////////////////////////////
+//////           ESPACIO COWORKING           /////
+//////////////////////////////////////////////////
+
+//Crear un nuevo espacio coworking
+
+app.post('/espacio-coworking', createEspacio_coworking, usuarioIsOwner)
+
+//obtener todos los datos de un espacio coworking a través del ID
+
+app.get('/espacio-coworking/:id_coworking', getEspacio_coworking)
+
+//Crear una lista de espacios coworking a partir de unos parámetros dados
+
+app.get('/espacio-coworking', getListEspacio_coworking)
+
+//modificar datos espacio coworking
+
+app.put('/espacio-coworking/:id_coworking', updateEspacio_coworking)
+
+//borrar espacio coworking
+
+app.delete('/espacio-coworking/:id_coworking', deleteEspacio_coworking)
+
+//validar un usuario
+
+app.get('/espacio-coworking/validate/:code', validateEspacio_coworking)
+
 
 
 console.log(`Running on port ${currentPort}`)

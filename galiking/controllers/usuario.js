@@ -135,39 +135,46 @@ try {
 
   //const updateContrasena = async (req, res) => {}
 
+   // Comprobar sintaxis de los parámetros (vieja password (1234) y la nueva password (123456))
 
-  const recoverContrasena = async (req, res) => {
+    // Ciframos la nueva password
 
-    const { email } = req.body;
+    // Comprobar que la vieja es correcta
 
-    usuario.findOne({email}, (err, usuario)) => {
-        if(err || !usuario) {
-            return res.status(400).json({error: "no existe un usuario con este email"});
-        }
-
-        const token = jwt.sign(tokenPayload, process.env.SECRET, {
-            expiresIn: '20m'
-         });
-
-         try {
-            
-            forgotPasswordEmail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/recover-contrasena/${token}`)
-        } catch(e) {
-            console.log(e)
-        }
-        return res.status(200).send({
-            status: 'ok',
-            message: 'usuario existente'})
-    })
-
-  }
-
-  
-
-  
+    // Actualizar vieja password con la nueva cifrada
 
 
+  //const recoverContrasena = async (req, res) => {}
 
+  // Comprobar la sintaxis de los parámetros de entrada (email) - omitible, 
+    // ya que en BBDD solo habrá emails correctos, validados en el register, así
+    // que si lo que nos pasan no es un email, no lo encontrará en la bbdd y
+    // lanzaremos un error en el siguiente paso
+
+    // Comprobar si el usuario existe en la BBDD
+    // bd.getUser(....)
+
+    // Generar un código de actualización de password
+    //const passwordUpdateCode = randomstring.generate(40);
+
+    // Almacenar código de actualización en la BBDD junto a un timestamp
+    // ojo! Necesario actualizar schema de la BD
+
+    // Enviamos por email el passwordUpdateCode
+
+
+    //const resetContrasena = async (req, res) => {
+        // Tenemos que recibir la nueva password y el código de actualización
+    
+        // Si el código de actualización no es correcto, 
+        // devolvemos error (403) - comprobar que el código
+        // de actualización está en BBDD
+    
+        // Comprobar que el código no tiene más de X minutos
+    
+        // Actualizar la password en BBDD
+    //}
+    
 
 
 const getUsuario = async (req, res) => {
@@ -267,7 +274,7 @@ module.exports = {
     createUsuario,
     validate,
     login,
-    updateContrasena,
+    //updateContrasena,
     //recoverContrasena,
     //resetContrasena,
     getUsuario,

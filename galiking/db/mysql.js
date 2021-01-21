@@ -178,11 +178,138 @@ const checkValidationCode = async (code) => {
 
  }
 
+ //////////////////////////////////////////////////
+//////           ESPACIO COWORKING           /////
+//////////////////////////////////////////////////
+
+
+ const createEspacio_coworking = async (id_usuario, nombre, telefono, localizacion, descripcion, web) => {
+    let connection;
+ 
+
+    try {
+        connection = await getConnection();
+
+       let SQL = await connection.query(`
+            INSERT INTO espacio_coworking (id_usuario, nombre, telefono, localizacion, descripcion, web)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `,
+            [id_usuario, nombre, telefono, localizacion, descripcion, web])
+
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const getEspacio_coworking = async (id_coworking) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select * from espacio_coworking where id_coworking = ?
+        `,
+            [id_coworking])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const updateEspacio_coworking = async (id_usuario, nombre, telefono, localizacion, descripcion, web) => {
+    let connection;
+    
+
+    try {
+        connection = await getConnection();
+
+        await connection.query(`
+            update espacio_coworking SET id_usuario=?, nombre=?, telefono=?, localizacion=?, descripcion=?, web=?
+            where id_coworking=? 
+        `,
+            [nombre, telefono, localizacion, descripcion, web, id_usuario])
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const checkEspacio_coworking = async (web, id_usuario) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select 1 from espacio_coworking where web = ? and id_usuario=?
+        `,
+            [web, id_usuario])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const deleteEspacio_coworking = async (id_coworking) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from espacio_coworking where id_coworking = ?
+        `,
+            [id_coworking])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
 module.exports = {
     createUsuario,
+    createEspacio_coworking,
     getUsuario,
+    getEspacio_coworking,
     listUsuario,
     updateUsuario,
+    updateEspacio_coworking,
     deleteUsuario,
-    checkValidationCode
+    deleteEspacio_coworking,
+    checkValidationCode,
+    checkEspacio_coworking
 }
