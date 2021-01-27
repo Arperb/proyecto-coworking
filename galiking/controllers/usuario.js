@@ -4,56 +4,34 @@ const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
 const {sendConfirmationMail} = require('../utils/utils')
 
-const { usuarioValidator } = require('../validators/usuario');
+const { usuarioValidator, passValidator, newPassValidator } = require('../validators/usuario');
 const { getConnection } = require('../db/db');
+
 
 
 
 const createUsuario = async (req, res) => {
 
-   
-    
     try {
-        const { nif_cif, email, telefono, bio, foto, nombre, rol, contrasena } = req.body
-        const response  = await db.getUsuario(nif_cif)
 
-        console.log(response)
-        if(response.length > 0) {
-            return res.send({
-                ok: false,
-                message: 'el usuario ya existe'
-
-            })
-        }
         await usuarioValidator.validateAsync(req.body)
 
-        
-        
+        const { nif_cif, email, telefono, bio, foto, nombre, rol, contrasena } = req.body
         const contrasenaBcrypt = await bcrypt.hash(contrasena, 10);
         const validationCode = randomstring.generate(40);
         
-
         await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, rol, contrasenaBcrypt, validationCode)
 
-        try {
-            
-            sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
-        } catch(e) {
-            console.log(e)
-        }
-        return res.status(200).send({
-            status: 'ok',
-            message: 'usuario registrado'})
         
-
+            
+        sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
+       
     } catch (e) {
-        console.log(e)
-        res.send({
-            status: 'false',
-            message: 'el usuario ya existe'
-        })
+        res.status(400).send("error de registro")
+        return
     }
 
+    res.send("usuario registrado con éxito")
 }
 
 
@@ -65,25 +43,20 @@ const createUsuario = async (req, res) => {
          db.checkValidationCode(code)
          res.send('Usuario validado correctamente')
      } catch(e) {
-         res.status(401).send('Usuario no validado correctamente')
+         res.status(401).send('Validación incorrecta de usuario')
      }
 
- }   
+ }
 
 const login = async (req, res) => {
     
-   
     const { email, contrasena } = req.body
     
-
-try {
-
-
-  
-
-    const usuario = await db.getUsuario(email)
+    //comprobar que el usuario está en la base de datos
+    try {
+        const usuario = await db.getUsuario(email)
+        console.log(usuario);
     
-
     if(!usuario) {
         res.status(401).send()
         return
@@ -101,11 +74,12 @@ try {
          rol: usuario.rol,
          email: usuario.email
      }
-
+     
      const token = jwt.sign(tokenPayload, process.env.SECRET, {
-        expiresIn: '1d'
-     });
+         expiresIn: '1d'
+        });
 
+        
      res.json({
          status: "ok",
          data: {
@@ -122,8 +96,6 @@ try {
 
        });
 
-     
-
     }catch(error){
         
           res.status(500).send({
@@ -133,61 +105,138 @@ try {
     }
   }
 
-  //const updateContrasena = async (req, res) => {}
+  const updateContrasena = async (req, res) => {
 
-   // Comprobar sintaxis de los parámetros (vieja password (1234) y la nueva password (123456))
+    // Comprobar sintaxis de los parámetros (vieja password (1234) y la nueva password (123456))
 
-    // Ciframos la nueva password
-
-    // Comprobar que la vieja es correcta
-
-    // Actualizar vieja password con la nueva cifrada
-
-
-  //const recoverContrasena = async (req, res) => {}
-
-  // Comprobar la sintaxis de los parámetros de entrada (email) - omitible, 
-    // ya que en BBDD solo habrá emails correctos, validados en el register, así
-    // que si lo que nos pasan no es un email, no lo encontrará en la bbdd y
-    // lanzaremos un error en el siguiente paso
-
-    // Comprobar si el usuario existe en la BBDD
-    // bd.getUser(....)
-
-    // Generar un código de actualización de password
-    //const passwordUpdateCode = randomstring.generate(40);
-
-    // Almacenar código de actualización en la BBDD junto a un timestamp
-    // ojo! Necesario actualizar schema de la BD
-
-    // Enviamos por email el passwordUpdateCode
-
-
-    //const resetContrasena = async (req, res) => {
-        // Tenemos que recibir la nueva password y el código de actualización
+    const { contrasena, newContrasena, newContrasenaRepeat } = req.body
     
-        // Si el código de actualización no es correcto, 
-        // devolvemos error (403) - comprobar que el código
-        // de actualización está en BBDD
+     // Comprobar que la vieja es correcta
+
+        console.log(contrasena, newContrasena, newContrasenaRepeat);
+
+     const decodedToken = req.auth
+
+     if (newContrasena !== newContrasenaRepeat) {
+        res.status(400).send('Las contraseñas no coinciden')
+        return
+    }
+
+    /* try {
+        await passValidator.validateAsync(req.body)
+    } catch(e) {
+        console.log(e)
+        res.status(400).send('Validacion erronea')
+        return
+    } */
+
+
+    //comprobar la contraseña correspondiente
+    //const decodedToken = jwt.verify(authorization, process.env.SECRET);
     
-        // Comprobar que el código no tiene más de X minutos
-    
-        // Actualizar la password en BBDD
-    //}
-    
+    const [usuario] = await db.getUsuario(decodedToken.email)
+    console.log(req.auth);
+    console.log(usuario)
 
+    const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+        
+     if(!validContrasena) { 
+         res.status(401).send()
+         return
 
-const getUsuario = async (req, res) => {
+    //Ciframos la nueva password
 
-     const { id_usuario } = req.params
+    const contrasenaBcrypt = bcrypt.hash(newContrasena, 10);
 
-     try {
-         const usuario = await db.getUsuario(id_usuario)
-         res.send(usuario)
-     } catch (e) {
-         res.status(500).send()
+    //actualizar la vieja contraseña con la nueva cifrada
+
+    await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
+
+    res.send()
      }
  }
+  
+  const recoverContrasena = async (req, res) => {
+
+    //comprobamos la sintaxis del email
+
+    const { email } = req.body
+  
+    try {
+        await usuarioValidator.validateAsync(req.body)
+    } catch(e) {
+        res.status(400).send('Email incorrecto')
+        return
+    }
+
+    // Comprobar si el usuario existe en la BBDD
+
+    const usuario = await db.getUsuario(email)
+         
+    if (usuario && usuario.validado) {
+        const validationCode = randomstring.generate(40);
+        await db.updateValidationCode(email, validationCode)
+        forgotPasswordMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/contrasena/reset/${validationCode}`)
+    } else {
+        res.status(400).send('Email incorrecto')
+        return
+    }
+
+    res.send('Se ha enviado un correo al email indicado para recuperar la contraseña')
+}
+
+const contrasenaUpdateCode = async (req, res) => {
+
+const { code } = req.params;
+
+try {
+    const usuario = await db.checkValidationCode(code)
+    
+    if (usuario) {
+        // go to redireccion a otro endpoint con el user.id en 
+        // req.params, donde se introducirá la contraseña dos veces
+    }
+    res.send()
+} catch(e) {
+    res.status(401).send('Usuario no validado')
+}
+}
+
+        
+ const resetContrasena = async (req, res) => {
+        
+    const { id_usuario } = req.params
+    const { newContrasena, newContrasenaRepeat } = req.body
+        
+    try {
+        await newPassValidator.validateAsync(req.body)
+    } catch(e) {
+        res.status(400).send('Los datos introducidos son incorrectos')
+        return
+    }
+
+    const usuario = await db.getUsuario(id_usuario)
+    // Ciframos la nueva password
+    const passwordBcrypt = await bcrypt.hash(newContrasena, 10);
+    // Actualizar vieja password con la nueva cifrada
+    await db.updateContrasena(id_usuario, contrasenadBcrypt)
+    forgotPasswordMail(usuario.email, `http://${process.env.PUBLIC_DOMAIN}/usuario/login`)
+
+    res.send('Contraseña actualizada correctamente')
+}
+    
+  const getUsuarioId = async (req, res) => {
+
+       const { id_usuario } = req.params
+
+       try {
+           const usuario = await db.getUsuarioId(id_usuario)
+          res.send()
+       } catch (e) {
+          res.status(500).send()
+     }
+  }
+
 
 const getListOfUsuario = async (req, res) => {
     // localhost:3000/events?type=music
@@ -201,7 +250,6 @@ const getListOfUsuario = async (req, res) => {
         res.status(500).send()
     }
 }
-
 
 const updateUsuario = async (req, res) => {
     const {nif_cif, email, telefono, bio, foto, nombre, rol, contrasena} = req.body
@@ -229,8 +277,6 @@ const updateUsuario = async (req, res) => {
     res.send()
 }
 
-
-
 const deleteUsuario = async (req, res) => {
     const { id_usuario } = req.params;
 
@@ -239,46 +285,45 @@ const deleteUsuario = async (req, res) => {
         // pasamos podemos resolverlo aquí haciendo una petición
         // específica a la BBDD o bien resolverlo en el módulo de
         // BBDD leyendo la respuesta de la consulta (affectedRows)
-        const usuario = await db.getUsuario(id_usuario)
-
+        
+        const usuario = await db.getUsuarioId(id_usuario)
+       
         // Si nos piden eliminar un ID que no existe
         // tenemos que informar a quién hizo la llamada y lo
         // hacemos a través del statusCode, que será 404
         // En caso contrario, el programador que programa contra la API
         // podría pensar que efectivamente se hizo un DELETE cuando 
         // en realidad no es así
-        if (!usuario.length) {
+        if (!usuario) {
             res.status(404).send()
-            return
+            return   
         } 
 
         await db.deleteUsuario(id_usuario)
 
-        res.send()
+        res.send("usuario eliminado con éxito")
     } catch (e) {
-       
-
+       console.log(e)
         if (e.message === 'unknown-id') {
-            res.status(404).send()
+            res.status(404).send('este ID no existe')
 
         } else {
-            res.status(500).send()
+            res.status(500).send('Este usuario no se puede borrar porque está asociado a un coworking')
         }
     }
 }
-
-
-
+  
 
 module.exports = {
     createUsuario,
     validate,
     login,
-    //updateContrasena,
-    //recoverContrasena,
-    //resetContrasena,
-    getUsuario,
+    updateContrasena,
+    recoverContrasena,
+    contrasenaUpdateCode,
+    resetContrasena,
     getListOfUsuario,
     updateUsuario,
-    deleteUsuario   
-}
+    deleteUsuario,
+    getUsuarioId
+} 

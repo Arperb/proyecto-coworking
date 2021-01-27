@@ -18,17 +18,7 @@ const createEspacio_coworking = async (req, res) => {
       console.log(id_usuario)
       const response = await db.checkEspacio_coworking(web, id_usuario)
 
-      console.log(response)
-    //   if(response) {
-    //       return res.send({
-    //           ok: false,
-    //           message: 'el coworking ya existe'
-
-    //       })
-    //  }
-
       await espacioCoworkingValidator.validateAsync(req.body)
-
 
       await db.createEspacio_coworking(id_usuario, nombre, telefono, localizacion, descripcion, web)
         let connection;
@@ -46,11 +36,10 @@ const createEspacio_coworking = async (req, res) => {
       
 
   } catch (e) {
-      console.log(e)
-//       res.send({
-//           status: 'false',
-//           message: 'este espacio coworking ya existe'
-//       })
+       res.send({
+          status: 'false',
+          message: 'este espacio coworking ya existe'
+       })
   }
 
 }
@@ -68,34 +57,8 @@ const validateEspacio_coworking = async (req, res) => {
 
 }   
 
-
-//cambio datos del espacio coworking
-// const updateEspacio_coworking = async (req, res) => {
-//   const { id_coworking, id_usuario, nombre, telefono, localizacion, descripcion, web } = req.body
-//   const { id_coworking } = req.params
-
-//   try {
-//     await espacioCoworkingValidator.validateAsync(req.body)
-
-//     await db.updateEspacio_coworking(id_coworking, id_usuario, nombre, telefono, localizacion, descripcion, web)
-
-// } catch (e) {
-    
-//     let statusCode = 400;
-//     // averiguar el tipo de error para enviar un código u otro
-//     if (e.message === 'database-error') {
-//         statusCode = 500
-//     }
-
-//     res.status(statusCode).send(e.message)
-//     return
-// }
-
-// res.send()
-// }
-
 const updateEspacio_coworking = async (req, res) => {
-    const {id_usuario, nombre, telefono, localizacion, descripcion, web} = req.body
+    const { id_usuario, nombre, telefono, localizacion, descripcion, web } = req.body
     const { id_coworking } = req.params
 
     // TODO: considerar el caso en el que el ID pasado no existe
@@ -174,9 +137,9 @@ const getEspacio_coworking = async (req, res) => {
 //Obtener lista de espacios coworking filtrando por nombre y/o localización
 
   const getListEspacio_coworking = async (req, res) => {
-  const { nombre, localizacion } = req.query;
+  const { nombre, telefono } = req.query;
   try {
-      let usuario = await db.listUsuario(nombre, localizacion)
+      let espacio_coworking = await db.getListEspacio_coworking(nombre, telefono)
       res.send(espacio_coworking)
   } catch (e) {
       res.status(500).send()

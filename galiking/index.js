@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const bodyParser = require('body-parser')
 const express = require('express')
-const { createUsuario, getUsuario, getListOfUsuario, updateUsuario, deleteUsuario, validate, login, updateContrasena, resetContrasena, recoverContrasena } = require('./controllers/usuario')
+const { createUsuario, getUsuarioId, getListOfUsuario, updateUsuario, deleteUsuario, validate, login, updateContrasena, resetContrasena, contrasenaUpdateCode, recoverContrasena } = require('./controllers/usuario')
 const { usuarioIsAdmin, usuarioIsOwner, usuarioIsUser, isAuthenticated, isSameUser } = require('./middlewares/auth')
 const { createEspacio_coworking, getEspacio_coworking, getListEspacio_coworking, updateEspacio_coworking, deleteEspacio_coworking, validateEspacio_coworking } = require('./controllers/espacioCoworking')
   
@@ -27,11 +27,11 @@ const currentPort = process.env.PORT || DEFAULT_PORT
 
 //Crear una lista de datos de usuario a partir de unos parámetros dados
 
-app.get('/usuario', getListOfUsuario )
+app.get('/usuario', getListOfUsuario, usuarioIsAdmin)
 
 //obtener todos los datos de un usuario a través del ID
 
-app.get('/usuario/:id_usuario', getUsuario)
+app.get('/usuario/:id', getUsuarioId)
 
 //crear un nuevo usuario
 
@@ -55,17 +55,21 @@ app.post('/usuario/login', login)
 
 //Actualizar la contraseña de un usuario
 
-//app.put('/usuario/:id/contrasena', updateContrasena)
+app.put('/usuario/:id/update-contrasena', isSameUser, updateContrasena)
 
 
 
 //Petición de una nueva contraseña(2 pasos)
 
-//app.post('/usuario/recover-contrasena', recoverContrasena)
+app.post('/usuario/recover-contrasena', recoverContrasena)
 
 //Actualizar la contraseña con el código de actualización al haber olvidado la contraseña(endopoint anterior)
 
-//app.put('/usuario/contrasena/reset', resetContrasena)
+app.get('/usuario/contrasena/reset/:code', contrasenaUpdateCode)
+
+//actualizar la contraseña(recuperación de contraseña)
+
+app.put('/update-reset-contrasena/:id', resetContrasena)
 
 //////////////////////////////////////////////////
 //////           ESPACIO COWORKING           /////
@@ -73,7 +77,7 @@ app.post('/usuario/login', login)
 
 //Crear un nuevo espacio coworking
 
-app.post('/espacio-coworking', createEspacio_coworking, usuarioIsOwner)
+app.post('/espacio-coworking', createEspacio_coworking)
 
 //obtener todos los datos de un espacio coworking a través del ID
 

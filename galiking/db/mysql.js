@@ -83,27 +83,21 @@ const listUsuario = async (nombre, telefono) => {
 
 }
 
-const getUsuario = async (id_usuario) => {
-    let connection;
+const getUsuario = async (email) => {
+    const query = `select * from usuario where email = ?`
+    const params = [email]
 
-    try {
-        connection = await getConnection();
+    const [result] = await performQuery(query, params)
+    return result
+}
 
-        // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
-            select * from usuario where id_usuario = ?
-        `,
-            [id_usuario])
+const getUsuarioId = async (id_usuario) => {
+    
+    const query = `select * from usuario where id_usuario = ?`
+    const params = [id_usuario]
 
-        return result  // potential bug because connection is not released
-    } catch (e) {
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
+    const [result] = await performQuery(query, params)
+    return result
 }
 
 
@@ -133,7 +127,6 @@ const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, no
 
 const deleteUsuario = async (id_usuario) => {
     let connection;
-
     try {
         connection = await getConnection();
 
@@ -177,6 +170,26 @@ const checkValidationCode = async (code) => {
     }
 
  }
+
+ const updateValidationCode = async (email, validationCode) => {
+    const query = `update usuario SET validationCode = ?, expirationCodeDate = addtime(now(), '0 2:0:0') where email=?`
+    const params = [validationCode, email]
+
+    await performQuery(query, params)
+}
+
+ const updateContrasena = async (id_usuario, contrasena) => {
+    
+    const query = `update usuario SET contrasena=?, validationCode='' where id_usuario=?`
+    const params = [contrasena, id_usuario]
+
+    await performQuery(query, params)
+
+ }
+    
+
+    
+      
 
  //////////////////////////////////////////////////
 //////           ESPACIO COWORKING           /////
@@ -230,7 +243,46 @@ const getEspacio_coworking = async (id_coworking) => {
     }
 }
 
-const updateEspacio_coworking = async (id_usuario, nombre, telefono, localizacion, descripcion, web) => {
+
+const getListEspacio_coworking = async (nombre, telefono) => {
+   
+    let connection;
+
+    try {
+        connection = await getConnection();
+        let result;
+
+        if (telefono && nombre) {
+            result = await connection.query(`
+                select id_coworking, telefono, nombre from espacio_coworking where telefono = ? and nombre = ?
+                `, [telefono, nombre])
+        } else if (!telefono && nombre) {
+            result = await connection.query(`
+            select id_coworking, telefono, nombre from espacio_coworking where nombre = ?
+            `, [nombre])
+        } else if (telefono && !nombre) {
+            result = await connection.query(`
+            select id_coworking, telefono, nombre from espacio_coworking where telefono = ?
+            `, [telefono])
+        } else {
+            result = await connection.query(`
+            select id_coworking, telefono, nombre from espacio_coworking
+            `)
+        }
+        
+        return result[0]  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+
+}
+
+const updateEspacio_coworking = async (id_coworking, id_usuario, nombre, telefono, localizacion, descripcion, web) => {
     let connection;
     
 
@@ -238,10 +290,10 @@ const updateEspacio_coworking = async (id_usuario, nombre, telefono, localizacio
         connection = await getConnection();
 
         await connection.query(`
-            update espacio_coworking SET id_usuario=?, nombre=?, telefono=?, localizacion=?, descripcion=?, web=?
+            update espacio_coworking SET nombre=?, telefono=?, localizacion=?, descripcion=?, web=?
             where id_coworking=? 
         `,
-            [nombre, telefono, localizacion, descripcion, web, id_usuario])
+            [nombre, telefono, localizacion, descripcion, web, id_usuario, id_coworking])
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -261,7 +313,7 @@ const checkEspacio_coworking = async (web, id_usuario) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            select 1 from espacio_coworking where web = ? and id_usuario=?
+            select * from espacio_coworking where web = ? and id_usuario=?
         `,
             [web, id_usuario])
 
@@ -304,9 +356,13 @@ module.exports = {
     createUsuario,
     createEspacio_coworking,
     getUsuario,
+    getUsuarioId,
     getEspacio_coworking,
     listUsuario,
+    getListEspacio_coworking,
     updateUsuario,
+    updateContrasena,
+    updateValidationCode,
     updateEspacio_coworking,
     deleteUsuario,
     deleteEspacio_coworking,

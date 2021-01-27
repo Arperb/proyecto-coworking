@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-   
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -26,5 +26,7 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }

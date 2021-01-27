@@ -5,21 +5,26 @@ const db = require('../db/mysql')
 const isAuthenticated = async (req, res, next) => {
     // obtengo el token que habrán metido en 
     // las cabecera
+    
     const { authorization } = req.headers;
 
+    
     try {
         // si la verificación del token falla (caducado, mal formado, no descifrable
         // con el SECRET dado) salta una excepción
         const decodedToken = jwt.verify(authorization, process.env.SECRET);
+       
 
         const usuario = await db.getUsuario(decodedToken.email)
-
-        if (!user) {
+        
+        if (!usuario) {
             throw new Error()
         }
 
         req.auth = decodedToken;
+        console.log(req.auth)
     } catch (e) {
+        
         res.status(401).send()
         return
 
@@ -33,32 +38,39 @@ const isAuthenticated = async (req, res, next) => {
 
 
 const usuarioIsAdmin = (req, res, next) => {
-    if (req.auth.rol !=="administrador") {
-        const error = new Error("tu deberías de ser administrador para acceder a este recurso");
-        error.httpCode = 401;
-        next(error);
+
+    if (!req.auth || req.auth.usuarioIsAdmin) {
+        res.status(403).send()
+        return
+        //        const authError = new Error('not-authorized');
+        //        authError.status = 403;
+        //        return next(authError);
     }
+
     next();
 }
 
 
-const usuarioIsOwner = (req, res, next) => {
-    if (req.auth.rol !=="propietario") {
-        const error = new Error("tu deberías de ser propietario de un coworking para acceder a este recurso");
-        error.httpCode = 401;
-        next(error);
-    }
-    next();
-}
 
-const usuarioIsUser = (req, res, next) => {
-    if (req.auth.rol !=="cliente") {
-        const error = new Error("tu deberías de ser usuario para acceder a este recurso");
-        error.httpCode = 401;
-        next(error);
-    }
-    next();
-}
+// const usuarioIsOwner = (req, res, next) => {
+//     if (!req.auth && req.auth.rol !=="propietario") {
+//         const error = new Error("tu deberías de ser propietario de un coworking para acceder a este recurso");
+//         error.httpCode = 401;
+//         next(error);
+//     }
+//     next();
+// }
+
+// const usuarioIsUser = (req, res, next) => {
+
+//     console.log(usuarioIsUser)
+//     if (!req.auth && req.auth.rol !=="cliente") {
+//         const error = new Error("tu deberías de ser usuario para acceder a este recurso");
+//         error.httpCode = 401;
+//         next(error);
+//     }
+//     next();
+// }
 
 
 
@@ -89,8 +101,6 @@ const isSameUser = (req, res, next) => {
 
 module.exports = {
     usuarioIsAdmin,
-    usuarioIsOwner,
-    usuarioIsUser,
     isAuthenticated,
     isSameUser
 };

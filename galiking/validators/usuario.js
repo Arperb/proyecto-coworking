@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const { usuarioIsOwner } = require('../middlewares/auth');
 
 const usuarioValidator = Joi.object({
     nif_cif: Joi.string()
@@ -59,10 +60,31 @@ const usuarioValidator = Joi.object({
         .required()
         .error(
             new Error('contraseña should be a string between 9 and 100 characters')
-        ),
+        )
+})
 
+const passValidator = Joi.object({
+    contrasena: Joi.string()
+        .required(),
+        
+    newContrasena: Joi.string()
+        .required(),
+
+    newContrasenaRepeat: Joi.ref('newContrasena')
+        
+    
+})
+
+const newPassValidator = Joi.object({
+    newContrasena: Joi.string()
+        .required(),
+
+    newContrasenaRepeat: Joi.ref('newContrasena')
+   
 })
 
 module.exports = {
-    usuarioValidator
+    usuarioValidator,
+    passValidator,
+    newPassValidator
 }

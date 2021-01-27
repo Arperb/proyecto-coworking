@@ -49,19 +49,19 @@ const sendConfirmationMailCoworking = async (email) => {
       await sendgrid.send(message);
     }
 
-const forgotPassworddMail = async (email, link) => {
+const forgotPasswordMail = async (email, link) => {
   sendgrid.setApiKey(process.env.EMAIL_API_KEY);
 
   const message = {
       to: email,
       from: 'esther_h_e@hotmail.com',
-      subject: 'Recuperate your password',
+      subject: 'Update your password',
       text: `La dirección de verificación es: ${link}`,
       html: `
       <div>
         <h1> Cambia tu contraseña </h1>
-        <p> Si te has registrado en el sistema, accede al siguiente
-        enlace para validar tu cuenta </p>
+        <p> Si has creado una nueva contraseña, accede al siguiente
+        enlace para poder actualizarla </p>
         
 
         ${link}
@@ -76,5 +76,5 @@ const forgotPassworddMail = async (email, link) => {
 module.exports = {
     sendConfirmationMail,
     sendConfirmationMailCoworking,
-    forgotPassworddMail
+    forgotPasswordMail
 }

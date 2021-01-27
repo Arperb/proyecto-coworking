@@ -55,6 +55,24 @@ const createEspacio_coworking = (fecha_creacion, fecha_modificacion, nombre, tel
     })
 }
 
+const listEspacio_coworking = (telefono, nombre) => {
+    const filterByNombre = espacio_coworking => espacio_coworking.nombre.toLowerCase().indexOf(nombre.toLowerCase()) !== -1
+    const filterByTelefono = espacio_coworking => espacio_coworking.telefono === telefono
+
+    let filteredEspacio_coworking = [...espacio_coworking]
+
+    if (telefono !== undefined) {
+        filteredEspacio_coworking = filteredEspacio_coworking.filter( filterByTelefono )
+    }
+
+    if (nombre !== undefined) {
+        filteredEspacio_coworking = filteredEspacio_coworking.filter( filterByNombre )
+    }
+
+    return filteredEspacio_coworking
+}
+
 module.exports = {
     createEspacio_coworking,
+    listEspacio_coworking
 }
