@@ -86,7 +86,6 @@ const listUsuario = async (nombre, telefono) => {
 const getUsuario = async (email) => {
     const query = `select * from usuario where email = ?`
     const params = [email]
-
     const [result] = await performQuery(query, params)
     return result
 }
@@ -95,6 +94,8 @@ const getUsuarioId = async (id_usuario) => {
     
     const query = `select * from usuario where id_usuario = ?`
     const params = [id_usuario]
+
+    
 
     const [result] = await performQuery(query, params)
     return result
@@ -186,6 +187,13 @@ const checkValidationCode = async (code) => {
     await performQuery(query, params)
 
  }
+
+ const uploadFotoUsuario = async (filename, id_usuario) => {
+    const query = `UPDATE usuario SET foto=? where id_usuario=?`
+    const params = [filename, id_usuario]
+
+    await performQuery(query, params)
+}
     
 
     
@@ -354,6 +362,7 @@ const deleteEspacio_coworking = async (id_coworking) => {
 
 module.exports = {
     createUsuario,
+    uploadFotoUsuario,
     createEspacio_coworking,
     getUsuario,
     getUsuarioId,
