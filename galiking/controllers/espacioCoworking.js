@@ -4,29 +4,41 @@ const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
 const {sendConfirmationMail, sendConfirmationMailCoworking} = require('../utils/utils')
 
-const { espacioCoworkingValidator } = require('../validators/espacioCoworking');
+const { coworkingValidator } = require('../validators/espacioCoworking');
 const { getConnection } = require('../db/db');
 
 
 
 //creamos espacio coworking
-const createEspacio_coworking = async (req, res) => {
+const createCoworking = async (req, res) => {
     
 
   try {
-      const { id_usuario, nombre, telefono, localizacion, descripcion, web } = req.body
+      const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+        equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+        puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+        despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+        sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+        salon_eventos_tarifa_tipo } = req.body
       console.log(id_usuario)
-      const response = await db.checkEspacio_coworking(web, id_usuario)
+      const response = await db.checkCoworking(web, id_usuario)
 
-      await espacioCoworkingValidator.validateAsync(req.body)
+      await coworkingValidator.validateAsync(req.body)
 
-      await db.createEspacio_coworking(id_usuario, nombre, telefono, localizacion, descripcion, web)
+      await db.createCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+        equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+        puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+        despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+        sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+        salon_eventos_tarifa_tipo)
         let connection;
       try {
-          const usuario = await db.getUsuario(id_usuario)
-          const email = usuario[0]
+          //const email = usuario[0]
+          const usuario = await db.getUsuarioId(id_usuario)
+          console.log(usuario)
+          
        
-          await sendConfirmationMailCoworking(email)
+          await sendConfirmationMailCoworking(usuario.email)
       } catch(e) {
           console.log(e)
       }
@@ -36,6 +48,7 @@ const createEspacio_coworking = async (req, res) => {
       
 
   } catch (e) {
+      console.log(e)
        res.send({
           status: 'false',
           message: 'este espacio coworking ya existe'
@@ -44,7 +57,7 @@ const createEspacio_coworking = async (req, res) => {
 
 }
 
-const validateEspacio_coworking = async (req, res) => {
+const validateCoworking = async (req, res) => {
    
   const { code } = req.params;
 
@@ -57,34 +70,50 @@ const validateEspacio_coworking = async (req, res) => {
 
 }   
 
-const updateEspacio_coworking = async (req, res) => {
-    const { id_usuario, nombre, telefono, localizacion, descripcion, web } = req.body
-    const { id_coworking } = req.params
+const updateCoworking = async (req, res) => {
 
+    
+    const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+        equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+        puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+        despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+        sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+        salon_eventos_tarifa_tipo } = req.body
+
+    const { id_coworking } = req.params
+    
+        
     // TODO: considerar el caso en el que el ID pasado no existe
     // y enviar un 404
+
     try {
-        await espacioCoworkingValidator.validateAsync(req.body)
 
-        await db.updateEspacio_coworking(id_coworking, id_usuario, nombre, telefono, localizacion, descripcion, web)
+       await coworkingValidator.validateAsync(req.body)
 
-    } catch (e) {
+       await db.updateCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+            equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+            puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+            despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+            sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+            salon_eventos_tarifa_tipo, id_coworking)
+
+     } catch (e) {
         
-        let statusCode = 400;
-        // averiguar el tipo de error para enviar un código u otro
-        if (e.message === 'database-error') {
-            statusCode = 500
-        }
+         let statusCode = 400;
+         // averiguar el tipo de error para enviar un código u otro
+         if (e.message === 'database-error') {
+             statusCode = 500
+         }
 
-        res.status(statusCode).send(e.message)
-        return
-    }
+         res.status(statusCode).send(e.message)
+         return
+     }
 
-    res.send()
-}
+     res.send()
+ }
     
     
-  const deleteEspacio_coworking = async (req, res) => {
+  const deleteCoworking = async (req, res) => {
     const { id_coworking } = req.params;
 
     try {
@@ -92,7 +121,7 @@ const updateEspacio_coworking = async (req, res) => {
         // pasamos podemos resolverlo aquí haciendo una petición
         // específica a la BBDD o bien resolverlo en el módulo de
         // BBDD leyendo la respuesta de la consulta (affectedRows)
-        const espacio_coworking = await db.getEspacio_coworking(id_coworking)
+        const coworking = await db.getCoworking(id_coworking)
 
         // Si nos piden eliminar un ID que no existe
         // tenemos que informar a quién hizo la llamada y lo
@@ -100,12 +129,12 @@ const updateEspacio_coworking = async (req, res) => {
         // En caso contrario, el programador que programa contra la API
         // podría pensar que efectivamente se hizo un DELETE cuando 
         // en realidad no es así
-        if (!espacio_coworking.length) {
+        if (!coworking.length) {
             res.status(404).send()
             return
         } 
 
-        await db.deleteEspacio_coworking(id_coworking)
+        await db.deleteCoworking(id_coworking)
 
         res.send()
     } catch (e) {
@@ -123,34 +152,40 @@ const updateEspacio_coworking = async (req, res) => {
 
 //Obtener una lista de los espacios coworking a través del ID
 
-const getEspacio_coworking = async (req, res) => {
+const getCoworking = async (req, res) => {
   const { id_coworking } = req.params
 
   try {
-      const espacio_coworking = await db.getEspacio_coworking(id_coworking)
-      res.send(espacio_coworking)
-  } catch (e) {
-      res.status(500).send()
-  }
-} 
+    const coworking = await db.getCoworking(id_coworking)
+
+
+    if (!coworking.length) {
+        res.status(404).send()
+    } else {
+        res.send(coworking)
+    }
+} catch (e) {
+    res.status(500).send()
+}
+}
 
 //Obtener lista de espacios coworking filtrando por nombre y/o localización
 
-  const getListEspacio_coworking = async (req, res) => {
+  const getListCoworking = async (req, res) => {
   const { nombre, telefono } = req.query;
   try {
-      let espacio_coworking = await db.getListEspacio_coworking(nombre, telefono)
-      res.send(espacio_coworking)
+      let coworking = await db.getListCoworking(nombre, telefono)
+      res.send()
   } catch (e) {
       res.status(500).send()
   }
 }
 
   module.exports = {
-    createEspacio_coworking,
-    getEspacio_coworking,
-    getListEspacio_coworking,
-    updateEspacio_coworking,
-    deleteEspacio_coworking,
-    validateEspacio_coworking
+    createCoworking,
+    getCoworking,
+    getListCoworking,
+    updateCoworking,
+    deleteCoworking,
+    validateCoworking
   } 

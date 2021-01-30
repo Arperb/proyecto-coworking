@@ -15,7 +15,7 @@ const isAuthenticated = async (req, res, next) => {
         const decodedToken = jwt.verify(authorization, process.env.SECRET);
        
 
-        const usuario = await db.getUsuario(decodedToken.email)
+        const usuario = await db.getUsuarioEmail(decodedToken.email)
         
         if (!usuario) {
             throw new Error()
@@ -71,9 +71,6 @@ const usuarioIsAdmin = (req, res, next) => {
 //     }
 //     next();
 // }
-
-
-
 
 const isSameUser = (req, res, next) => {
     // ¿Es el mismo usuario cuando el recurso sobre el que queremos

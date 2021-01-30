@@ -7,9 +7,9 @@ const uuid = require('uuid');
 
 const fsPromises = require('fs').promises
 
-const { createUsuario, getUsuarioId, getListOfUsuario, updateUsuario, deleteUsuario, validate, login, updateContrasena, resetContrasena, contrasenaUpdateCode, recoverContrasena, addFotoUsuario } = require('./controllers/usuario')
+const { createUsuario, getUsuarioId,getListOfUsuario, updateUsuario, deleteUsuario, validate, login, updateContrasena, resetContrasena, contrasenaUpdateCode, recoverContrasena, createFotoUsuario } = require('./controllers/usuario')
 const { usuarioIsAdmin, usuarioIsOwner, usuarioIsUser, isAuthenticated, isSameUser } = require('./middlewares/auth')
-const { createEspacio_coworking, getEspacio_coworking, getListEspacio_coworking, updateEspacio_coworking, deleteEspacio_coworking, validateEspacio_coworking } = require('./controllers/espacioCoworking')
+const { createCoworking, getCoworking, getListCoworking, updateCoworking, deleteCoworking, validateCoworking } = require('./controllers/espacioCoworking')
 
 
 
@@ -43,7 +43,11 @@ app.get('/usuario', getListOfUsuario, usuarioIsAdmin)
 
 //obtener todos los datos de un usuario a través del ID
 
-app.get('/usuario/:id', getUsuarioId)
+app.get('/usuario/:id_usuario', getUsuarioId)
+
+//obtener todos los datos de un usuario a través del email
+
+//app.get('/usuario/:email', getUsuarioEmail)
 
 //crear un nuevo usuario
 
@@ -78,7 +82,7 @@ app.post('/usuario', createUsuario)
 
 //Añadir foto
 
-app.post('/usuario/:id/profile', addFotoUsuario)
+app.post('/usuario/:id/profile', createFotoUsuario)
 
 //ver foto
 //app.get('/usuario/:id/profile')  //
@@ -125,7 +129,7 @@ app.put('/usuario/:id/update-contrasena', isSameUser, updateContrasena)
 
 app.post('/usuario/recover-contrasena', recoverContrasena)
 
-//Actualizar la contraseña con el código de actualización al haber olvidado la contraseña(endopoint anterior)
+//Actualizar la contraseña con el código de actualización al haber olvidado la contraseña(endpoint anterior)
 
 app.get('/usuario/contrasena/reset/:code', contrasenaUpdateCode)
 
@@ -139,27 +143,27 @@ app.put('/update-reset-contrasena/:id', resetContrasena)
 
 //Crear un nuevo espacio coworking
 
-app.post('/espacio-coworking', createEspacio_coworking)
+app.post('/coworking', createCoworking)
 
 //obtener todos los datos de un espacio coworking a través del ID
 
-app.get('/espacio-coworking/:id_coworking', getEspacio_coworking)
+app.get('/coworking/:id_coworking', getCoworking)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 
-app.get('/espacio-coworking', getListEspacio_coworking)
+app.get('/coworking', getListCoworking)
 
 //modificar datos espacio coworking
 
-app.put('/espacio-coworking/:id_coworking', updateEspacio_coworking)
+app.put('/coworking/:id_coworking', updateCoworking)
 
 //borrar espacio coworking
 
-app.delete('/espacio-coworking/:id_coworking', deleteEspacio_coworking)
+app.delete('/coworking/:id_coworking', deleteCoworking)
 
 //validar un usuario
 
-app.get('/espacio-coworking/validate/:code', validateEspacio_coworking)
+app.get('/coworking/validate/:code', validateCoworking)
 
 
 

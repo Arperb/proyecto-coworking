@@ -33,11 +33,9 @@ const usuarioValidator = Joi.object({
             new Error('bio should be a string between 5 and 500 characters')
         ),
 
-    foto: Joi.string()
-        .min(5)
-        .max(200)
+    foto: Joi.object()
         .error(
-            new Error('foto should be a string between 5 and 255 characters')
+            new Error('foto should be a png file')
         ),
 
     nombre: Joi.string()

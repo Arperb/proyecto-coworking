@@ -41,38 +41,67 @@ module.exports = {
 }
 
 
-let espacio_coworking = [];
+let coworking = [];
 
-const createEspacio_coworking = (fecha_creacion, fecha_modificacion, nombre, telefono, localizacion, descripcion, web) => {
-    usuario.push({
+const createCoworking = (fecha_creacion, fecha_modificacion, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+    equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+    puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+    despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+    sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+    salon_eventos_tarifa_tipo) => {
+    coworking.push({
         fecha_creacion,
         fecha_modificacion,
         nombre,
         telefono,
-        localizacion,
+        direccion,
+        ciudad,
+        provincia,
         descripcion,
-        web
+        web,
+        servicios,
+        equipacion,
+        puesto_trabajo,
+        puesto_trabajo_capacidad,
+        puesto_trabajo_tarifa,
+        puesto_trabajo_tarifa_tipo, 
+        puesto_multiple,
+        puesto_multiple_capacidad,
+        puesto_multiple_tarifa,
+        puesto_multiple_tarifa_tipo, 
+        despacho,
+        despacho_capacidad,
+        despacho_tarifa,
+        despacho_tarifa_tipo,
+        sala_reuniones,
+        sala_reuniones_capacidad, 
+        sala_reuniones_tarifa,
+        sala_reuniones_tarifa_tipo,
+        salon_eventos,
+        salon_eventos_capacidad,
+        salon_eventos_tarifa, 
+        salon_eventos_tarifa_tipo
     })
 }
 
-const listEspacio_coworking = (telefono, nombre) => {
-    const filterByNombre = espacio_coworking => espacio_coworking.nombre.toLowerCase().indexOf(nombre.toLowerCase()) !== -1
-    const filterByTelefono = espacio_coworking => espacio_coworking.telefono === telefono
+const listCoworking = (telefono, nombre) => {
+    const filterByNombre = coworking => coworking.nombre.toLowerCase().indexOf(nombre.toLowerCase()) !== -1
+    const filterByTelefono = coworking => coworking.telefono === telefono
 
-    let filteredEspacio_coworking = [...espacio_coworking]
+    let filteredCoworking = [...coworking]
 
     if (telefono !== undefined) {
-        filteredEspacio_coworking = filteredEspacio_coworking.filter( filterByTelefono )
+        filteredCoworking = filteredCoworking.filter( filterByTelefono )
     }
 
     if (nombre !== undefined) {
-        filteredEspacio_coworking = filteredEspacio_coworking.filter( filterByNombre )
+        filteredCoworking = filteredCoworking.filter( filterByNombre )
     }
 
-    return filteredEspacio_coworking
+    return filteredCoworking
 }
 
 module.exports = {
-    createEspacio_coworking,
-    listEspacio_coworking
+    createCoworking,
+    listCoworking
 }

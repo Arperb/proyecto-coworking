@@ -1,3 +1,4 @@
+const { send } = require('@sendgrid/mail');
 const moment = require('moment')
 
 const { getConnection } = require("./db");
@@ -21,7 +22,7 @@ const performQuery = async (query, params) => {
  }
 
 
-const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode) => {
+const createUsuario = async (nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode) => {
     let connection;
  
 
@@ -32,7 +33,7 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, c
             INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode])
+            [nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode])
 
     } catch (e) {
         console.log(e)
@@ -44,6 +45,30 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, c
         }
     }
 }
+
+const createFotoUsuario = async (id_usuario, uuid) => {
+    let connection;
+    
+
+    try {
+        connection = await getConnection();
+
+        await connection.query(`
+            INSERT INTO usuario (uuid)
+            VALUES (?) 
+        `,
+            [uuid])
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
 
 const listUsuario = async (nombre, telefono) => {
    
@@ -83,7 +108,8 @@ const listUsuario = async (nombre, telefono) => {
 
 }
 
-const getUsuario = async (email) => {
+const getUsuarioEmail = async (email) => {
+    
     const query = `select * from usuario where email = ?`
     const params = [email]
     const [result] = await performQuery(query, params)
@@ -94,21 +120,18 @@ const getUsuarioId = async (id_usuario) => {
     
     const query = `select * from usuario where id_usuario = ?`
     const params = [id_usuario]
-
-    
-
     const [result] = await performQuery(query, params)
     return result
 }
 
 
-const updateUsuario = async (id_usuario, nif_cif, email, telefono, bio, foto, nombre, rol, contrasena) => {
+const updateUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, id_usuario) => {
     let connection;
     
 
     try {
         connection = await getConnection();
-
+console.log(nif_cif)
         await connection.query(`
             update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, rol=?, contrasena=?
             where id_usuario=? 
@@ -162,11 +185,12 @@ const checkValidationCode = async (code) => {
      // si existe un usuario con ese código de validación
      // lo marcamos como activo
    
-     if (result) {
+     try {
          const query = (`update usuario set validado = true, validationCode =''`)
          
          await performQuery(query, [])
-    } else {
+    } catch (e) {
+        console.log(e)
          throw new Error('validation-error')
     }
 
@@ -188,9 +212,9 @@ const checkValidationCode = async (code) => {
 
  }
 
- const uploadFotoUsuario = async (filename, id_usuario) => {
-    const query = `UPDATE usuario SET foto=? where id_usuario=?`
-    const params = [filename, id_usuario]
+ const uploadFotoUsuario = async (uuid, id_usuario) => {
+    const query = `UPDATE usuario SET uuid=? where id_usuario=?`
+    const params = [uuid, id_usuario]
 
     await performQuery(query, params)
 }
@@ -204,7 +228,12 @@ const checkValidationCode = async (code) => {
 //////////////////////////////////////////////////
 
 
- const createEspacio_coworking = async (id_usuario, nombre, telefono, localizacion, descripcion, web) => {
+ const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+    equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+    puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+    despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+    sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+    salon_eventos_tarifa_tipo) => {
     let connection;
  
 
@@ -212,10 +241,20 @@ const checkValidationCode = async (code) => {
         connection = await getConnection();
 
        let SQL = await connection.query(`
-            INSERT INTO espacio_coworking (id_usuario, nombre, telefono, localizacion, descripcion, web)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO coworking (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+                equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+                puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+                despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+                sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+                salon_eventos_tarifa_tipo)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [id_usuario, nombre, telefono, localizacion, descripcion, web])
+            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+                equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+                puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+                despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+                sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+                salon_eventos_tarifa_tipo])
 
     } catch (e) {
         console.log(e)
@@ -228,7 +267,7 @@ const checkValidationCode = async (code) => {
     }
 }
 
-const getEspacio_coworking = async (id_coworking) => {
+const getCoworking = async (id_coworking) => {
     let connection;
 
     try {
@@ -236,7 +275,7 @@ const getEspacio_coworking = async (id_coworking) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            select * from espacio_coworking where id_coworking = ?
+            select * from coworking where id_coworking = ?
         `,
             [id_coworking])
 
@@ -252,7 +291,7 @@ const getEspacio_coworking = async (id_coworking) => {
 }
 
 
-const getListEspacio_coworking = async (nombre, telefono) => {
+const getListCoworking = async (nombre, telefono) => {
    
     let connection;
 
@@ -262,19 +301,19 @@ const getListEspacio_coworking = async (nombre, telefono) => {
 
         if (telefono && nombre) {
             result = await connection.query(`
-                select id_coworking, telefono, nombre from espacio_coworking where telefono = ? and nombre = ?
+                select id_coworking, telefono, nombre from coworking where telefono = ? and nombre = ?
                 `, [telefono, nombre])
         } else if (!telefono && nombre) {
             result = await connection.query(`
-            select id_coworking, telefono, nombre from espacio_coworking where nombre = ?
+            select id_coworking, telefono, nombre from coworking where nombre = ?
             `, [nombre])
         } else if (telefono && !nombre) {
             result = await connection.query(`
-            select id_coworking, telefono, nombre from espacio_coworking where telefono = ?
+            select id_coworking, telefono, nombre from coworking where telefono = ?
             `, [telefono])
         } else {
             result = await connection.query(`
-            select id_coworking, telefono, nombre from espacio_coworking
+            select id_coworking, telefono, nombre from coworking
             `)
         }
         
@@ -290,21 +329,39 @@ const getListEspacio_coworking = async (nombre, telefono) => {
 
 }
 
-const updateEspacio_coworking = async (id_coworking, id_usuario, nombre, telefono, localizacion, descripcion, web) => {
+const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+    equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+    puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+    despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+    sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+    salon_eventos_tarifa_tipo, id_coworking) => {
     let connection;
     
-
     try {
         connection = await getConnection();
-
-        await connection.query(`
-            update espacio_coworking SET nombre=?, telefono=?, localizacion=?, descripcion=?, web=?
-            where id_coworking=? 
+console.log(id_usuario)
+       let SQL = await connection.query(`
+            update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, web=?, servicios=?,
+            equipacion=?, puesto_trabajo=?, puesto_trabajo_capacidad=?, puesto_trabajo_tarifa=?, puesto_trabajo_tarifa_tipo=?, 
+            puesto_multiple=?, puesto_multiple_capacidad=?, puesto_multiple_tarifa=?, puesto_multiple_tarifa_tipo=?, 
+            despacho=?, despacho_capacidad=?, despacho_tarifa=?, despacho_tarifa_tipo=?, sala_reuniones=?, sala_reuniones_capacidad=?, 
+            sala_reuniones_tarifa=?, sala_reuniones_tarifa_tipo=?, salon_eventos=?, salon_eventos_capacidad=?, salon_eventos_tarifa=?, 
+            salon_eventos_tarifa_tipo=?
+            where id_coworking=?
         `,
-            [nombre, telefono, localizacion, descripcion, web, id_usuario, id_coworking])
+            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
+                equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
+                puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
+                despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
+                sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
+                salon_eventos_tarifa_tipo, id_coworking])
+            
+
+                
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
+        res.send(coworking)
 
     } finally {
         if (connection) {
@@ -313,7 +370,8 @@ const updateEspacio_coworking = async (id_coworking, id_usuario, nombre, telefon
     }
 }
 
-const checkEspacio_coworking = async (web, id_usuario) => {
+
+const checkCoworking = async (web, id_usuario) => {
     let connection;
 
     try {
@@ -321,7 +379,7 @@ const checkEspacio_coworking = async (web, id_usuario) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            select * from espacio_coworking where web = ? and id_usuario=?
+            select * from coworking where web = ? and id_usuario=?
         `,
             [web, id_usuario])
 
@@ -336,7 +394,7 @@ const checkEspacio_coworking = async (web, id_usuario) => {
     }
 }
 
-const deleteEspacio_coworking = async (id_coworking) => {
+const deleteCoworking = async (id_coworking) => {
     let connection;
 
     try {
@@ -344,7 +402,7 @@ const deleteEspacio_coworking = async (id_coworking) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            delete from espacio_coworking where id_coworking = ?
+            delete from coworking where id_coworking = ?
         `,
             [id_coworking])
 
@@ -362,19 +420,20 @@ const deleteEspacio_coworking = async (id_coworking) => {
 
 module.exports = {
     createUsuario,
+    createFotoUsuario,
     uploadFotoUsuario,
-    createEspacio_coworking,
-    getUsuario,
+    createCoworking,
+    getUsuarioEmail,
     getUsuarioId,
-    getEspacio_coworking,
+    getCoworking,
     listUsuario,
-    getListEspacio_coworking,
+    getListCoworking,
     updateUsuario,
     updateContrasena,
     updateValidationCode,
-    updateEspacio_coworking,
+    updateCoworking,
     deleteUsuario,
-    deleteEspacio_coworking,
+    deleteCoworking,
     checkValidationCode,
-    checkEspacio_coworking
+    checkCoworking
 }
