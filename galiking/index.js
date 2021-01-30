@@ -113,7 +113,7 @@ app.delete('/usuario/:id_usuario', deleteUsuario)
 
 //validar un usuario
 
-app.get('/usuario/validate/:code', validate)
+app.get('/usuario/validate/:validationCode', validate)
 
 //autenticar un usuario
 
@@ -161,9 +161,7 @@ app.put('/coworking/:id_coworking', updateCoworking)
 
 app.delete('/coworking/:id_coworking', deleteCoworking)
 
-//validar un usuario
 
-app.get('/coworking/validate/:code', validateCoworking)
 
 
 

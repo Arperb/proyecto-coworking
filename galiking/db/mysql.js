@@ -30,8 +30,8 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, uuid, nombre, 
         connection = await getConnection();
 
        let SQL = await connection.query(`
-            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
             [nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode])
 
@@ -173,28 +173,27 @@ const deleteUsuario = async (id_usuario) => {
 }
 
 
-const checkValidationCode = async (code) => {
+const checkValidationCode = async (validationCode) => {
      // comprobar si existe un usuario que esté pendiente de validación
-     const query = (`select * from usuario where validationCode = ?`)
+     
+     const query = `select * from usuario where validationCode = ?`
+    const params = [validationCode]
 
-     const params = [code]
-    
-     const [result] = await performQuery(query, params)
-   
+    const [result] = await performQuery(query, params)
 
-     // si existe un usuario con ese código de validación
-     // lo marcamos como activo
-   
-     try {
-         const query = (`update usuario set validado = true, validationCode =''`)
-         
-         await performQuery(query, [])
-    } catch (e) {
-        console.log(e)
-         throw new Error('validation-error')
+    // si existe un usuario con ese código de validación
+    // lo marcamos como activo
+    if (result) {
+        const query = `update usuario set validado = 1, validationCode = ''`
+        await performQuery(query, [])
+    } else {
+        throw new Error('validation-error')
     }
 
- }
+}
+
+
+
 
  const updateValidationCode = async (email, validationCode) => {
     const query = `update usuario SET validationCode = ?, expirationCodeDate = addtime(now(), '0 2:0:0') where email=?`

@@ -20,11 +20,11 @@ const createUsuario = async (req, res) => {
 
         await usuarioValidator.validateAsync(req.body)
 
-        const { nif_cif, email, telefono, bio, foto, nombre, rol, contrasena } = req.body
+        const { nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena } = req.body
         const contrasenaBcrypt = await bcrypt.hash(contrasena, 10);
         const validationCode = randomstring.generate(40);
 
-        await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, rol, contrasenaBcrypt, validationCode)
+        await db.createUsuario(nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasenaBcrypt, validationCode)
 
 
 
@@ -96,17 +96,19 @@ const getFotoUsuario = async (req, res) => {
 
 const validate = async (req, res) => {
 
-    const { code } = req.params;
+    const { validationCode } = req.params;
 
     try {
-        db.checkValidationCode(code)
-        res.send('Usuario validado correctamente')
-    } catch (e) {
-        //if(!db.checkValidationCode(code))
-        res.status(401).send('Validación incorrecta de usuario')
+        db.checkValidationCode(validationCode)
+        res.send('Validado correctamente')
+    } catch(e) {
+        res.status(401).send('Usuario no validado')
     }
 
 }
+
+
+
 
 const login = async (req, res) => {
 
@@ -114,16 +116,16 @@ const login = async (req, res) => {
 
     //comprobar que el usuario está en la base de datos
     try {
-        const usuario = await db.getUsuario(email)
-        console.log(usuario);
+        const usuario = await db.getUsuarioEmail(email)
+
 
         if (!usuario) {
             res.status(401).send()
             return
         }
 
-        const validContrasena = bcrypt.compare(contrasena, usuario.contrasena);
-
+        const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+        console.log(validContrasena)
         if (!validContrasena) {
             res.status(401).send()
             return
@@ -156,8 +158,8 @@ const login = async (req, res) => {
 
         });
 
-    } catch (error) {
-
+    } catch (e) {
+        console.log(error)
         res.status(500).send({
             ok: false,
             message: "error servidor"
@@ -305,7 +307,7 @@ const getUsuarioId = async (req, res) => {
 // const getUsuarioEmail = async (req, res) => {
 
 //     const { email } = req.params
-   
+
 
 //     try {
 //         const email = usuario [0]
