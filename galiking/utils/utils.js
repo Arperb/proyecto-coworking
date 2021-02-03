@@ -73,8 +73,28 @@ const forgotPasswordMail = async (email, link) => {
   await sendgrid.send(message);
 }
 
+
+//conversor de formato de fecha 
+function dateToDB(date) {
+  //usamos librería moment para dar formato sql
+  const dateSQL = moment(date.format("YYYY-MM-DD"));
+  //devolvemos la fecha
+  return dateSQL;
+
+}
+
+function oneDay(date) {
+  //sumamos un día a la fecha y formateamos
+  const dateSQL = moment(date).add(1,'days').format("YYYY-MM-DD");
+
+  //devolvemos la fecha
+  return dateSQL;
+}
+
 module.exports = {
     sendConfirmationMail,
     sendConfirmationMailCoworking,
-    forgotPasswordMail
+    forgotPasswordMail,
+    dateToDB,
+    oneDay
 }

@@ -10,6 +10,7 @@ const fsPromises = require('fs').promises
 const { createUsuario, getUsuarioId,getListOfUsuario, updateUsuario, deleteUsuario, validate, login, updateContrasena, resetContrasena, contrasenaUpdateCode, recoverContrasena, createFotoUsuario } = require('./controllers/usuario')
 const { usuarioIsAdmin, usuarioIsOwner, usuarioIsUser, isAuthenticated, isSameUser } = require('./middlewares/auth')
 const { createCoworking, getCoworking, getListCoworking, updateCoworking, deleteCoworking, validateCoworking } = require('./controllers/espacioCoworking')
+const { createReserva, validateReserva, updateReserva, deleteReserva, getReserva, getListReserva } = require('./controllers/reserva')
 
 
 
@@ -160,6 +161,33 @@ app.put('/coworking/:id_coworking', updateCoworking)
 //borrar espacio coworking
 
 app.delete('/coworking/:id_coworking', deleteCoworking)
+
+
+///////////////////////////////////////////////////////////////////////
+////////////////   RESERVAS                              /////////////
+//////////////////////////////////////////////////////////////////////
+
+//Crear una reserva
+app.post('/reserva', createReserva)
+
+//validar una reserva
+app.get('/reserva/validate/:code', validateReserva)
+
+//modificar datos de la reserva
+app.put('/reserva/:id_reserva', updateReserva)
+
+//borrar reserva
+app.delete('/reserva/:id_reserva', deleteReserva)
+
+//obtener todos los datos de una reserva través del ID
+app.get('/reserva/:id_reserva', getReserva)
+
+//Crear una lista de reservas a través de los parámetros dados
+app.get('/reserva', getListReserva)
+
+///////////////////////////////////////////////////////////////////////
+//////////////////         BUSCADOR                      /////////////
+/////////////////////////////////////////////////////////////////////
 
 
 

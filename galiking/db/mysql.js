@@ -417,6 +417,316 @@ const deleteCoworking = async (id_coworking) => {
     }
 }
 
+
+////////////////////////////////////////////////////
+///////////            RESERVAS          //////////
+//////////////////////////////////////////////////
+
+const createReserva = async (id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin) => {
+    let connection;
+    try {
+        connection = await getConnection();
+
+        let SQL = await connection.query(`
+        
+            INSERT INTO reserva (id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin)
+            VALUES (?, ?, ?, ?, ?, ?)
+        `,
+            [id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin])
+
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+const getListReserva = async (valoracion, estado) => {
+
+    let connection;
+
+    try {
+        connection = await getConnection();
+        let result;
+
+        if (valoracion && estado) {
+            result = await connection.query(`
+                select id_reserva, valoracion, estado from reserva where valoracion = ? and estado = ?
+                `, [valoracion, estado])
+        } else if (!valoracion && estado) {
+            result = await connection.query(`
+            select id_reserva, valoracion, estado from reserva where valoracion = ?
+            `, [valoracion])
+        } else if (valoracion && !estado) {
+            result = await connection.query(`
+            select id_reserva, valoracion, estado from reserva where reserva = ?
+            `, [valoracion])
+        } else {
+            result = await connection.query(`
+            select id_reserva, valoracion, estado from reserva
+            `)
+        }
+
+        return result[0]  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+
+}
+const getReserva = async (id_reserva) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select * from reserva where id_reserva = ?
+        `,
+            [id_reserva])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+const updateReserva = async (id_reserva, id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin) => {
+    let connection;
+
+
+    try {
+        connection = await getConnection();
+
+        await connection.query(`
+            update reserva SET valoracion=?, estado=?, fecha_inicio=?, fecha_fin=?
+            where id_reserva=? 
+        `,
+            [id_reserva, id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin])
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const deleteReserva = async (id_reserva) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from reserva where id_reserva = ?
+        `,
+            [id_reserva])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+const checkReserva = async (id_coworking, id_usuario) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select * from reserva where id_coworking = ? and id_usuario = ?
+        `,
+            [id_coworking, id_usuario])
+
+        return result  // potential bug because connection is not released
+        console.log(result)
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////
+//////////////            INCIDENCIA                       /////////
+////////////////////////////////////////////////////////////////////
+
+const createIncidencia = async (estado, descripcion, fecha_inicio, fecha_fin) => {
+    let connection;
+    try {
+        connection = await getConnection();
+
+        let SQL = await connection.query(`
+            INSERT INTO incidencia (estado, descripcion, fecha_inicio, fecha_fin)
+            VALUES (?, ?, ?, ?,)
+        `,
+            [estado, descripcion, fecha_inicio, fecha_fin])
+
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+const getListIncidencia = async (estado, descripcion) => {
+
+    let connection;
+
+    try {
+        connection = await getConnection();
+        let result;
+
+        if (estado && descripcion) {
+            result = await connection.query(`
+                select id_incidencia, estado, descripcion from incidencia where estado = ? and descripcion = ?
+                `, [estado, descripcion])
+        } else if (!estado && descripcion) {
+            result = await connection.query(`
+            select id_incidencia, estado, descripcion from incidencia where estado = ?
+            `, [estado])
+        } else if (estado && !valoracion) {
+            result = await connection.query(`
+            select id_incidencia, estado, descripcion from incidencia where incidencia = ?
+            `, [valoracion])
+        } else {
+            result = await connection.query(`
+            select id_incidencia, estado, descripcion from incidencia
+            `)
+        }
+
+        return result[0]  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+
+}
+const getIncidencia = async (id_incidencia) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select * from incidencia where id_incidencia = ?
+        `,
+            [id_incidencia])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+const updateIncidencia = async (id_incidencia, id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin) => {
+    let connection;
+
+
+    try {
+        connection = await getConnection();
+
+        await connection.query(`
+            update incidencia SET valoracion=?, estado=?, fecha_inicio=?, fecha_fin=?
+            where id_incidencia=? 
+        `,
+            [id_incidencia, id_coworking, id_usuario,estado, descripcion, fecha_inicio, fecha_fin])
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const deleteIncidencia = async (id_incidencia) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from incidencia where id_incidencia = ?
+        `,
+            [id_incidencia])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+const checkIncidencia = async (estado, descripcion) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select * from incidencia where estado = ? and descripcion=?
+        `,
+            [estado, descripcion])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+
 module.exports = {
     createUsuario,
     createFotoUsuario,
@@ -434,5 +744,17 @@ module.exports = {
     deleteUsuario,
     deleteCoworking,
     checkValidationCode,
-    checkCoworking
+    checkCoworking,
+    createReserva,
+    getListReserva,
+    getReserva,
+    updateReserva,
+    deleteReserva,
+    checkReserva,
+    createIncidencia,
+    getListIncidencia,
+    getIncidencia,
+    updateIncidencia,
+    deleteIncidencia,
+    checkIncidencia
 }
