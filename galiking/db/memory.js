@@ -43,12 +43,8 @@ module.exports = {
 
 let coworking = [];
 
-const createCoworking = (fecha_creacion, fecha_modificacion, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-    equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-    puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-    despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-    sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-    salon_eventos_tarifa_tipo) => {
+const createCoworking = (fecha_creacion, fecha_modificacion, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web) =>
+ {
     coworking.push({
         fecha_creacion,
         fecha_modificacion,
@@ -58,29 +54,8 @@ const createCoworking = (fecha_creacion, fecha_modificacion, nombre, telefono, d
         ciudad,
         provincia,
         descripcion,
-        web,
         servicios,
-        equipacion,
-        puesto_trabajo,
-        puesto_trabajo_capacidad,
-        puesto_trabajo_tarifa,
-        puesto_trabajo_tarifa_tipo, 
-        puesto_multiple,
-        puesto_multiple_capacidad,
-        puesto_multiple_tarifa,
-        puesto_multiple_tarifa_tipo, 
-        despacho,
-        despacho_capacidad,
-        despacho_tarifa,
-        despacho_tarifa_tipo,
-        sala_reuniones,
-        sala_reuniones_capacidad, 
-        sala_reuniones_tarifa,
-        sala_reuniones_tarifa_tipo,
-        salon_eventos,
-        salon_eventos_capacidad,
-        salon_eventos_tarifa, 
-        salon_eventos_tarifa_tipo
+        web
     })
 }
 

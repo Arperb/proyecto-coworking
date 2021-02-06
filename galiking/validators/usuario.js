@@ -1,5 +1,5 @@
 const Joi = require('joi');
-const { usuarioIsOwner } = require('../middlewares/auth');
+
 
 const usuarioValidator = Joi.object({
     nif_cif: Joi.string()
@@ -33,7 +33,7 @@ const usuarioValidator = Joi.object({
             new Error('bio should be a string between 5 and 500 characters')
         ),
 
-    foto: Joi.object()
+    foto: Joi.string()
         .error(
             new Error('foto should be a png file')
         ),
@@ -46,13 +46,12 @@ const usuarioValidator = Joi.object({
             new Error('nombre should be a string between 3 and 100 characters')
         ),
 
-    rol: Joi.string()
-        .min(1)
-        .max(13)
-        .required()
-        .error(
-            new Error('rol should be a string between 1 and 13 characters')
-        ),
+     rol: Joi.string()
+         .valid('cliente', 'propietario', 'administrador')
+         .required()
+         .error(
+             new Error('rol should be a string between 1 and 13 characters')
+         ),
 
     contrasena: Joi.string()
         .required()
@@ -62,6 +61,7 @@ const usuarioValidator = Joi.object({
 })
 
 const passValidator = Joi.object({
+
     contrasena: Joi.string()
         .required(),
         

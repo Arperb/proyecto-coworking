@@ -7,55 +7,45 @@ const fsPromises = require('fs').promises;
 const { getConnection } = require('../db/db');
 
 const addFotoCoworking = async (req, res) => {
-    const { id_foto_coworking } = req.params
-   
-    
-    const decodedToken = req.auth
-    console.log(req.auth)
-    try {
-        const coworking = await db.getCowokingId(id_coworking)
-        
-        if (decodedToken.id_coworking !== coworking.id_coworking) {
-            res.status(400).send()
-            return
-        }
+	const { id_coworking } = req.params;
 
-        if (req.files) {
-            // si hiciese falta comprobar la extensión del fichero
-            // podríamos hacerlo aquí a partir de la información de req.files
-            // y enviar un error si no es el tipo que nos interesa (res.status(400).send())
+	try {
+		//POST coworking/:id/picture
+		if (req.files) {
+			//CREA CARPETA SI NO EXISTE
+			await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/cwk`, {
+				recursive: true,
+			});
 
-            await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/cwk`, { recursive: true })
+			//DEFINE NOMBRE
+			const fileID = uuid.v4();
+			//DEFINE LA RUTA DEL FICHERO
+			const outputFileName = `${process.env.TARGET_FOLDER}/cwk/${fileID}.png`;
 
+			//CREA EL FICHER
+			await fsPromises.writeFile(req.files.image.name, req.files.image.data);
+			console.log(req.files);
 
-            const fileID = uuid.v4()
-            const outputFileName = `${process.env.TARGET_FOLDER}/cwk/${fileID}.png`
+			// guardar una referencia a este UUID En la base de datos, de forma que
+			// cuando nos pidan la lista de nuestros recursos (productos, conciertos, etc) o
+			// el detalle de uno de ellos, accedemos a la BBDD para leer los UUID, y después el
+			// front llamará al GET con el UUID correspondiente
+			await db.uploadFotoCoworking(outputFileName, id_coworking);
+		}
+	} catch (e) {
+		let statusCode = 400;
+		// averiguar el tipo de error para enviar un código u otro
+		if (e.message === "database-error") {
+			statusCode = 500;
+		}
 
-            await fsPromises.writeFile(req.files.image.name, req.files.image.data)
-            console.log(req.files)
+		res.status(statusCode).send(e.message);
+		return;
+	}
 
-            // guardar una referencia a este UUID En la base de datos, de forma que
-            // cuando nos pidan la lista de nuestros recursos (productos, conciertos, etc) o 
-            // el detalle de uno de ellos, accedemos a la BBDD para leer los UUID, y después el
-            // front llamará al GET con el UUID correspondiente
-            await db.uploadFotoCoworking(outputFileName, id_coworking)
-        }
-
-    } catch (e) {
-        let statusCode = 400;
-        // averiguar el tipo de error para enviar un código u otro
-        if (e.message === 'database-error') {
-            statusCode = 500
-        }
-
-        res.status(statusCode).send(e.message)
-        return
-    }
-
-    res.send('Datos actualizados correctamente')
-}
-  
+	res.send("Datos actualizados correctamente");
+};
 
 module.exports = {
-    addFotoCoworking,
-} 
+	addFotoCoworking,
+};
