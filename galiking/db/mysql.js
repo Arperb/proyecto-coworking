@@ -22,7 +22,7 @@ const performQuery = async (query, params) => {
  }
 
 
-const createUsuario = async (nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode) => {
+const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode) => {
     let connection;
  
 
@@ -30,10 +30,10 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, uuid, nombre, 
         connection = await getConnection();
 
        let SQL = await connection.query(`
-            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena, validationCode])
+            [nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode])
 
     } catch (e) {
         console.log(e)
@@ -46,7 +46,7 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, uuid, nombre, 
     }
 }
 
-const createFotoUsuario = async (id_usuario, uuid) => {
+const createFotoUsuario = async (id_usuario, foto) => {
     let connection;
     
 
@@ -54,10 +54,10 @@ const createFotoUsuario = async (id_usuario, uuid) => {
         connection = await getConnection();
 
         await connection.query(`
-            INSERT INTO usuario (uuid)
+            INSERT INTO usuario (foto)
             VALUES (?) 
         `,
-            [uuid])
+            [foto])
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -173,26 +173,29 @@ const deleteUsuario = async (id_usuario) => {
 }
 
 
-const checkValidationCode = async (validationCode) => {
+const checkValidationCode = async (code) => {
+   
      // comprobar si existe un usuario que esté pendiente de validación
-     
-     const query = `select * from usuario where validationCode = ?`
-    const params = [validationCode]
-
+try {
+    const query = `select * from usuario where validationCode = ?`
+    const params = [code]
+   
     const [result] = await performQuery(query, params)
-
+   
     // si existe un usuario con ese código de validación
     // lo marcamos como activo
     if (result) {
-        const query = `update usuario set validado = 1, validationCode = ''`
+        const query = `update usuario set validado = true, validationCode = ''`
         await performQuery(query, [])
     } else {
         throw new Error('validation-error')
+        
     }
 
+} catch (e) {
+    console.log(e)
+ }
 }
-
-
 
 
  const updateValidationCode = async (email, validationCode) => {
@@ -203,17 +206,17 @@ const checkValidationCode = async (validationCode) => {
 }
 
  const updateContrasena = async (id_usuario, contrasena) => {
-    
+  
     const query = `update usuario SET contrasena=?, validationCode='' where id_usuario=?`
     const params = [contrasena, id_usuario]
-
+  
     await performQuery(query, params)
 
  }
 
- const uploadFotoUsuario = async (uuid, id_usuario) => {
-    const query = `UPDATE usuario SET uuid=? where id_usuario=?`
-    const params = [uuid, id_usuario]
+ const uploadFotoUsuario = async (foto, id_usuario) => {
+    const query = `UPDATE usuario SET foto=? where id_usuario=?`
+    const params = [foto, id_usuario]
 
     await performQuery(query, params)
 }
@@ -227,36 +230,20 @@ const checkValidationCode = async (validationCode) => {
 //////////////////////////////////////////////////
 
 
- const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-    equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-    puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-    despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-    sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-    salon_eventos_tarifa_tipo) => {
+ const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web) => {
     let connection;
- 
 
     try {
         connection = await getConnection();
 
        let SQL = await connection.query(`
-            INSERT INTO coworking (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-                equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-                puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-                despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-                sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-                salon_eventos_tarifa_tipo)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            INSERT INTO coworking (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-                equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-                puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-                despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-                sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-                salon_eventos_tarifa_tipo])
+            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web])
 
     } catch (e) {
-        console.log(e)
+     
         throw new Error('database-error')
 
     } finally {
@@ -328,35 +315,18 @@ const getListCoworking = async (nombre, telefono) => {
 
 }
 
-const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-    equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-    puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-    despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-    sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-    salon_eventos_tarifa_tipo, id_coworking) => {
+const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web) => {
     let connection;
     
     try {
         connection = await getConnection();
 console.log(id_usuario)
        let SQL = await connection.query(`
-            update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, web=?, servicios=?,
-            equipacion=?, puesto_trabajo=?, puesto_trabajo_capacidad=?, puesto_trabajo_tarifa=?, puesto_trabajo_tarifa_tipo=?, 
-            puesto_multiple=?, puesto_multiple_capacidad=?, puesto_multiple_tarifa=?, puesto_multiple_tarifa_tipo=?, 
-            despacho=?, despacho_capacidad=?, despacho_tarifa=?, despacho_tarifa_tipo=?, sala_reuniones=?, sala_reuniones_capacidad=?, 
-            sala_reuniones_tarifa=?, sala_reuniones_tarifa_tipo=?, salon_eventos=?, salon_eventos_capacidad=?, salon_eventos_tarifa=?, 
-            salon_eventos_tarifa_tipo=?
+            update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, servicios=?, web=?
             where id_coworking=?
         `,
-            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-                equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-                puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-                despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-                sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-                salon_eventos_tarifa_tipo, id_coworking])
-            
-
-                
+            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web, id_coworking])
+               
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -369,29 +339,6 @@ console.log(id_usuario)
     }
 }
 
-
-const checkCoworking = async (web, id_usuario) => {
-    let connection;
-
-    try {
-        connection = await getConnection();
-
-        // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
-            select * from coworking where web = ? and id_usuario=?
-        `,
-            [web, id_usuario])
-
-        return result  // potential bug because connection is not released
-    } catch (e) {
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
 
 const deleteCoworking = async (id_coworking) => {
     let connection;
@@ -422,156 +369,164 @@ const deleteCoworking = async (id_coworking) => {
 ///////////            RESERVAS          //////////
 //////////////////////////////////////////////////
 
-const createReserva = async (id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin) => {
-    let connection;
-    try {
-        connection = await getConnection();
+const createReserva = async (
+	id_coworking,
+	id_usuario,
+	valoracion,
+	estado,
+	fecha_inicio,
+	fecha_fin
+) => {
+	let connection;
+	try {
+		connection = await getConnection();
 
-        let SQL = await connection.query(`
+		let SQL = await connection.query(
+			`
         
             INSERT INTO reserva (id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin)
             VALUES (?, ?, ?, ?, ?, ?)
         `,
-            [id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin])
+			[id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin]
+		);
+	} catch (e) {
+		console.log(e);
+		throw new Error("database-error");
+	} finally {
+		if (connection) {
+			connection.release();
+		}
+	}
+};
+const getListReserva = async (id_usuario, id_sala) => {
+	let connection;
 
-    } catch (e) {
-        console.log(e)
-        throw new Error('database-error')
+	try {
+		connection = await getConnection();
 
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
-const getListReserva = async (valoracion, estado) => {
+		let result;
+		//OBTENER RESERVAS DE USUARIO - COMPRADOR
+		if (id_usuario) {
+			result = await connection.query(
+				`
+            SELECT * FROM reserva WHERE id_usuario = ?`,
+				[id_usuario]
+			);
+			//OBTENER RESERVAS DE UNA SALA DETERMINADA
+		} else if (id_sala) {
+			result = await connection.query(
+				`
+            SELECT * FROM reserva WHERE id_usuario = ?`,
+				[id_sala]
+			);
+			//OBTENER RESERVA DE TODO EL ESPACIO DE COWORKING
+		} else if (id_coworking) {
+			result = await connection.query(
+				`
+            SELECT * FROM reserva 
+            INNER JOIN sala ON reserva.id_sala = sala.id
+            INNER JOIN coworking ON sala.id_coworking = coworking.id
+            WHERE id = ?`,
+				[id_coworking]
+			);
+		}
 
-    let connection;
-
-    try {
-        connection = await getConnection();
-        let result;
-
-        if (valoracion && estado) {
-            result = await connection.query(`
-                select id_reserva, valoracion, estado from reserva where valoracion = ? and estado = ?
-                `, [valoracion, estado])
-        } else if (!valoracion && estado) {
-            result = await connection.query(`
-            select id_reserva, valoracion, estado from reserva where valoracion = ?
-            `, [valoracion])
-        } else if (valoracion && !estado) {
-            result = await connection.query(`
-            select id_reserva, valoracion, estado from reserva where reserva = ?
-            `, [valoracion])
-        } else {
-            result = await connection.query(`
-            select id_reserva, valoracion, estado from reserva
-            `)
-        }
-
-        return result[0]  // potential bug because connection is not released
-    } catch (e) {
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-
-}
+		console.log(result);
+		return result[0]; // potential bug because connection is not released
+	} catch (e) {
+		throw new Error("database-error");
+	} finally {
+		if (connection) {
+			connection.release();
+		}
+	}
+};
 const getReserva = async (id_reserva) => {
-    let connection;
+	let connection;
 
-    try {
-        connection = await getConnection();
+	try {
+		connection = await getConnection();
 
-        // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
+		// me quedo con el primer elemento (array destructuring)
+		const [result] = await connection.query(
+			`
             select * from reserva where id_reserva = ?
         `,
-            [id_reserva])
+			[id_reserva]
+		);
 
-        return result  // potential bug because connection is not released
-    } catch (e) {
-        throw new Error('database-error')
+		return result; // potential bug because connection is not released
+	} catch (e) {
+		throw new Error("database-error");
+	} finally {
+		if (connection) {
+			connection.release();
+		}
+	}
+};
+const updateReserva = async (
+	id_reserva,
+	id_coworking,
+	id_usuario,
+	valoracion,
+	estado,
+	fecha_inicio,
+	fecha_fin
+) => {
+	let connection;
 
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
-const updateReserva = async (id_reserva, id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin) => {
-    let connection;
+	try {
+		connection = await getConnection();
 
-
-    try {
-        connection = await getConnection();
-
-        await connection.query(`
+		await connection.query(
+			`
             update reserva SET valoracion=?, estado=?, fecha_inicio=?, fecha_fin=?
             where id_reserva=? 
         `,
-            [id_reserva, id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin])
-    } catch (e) {
-        console.log(e)
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
+			[
+				id_reserva,
+				id_coworking,
+				id_usuario,
+				valoracion,
+				estado,
+				fecha_inicio,
+				fecha_fin,
+			]
+		);
+	} catch (e) {
+		console.log(e);
+		throw new Error("database-error");
+	} finally {
+		if (connection) {
+			connection.release();
+		}
+	}
+};
 
 const deleteReserva = async (id_reserva) => {
-    let connection;
+	let connection;
 
-    try {
-        connection = await getConnection();
+	try {
+		connection = await getConnection();
 
-        // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
+		// me quedo con el primer elemento (array destructuring)
+		const [result] = await connection.query(
+			`
             delete from reserva where id_reserva = ?
         `,
-            [id_reserva])
+			[id_reserva]
+		);
 
-        return result  // potential bug because connection is not released
-    } catch (e) {
-        console.log(e)
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
-const checkReserva = async (id_coworking, id_usuario) => {
-    let connection;
-
-    try {
-        connection = await getConnection();
-
-        // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
-            select * from reserva where id_coworking = ? and id_usuario = ?
-        `,
-            [id_coworking, id_usuario])
-
-        return result  // potential bug because connection is not released
-        console.log(result)
-    } catch (e) {
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
+		return result; // potential bug because connection is not released
+	} catch (e) {
+		console.log(e);
+		throw new Error("database-error");
+	} finally {
+		if (connection) {
+			connection.release();
+		}
+	}
+};
 
 /////////////////////////////////////////////////////////////////////
 //////////////            INCIDENCIA                       /////////
@@ -744,13 +699,11 @@ module.exports = {
     deleteUsuario,
     deleteCoworking,
     checkValidationCode,
-    checkCoworking,
     createReserva,
     getListReserva,
     getReserva,
     updateReserva,
     deleteReserva,
-    checkReserva,
     createIncidencia,
     getListIncidencia,
     getIncidencia,

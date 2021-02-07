@@ -14,30 +14,17 @@ const createCoworking = async (req, res) => {
     
 
   try {
-      const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-        equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-        puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-        despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-        sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-        salon_eventos_tarifa_tipo } = req.body
-      console.log(id_usuario)
+      const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web } = req.body
+   
       const response = await db.checkCoworking(web, id_usuario)
 
       await coworkingValidator.validateAsync(req.body)
 
-      await db.createCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-        equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-        puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-        despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-        sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-        salon_eventos_tarifa_tipo)
+      await db.createCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web)
         let connection;
       try {
           //const email = usuario[0]
           const usuario = await db.getUsuarioId(id_usuario)
-          console.log(usuario)
-          
-       
           await sendConfirmationMailCoworking(usuario.email)
       } catch(e) {
           console.log(e)
@@ -73,12 +60,7 @@ const validateCoworking = async (req, res) => {
 const updateCoworking = async (req, res) => {
 
     
-    const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-        equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-        puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-        despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-        sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-        salon_eventos_tarifa_tipo } = req.body
+    const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web } = req.body
 
     const { id_coworking } = req.params
     
@@ -90,12 +72,7 @@ const updateCoworking = async (req, res) => {
 
        await coworkingValidator.validateAsync(req.body)
 
-       await db.updateCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, web, servicios,
-            equipacion, puesto_trabajo, puesto_trabajo_capacidad, puesto_trabajo_tarifa, puesto_trabajo_tarifa_tipo, 
-            puesto_multiple, puesto_multiple_capacidad, puesto_multiple_tarifa, puesto_multiple_tarifa_tipo, 
-            despacho, despacho_capacidad, despacho_tarifa, despacho_tarifa_tipo, sala_reuniones, sala_reuniones_capacidad, 
-            sala_reuniones_tarifa, sala_reuniones_tarifa_tipo, salon_eventos, salon_eventos_capacidad, salon_eventos_tarifa, 
-            salon_eventos_tarifa_tipo, id_coworking)
+       await db.updateCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web, id_coworking)
 
      } catch (e) {
         

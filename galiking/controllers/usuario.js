@@ -20,14 +20,12 @@ const createUsuario = async (req, res) => {
 
         await usuarioValidator.validateAsync(req.body)
 
-        const { nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasena } = req.body
+        const { nif_cif, email, telefono, bio, foto, nombre, rol, contrasena } = req.body
         const contrasenaBcrypt = await bcrypt.hash(contrasena, 10);
         const validationCode = randomstring.generate(40);
 
-        await db.createUsuario(nif_cif, email, telefono, bio, foto, uuid, nombre, rol, contrasenaBcrypt, validationCode)
-
-
-
+        await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, rol, contrasenaBcrypt, validationCode)
+     
         sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
 
     } catch (e) {
@@ -78,10 +76,10 @@ const createFotoUsuario = async (req, res) => {
 
 const getFotoUsuario = async (req, res) => {
 
-    const { uuid } = req.params
+    const { foto } = req.params
 
     //     //comprobar si la imagen existe
-    const path = `${__dirname}/images/profile/${uuid}.png`
+    const path = `${__dirname}/images/profile/${foto}.png`
     try {
         const checkExists = await fsPromises.stat(path)
         //         //aquí devolvemos el fichero
@@ -96,11 +94,12 @@ const getFotoUsuario = async (req, res) => {
 
 const validate = async (req, res) => {
 
-    const { validationCode } = req.params;
+    const { code } = req.params;
 
     try {
-        db.checkValidationCode(validationCode)
+        db.checkValidationCode(code)
         res.send('Validado correctamente')
+        
     } catch(e) {
         res.status(401).send('Usuario no validado')
     }
@@ -115,7 +114,7 @@ const login = async (req, res) => {
     const { email, contrasena } = req.body
 
     //comprobar que el usuario está en la base de datos
-    try {
+    
         const usuario = await db.getUsuarioEmail(email)
 
 
@@ -125,17 +124,18 @@ const login = async (req, res) => {
         }
 
         const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
-        console.log(validContrasena)
+
         if (!validContrasena) {
             res.status(401).send()
             return
         }
 
         const tokenPayload = {
-            isAdmin: usuario.rol === 'administrador',
-            rol: usuario.rol,
+            isAdmin: usuario.rol === 'administrador' ,
+            rol: usuario.rol ,
             email: usuario.email
         }
+       
 
         const token = jwt.sign(tokenPayload, process.env.SECRET, {
             expiresIn: '1d'
@@ -143,78 +143,70 @@ const login = async (req, res) => {
 
 
         res.json({
-            status: "ok",
-            data: {
-                token,
-            },
-        });
+                token
+            })
+            console.log(token)
+        }
 
-        return res.status(200).send({
-            ok: true,
-            message: 'login correcto',
-            rol: usuario.rol,
-            email: usuario.email,
-            token: token
+     
 
-        });
-
-    } catch (e) {
-        console.log(error)
-        res.status(500).send({
-            ok: false,
-            message: "error servidor"
-        })
-    }
-}
+    
 
 const updateContrasena = async (req, res) => {
+  
+// try {
+//     // Comprobar sintaxis de los parámetros (vieja password (1234) y la nueva password (123456))
 
-    // Comprobar sintaxis de los parámetros (vieja password (1234) y la nueva password (123456))
+//     const { contrasena, newContrasena, newContrasenaRepeat } = req.body
+  
+//     // Comprobar que la vieja es correcta
 
-    const { contrasena, newContrasena, newContrasenaRepeat } = req.body
+//     const usuario = await db.getUsuarioEmail(decodedToken.email)
+  
+//     const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+    
+//     if (!validContrasena) {
+//         res.status(401).send()
+//         return
 
-    // Comprobar que la vieja es correcta
+//     } catch (e) {
+//         console.log(e)
+//     }
 
-    const decodedToken = req.auth
 
-    if (newContrasena !== newContrasenaRepeat) {
-        res.status(400).send('Las contraseñas no coinciden')
-        return
+// try {
+//     const decodedToken = usuario.rol
+    
+  
+    
+//     if (newContrasena !== newContrasenaRepeat) {
+//         res.status(400).send('Las contraseñas no coinciden')
+//         return
+//     }
+
+
+//     await passValidator.validateAsync(req.body)
+// } catch(e) {
+    
+//     res.status(400).send('validación errónea')
+//     return
+    
+//     }
+// }
+   
+    
+
+    //Ciframos la nueva password
+
+    const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
+  
+    //actualizar la vieja contraseña con la nueva cifrada
+
+    await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
+
+    res.send()
     }
 
-    /* try {
-        await passValidator.validateAsync(req.body)
-    } catch(e) {
-        console.log(e)
-        res.status(400).send('Validacion erronea')
-        return
-    } */
-
-
-    //comprobar la contraseña correspondiente
-    //const decodedToken = jwt.verify(authorization, process.env.SECRET);
-
-    const [usuario] = await db.getUsuarioEmail(decodedToken.email)
-    console.log(req.auth);
-    console.log(usuario)
-
-    const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
-
-    if (!validContrasena) {
-        res.status(401).send()
-        return
-
-        //Ciframos la nueva password
-
-        const contrasenaBcrypt = bcrypt.hash(newContrasena, 10);
-
-        //actualizar la vieja contraseña con la nueva cifrada
-
-        await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
-
-        res.send()
-    }
-}
 
 const recoverContrasena = async (req, res) => {
 
@@ -303,33 +295,26 @@ const getUsuarioId = async (req, res) => {
     }
 }
 
+ const getUsuarioEmail = async (req, res) => {
 
-// const getUsuarioEmail = async (req, res) => {
+     const { email } = req.params
 
-//     const { email } = req.params
+     try {
+         const [usuario] = await db.getUsuarioEmail(email)
 
-
-//     try {
-//         const email = usuario [0]
-//         const usuario = await db.getUsuarioEmail(email)
-
-//         if (!usuario) {
-//             res.status(404).send()
-//         } else {
-//             res.send(usuario)
-//         }
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-// }
-
-
+         if (!usuario) {
+             res.status(404).send()
+         } else {
+             res.send(usuario)
+         }
+     } catch (e) {
+         res.status(500).send()
+     }
+ }
 
 
 const getListOfUsuario = async (req, res) => {
-    // localhost:3000/events?type=music
-    // localhost:3000/events
-    // localhost:3000/events?name=xxxx&type=music
+ 
     const { nombre, telefono } = req.query;
     try {
         let usuario = await db.listUsuario(nombre, telefono)
@@ -401,56 +386,6 @@ const deleteUsuario = async (req, res) => {
     }
 }
 
-// const addFotoUsuario = async (req, res) => {
-//     const { id_usuario } = req.params
-
-
-//     const decodedToken = req.auth
-//     console.log(req.auth)
-//     try {
-//         const usuario = await db.getUsuarioId(id_usuario)
-
-//         if (decodedToken.id_usuario !== usuario.id_usuario) {
-//             res.status(400).send()
-//             return
-//         }
-
-//         if (req.files) {
-//             // si hiciese falta comprobar la extensión del fichero
-//             // podríamos hacerlo aquí a partir de la información de req.files
-//             // y enviar un error si no es el tipo que nos interesa (res.status(400).send())
-
-//             await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/profile`, { recursive: true })
-
-
-//             const fileID = uuid.v4()
-//             const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.png`
-
-//             await fsPromises.writeFile(req.files.image.name, req.files.image.data)
-//             console.log(req.files)
-
-//             // guardar una referencia a este UUID En la base de datos, de forma que
-//             // cuando nos pidan la lista de nuestros recursos (productos, conciertos, etc) o 
-//             // el detalle de uno de ellos, accedemos a la BBDD para leer los UUID, y después el
-//             // front llamará al GET con el UUID correspondiente
-//             await db.uploadFotoUsuario(outputFileName, id_usuario)
-//         }
-
-//     } catch (e) {
-//         let statusCode = 400;
-//         // averiguar el tipo de error para enviar un código u otro
-//         if (e.message === 'database-error') {
-//             statusCode = 500
-//         }
-
-//         res.status(statusCode).send(e.message)
-//         return
-//     }
-
-//     res.send('Datos actualizados correctamente')
-// }
-
-
 module.exports = {
     createUsuario,
     createFotoUsuario,
@@ -464,5 +399,6 @@ module.exports = {
     getListOfUsuario,
     updateUsuario,
     deleteUsuario,
-    getUsuarioId
+    getUsuarioId,
+    getUsuarioEmail
 } 

@@ -43,19 +43,7 @@ const createIncidencia = async (req, res) => {
   }
 
 }
-
-const validateIncidencia = async (req, res) => {
-   
-  const { code } = req.params;
-
-  try {
-      db.checkValidationCode(code)
-      res.send('incidencia validada corréctamente')
-  } catch(e) {
-      res.status(401).send('incidencia no validada')
-  }
-
-}   
+ 
 
 const updateIncidencia = async (req, res) => {
     const { id_usuario, id_coworking, estado, descripcion, fecha_creacion, fecha_modificacion } = req.body
@@ -151,6 +139,5 @@ const getIncidencia = async (req, res) => {
     getIncidencia,
     getListIncidencia,
     updateIncidencia,
-    deleteIncidencia,
-    validateIncidencia
+    deleteIncidencia
   } 
