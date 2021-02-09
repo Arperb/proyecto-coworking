@@ -13,6 +13,7 @@ const performQuery = async (query, params) => {
 
         return result;
      } catch (e) {
+        
          throw new Error('database-error')
      } finally {
         if (connection) {
@@ -109,8 +110,8 @@ const listUsuario = async (nombre, telefono) => {
 }
 
 const getUsuarioEmail = async (email) => {
-    
-    const query = `select * from usuario where email = ?`
+   
+    const query = `select * from usuario where email = ?`  
     const params = [email]
     const [result] = await performQuery(query, params)
     return result
@@ -120,8 +121,10 @@ const getUsuarioId = async (id_usuario) => {
     
     const query = `select * from usuario where id_usuario = ?`
     const params = [id_usuario]
+   
     const [result] = await performQuery(query, params)
     return result
+   
 }
 
 
@@ -131,7 +134,7 @@ const updateUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, c
 
     try {
         connection = await getConnection();
-console.log(nif_cif)
+
         await connection.query(`
             update usuario SET nif_cif=?, email=?, telefono=?, bio=?, foto=?, nombre=?, rol=?, contrasena=?
             where id_usuario=? 
@@ -193,13 +196,13 @@ try {
     }
 
 } catch (e) {
-    console.log(e)
+ 
  }
 }
 
 
  const updateValidationCode = async (email, validationCode) => {
-    const query = `update usuario SET validationCode = ?, expirationCodeDate = addtime(now(), '0 2:0:0') where email=?`
+    const query = `update usuario SET validationCode = ? where email=?`
     const params = [validationCode, email]
 
     await performQuery(query, params)
@@ -213,6 +216,16 @@ try {
     await performQuery(query, params)
 
  }
+
+ const getUsuarioByCode = async (code) => {
+
+    const query = `select * from usuario where validationCode=?`
+    const params = [code]
+    const [result] = await performQuery(query, params)
+    return result
+
+ }
+
 
  const uploadFotoUsuario = async (foto, id_usuario) => {
     const query = `UPDATE usuario SET foto=? where id_usuario=?`
@@ -320,7 +333,7 @@ const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, 
     
     try {
         connection = await getConnection();
-console.log(id_usuario)
+
        let SQL = await connection.query(`
             update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, servicios=?, web=?
             where id_coworking=?
@@ -709,5 +722,6 @@ module.exports = {
     getIncidencia,
     updateIncidencia,
     deleteIncidencia,
-    checkIncidencia
+    checkIncidencia,
+    getUsuarioByCode
 }

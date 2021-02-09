@@ -62,6 +62,9 @@ const usuarioValidator = Joi.object({
 
 const passValidator = Joi.object({
 
+    email: Joi.string()
+    .required(),
+
     contrasena: Joi.string()
         .required(),
         
@@ -74,6 +77,7 @@ const passValidator = Joi.object({
 })
 
 const newPassValidator = Joi.object({
+
     newContrasena: Joi.string()
         .required(),
 
@@ -81,8 +85,16 @@ const newPassValidator = Joi.object({
    
 })
 
+const emailValidator = Joi.object({
+
+    email: Joi.string()
+    .required(),
+
+})
+
 module.exports = {
     usuarioValidator,
     passValidator,
-    newPassValidator
+    newPassValidator,
+    emailValidator
 }

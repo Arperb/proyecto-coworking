@@ -23,7 +23,7 @@ const createCoworking = async (req, res) => {
       await db.createCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web)
         let connection;
       try {
-          //const email = usuario[0]
+         
           const usuario = await db.getUsuarioId(id_usuario)
           await sendConfirmationMailCoworking(usuario.email)
       } catch(e) {

@@ -4,11 +4,11 @@ const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
 const uuid = require('uuid');
 const fsPromises = require('fs').promises
-const { sendConfirmationMail } = require('../utils/utils')
+const { sendConfirmationMail, forgotPasswordMail } = require('../utils/utils')
 
 
 
-const { usuarioValidator, passValidator, newPassValidator } = require('../validators/usuario');
+const { usuarioValidator, passValidator, newPassValidator, emailValidator } = require('../validators/usuario');
 const { getConnection } = require('../db/db');
 
 
@@ -29,7 +29,7 @@ const createUsuario = async (req, res) => {
         sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
 
     } catch (e) {
-        console.log(e)
+      
         res.status(400).send("error de registro")
         return
     }
@@ -153,70 +153,55 @@ const login = async (req, res) => {
     
 
 const updateContrasena = async (req, res) => {
-  
-// try {
-//     // Comprobar sintaxis de los parámetros (vieja password (1234) y la nueva password (123456))
 
-//     const { contrasena, newContrasena, newContrasenaRepeat } = req.body
-  
-//     // Comprobar que la vieja es correcta
-
-//     const usuario = await db.getUsuarioEmail(decodedToken.email)
-  
-//     const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
-    
-//     if (!validContrasena) {
-//         res.status(401).send()
-//         return
-
-//     } catch (e) {
-//         console.log(e)
-//     }
-
-
-// try {
-//     const decodedToken = usuario.rol
-    
-  
-    
-//     if (newContrasena !== newContrasenaRepeat) {
-//         res.status(400).send('Las contraseñas no coinciden')
-//         return
-//     }
-
-
-//     await passValidator.validateAsync(req.body)
-// } catch(e) {
-    
-//     res.status(400).send('validación errónea')
-//     return
-    
-//     }
-// }
    
+     const { contrasena, newContrasena, newContrasenaRepeat } = req.body
+     const decodedToken = req.auth
+
+   
+     if (newContrasena !== newContrasenaRepeat) {
+         res.status(400).send('Los datos introducidos son incorrectos')
+         return
+       
+     }
+
+      try {
+          await passValidator.validateAsync(req.body)
+               
+      } catch(e) {
+      
+          res.status(400).send('Validacion erronea')
+        
+          return
+      }
     
+     const usuario = await db.getUsuarioEmail(decodedToken.email)
+     const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
 
-    //Ciframos la nueva password
-
-    const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
   
-    //actualizar la vieja contraseña con la nueva cifrada
+     if (!validContrasena) {
+         res.status(401).send()
+         return
+     }
 
-    await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
+     const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
 
-    res.send()
-    }
+     await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
 
+     res.send()
+ }
 
 const recoverContrasena = async (req, res) => {
 
     //comprobamos la sintaxis del email
 
     const { email } = req.body
+    
 
     try {
-        await usuarioValidator.validateAsync(req.body)
+        await emailValidator.validateAsync(req.body)
     } catch (e) {
+        console.log(e)
         res.status(400).send('Email incorrecto')
         return
     }
@@ -230,7 +215,7 @@ const recoverContrasena = async (req, res) => {
         await db.updateValidationCode(email, validationCode)
         forgotPasswordMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/contrasena/reset/${validationCode}`)
     } else {
-        res.status(400).send('Email incorrecto')
+        res.status(400).send('Email no existe')
         return
     }
 
@@ -240,7 +225,7 @@ const recoverContrasena = async (req, res) => {
 const contrasenaUpdateCode = async (req, res) => {
 
     const { code } = req.params;
-
+   
     try {
         const usuario = await db.checkValidationCode(code)
 
@@ -257,23 +242,25 @@ const contrasenaUpdateCode = async (req, res) => {
 
 const resetContrasena = async (req, res) => {
 
-    const { id_usuario } = req.params
+    const { code } = req.params
     const { newContrasena, newContrasenaRepeat } = req.body
-
+  
     try {
         await newPassValidator.validateAsync(req.body)
     } catch (e) {
         res.status(400).send('Los datos introducidos son incorrectos')
         return
     }
-
-    const usuario = await db.getUsuarioId(id_usuario)
+   
+    const usuario = await db.getUsuarioByCode(code)
+ 
     // Ciframos la nueva password
-    const passwordBcrypt = await bcrypt.hash(newContrasena, 10);
+    const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
+ 
     // Actualizar vieja password con la nueva cifrada
-    await db.updateContrasena(id_usuario, contrasenadBcrypt)
-    forgotPasswordMail(usuario.email, `http://${process.env.PUBLIC_DOMAIN}/usuario/login`)
-
+ 
+    await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
+ 
     res.send('Contraseña actualizada correctamente')
 }
 
@@ -287,6 +274,7 @@ const getUsuarioId = async (req, res) => {
 
         if (!usuario) {
             res.status(404).send()
+            
         } else {
             res.send(usuario)
         }
@@ -295,22 +283,26 @@ const getUsuarioId = async (req, res) => {
     }
 }
 
- const getUsuarioEmail = async (req, res) => {
+//  const getUsuarioEmail = async (req, res) => {
 
-     const { email } = req.params
+//      const { email } = req.params
+//      console.log(req.params)
+   
 
-     try {
-         const [usuario] = await db.getUsuarioEmail(email)
-
-         if (!usuario) {
-             res.status(404).send()
-         } else {
-             res.send(usuario)
-         }
-     } catch (e) {
-         res.status(500).send()
-     }
- }
+//      try {
+         
+//          const usuario = await db.getUsuarioEmail(email)
+       
+//          if (!usuario) {
+//              res.status(404).send()
+            
+//          } else {
+//              res.send()
+//          }
+//      } catch (e) {
+//          res.status(500).send()
+//      }
+//  }
 
 
 const getListOfUsuario = async (req, res) => {
@@ -386,6 +378,20 @@ const deleteUsuario = async (req, res) => {
     }
 }
 
+const logout = async (req, res, next) => {
+        
+     try {
+         const decodedToken = {}
+
+         req.auth = decodedToken;
+    } catch (e) {
+         res.status(401).send()
+         return
+     }
+
+     res.send('sesión finalizada correctamente')
+ }
+
 module.exports = {
     createUsuario,
     createFotoUsuario,
@@ -400,5 +406,5 @@ module.exports = {
     updateUsuario,
     deleteUsuario,
     getUsuarioId,
-    getUsuarioEmail
+    logout
 } 

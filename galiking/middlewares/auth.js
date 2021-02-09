@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-const db = require('../db/mysql')
+const db = require('../db/mysql');
+const { sendConfirmationMailCoworking } = require('../utils/utils');
 
 const isAuthenticated = async (req, res, next) => {
     // obtenemos el token que habrán metido en 
@@ -11,13 +12,15 @@ const isAuthenticated = async (req, res, next) => {
         // si la verificación del token falla (caducado, mal formado, no descifrable
         // con el SECRET dado) salta una excepción
         const decodedToken = jwt.verify(authorization, process.env.SECRET);
-
+       
         const usuario = await db.getUsuarioEmail(decodedToken.email)
+      
 
         if (!usuario) {
             throw new Error()
         }
-
+        req.auth = decodedToken;
+       
     } catch (e) {
         res.status(401).send()
         return
@@ -27,17 +30,28 @@ const isAuthenticated = async (req, res, next) => {
 }
 
 
-const usuarioIsAdmin = (req, res, next) => {
+const usuarioIsAdmin = async (req, res, next) => {
 
-    if (!req.auth || req.auth.usuarioIsAdmin) {
-        res.status(403).send()
-        return
-        //        const authError = new Error('not-authorized');
-        //        authError.status = 403;
-        //        return next(authError);
-    }
+    const { authorization } = req.headers;
 
-    next();
+    try {
+        // si la verificación del token falla (caducado, mal formado, no descifrable
+        // con el SECRET dado) salta una excepción
+        const decodedToken = jwt.verify(authorization, process.env.SECRET);
+
+        const usuario = await db.getUsuarioEmail(decodedToken.email)
+        
+     if (usuario.rol !=="administrador") {
+         const error = new Error("tu deberías de ser administrador para acceder a este recurso");
+        error.httpCode = 401;
+         next(error);
+         
+       
+     }
+     next();
+ } catch (e) {
+     console.log(e)
+}
 }
 
 
@@ -52,7 +66,7 @@ const usuarioIsOwner = async (req, res, next) => {
         const decodedToken = jwt.verify(authorization, process.env.SECRET);
 
         const usuario = await db.getUsuarioEmail(decodedToken.email)
-        console.log(usuario)
+     
      if (usuario.rol !=="propietario") {
          const error = new Error("tu deberías de ser propietario de un coworking para acceder a este recurso");
         error.httpCode = 401;
@@ -66,16 +80,29 @@ const usuarioIsOwner = async (req, res, next) => {
 }
 }
 
-// const usuarioIsUser = (req, res, next) => {
+const usuarioIsUser = async (req, res, next) => {
 
+    const { authorization } = req.headers;
+
+    try {
+        // si la verificación del token falla (caducado, mal formado, no descifrable
+        // con el SECRET dado) salta una excepción
+        const decodedToken = jwt.verify(authorization, process.env.SECRET);
+
+        const usuario = await db.getUsuarioEmail(decodedToken.email)
      
-//     if (req.auth && req.auth.rol !=="cliente") {
-//          const error = new Error("tu deberías de ser usuario para acceder a este recurso");
-//          error.httpCode = 401;
-//          next(error);
-//      }
-//      next();
-//  }
+     if (usuario.rol !=="cliente") {
+         const error = new Error("tu deberías de ser cliente para acceder a este recurso");
+        error.httpCode = 401;
+         next(error);
+         
+       
+     }
+     next();
+ } catch (e) {
+     console.log(e)
+}
+}
 
 //COMPROBARÁ EL USUARIO DEL TOKEN CON EL .PARAMS O SI ES ADMIN
 // const isSameUser = (req, res, next) => {
@@ -171,7 +198,7 @@ if (decodedToken.id_coworking !== coworking.id_coworking) {
 module.exports = {
     usuarioIsAdmin,
     usuarioIsOwner,
-    //usuarioIsUser,
+    usuarioIsUser,
     isAuthenticated,
     //isSameUser,
     //isReserva,

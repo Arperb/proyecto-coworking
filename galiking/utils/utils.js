@@ -29,7 +29,7 @@ const sendConfirmationMail = async (email, link) => {
 
 const sendConfirmationMailCoworking = async (email) => {
   sendgrid.setApiKey(process.env.EMAIL_API_KEY);
-  console.log(email)
+ 
 
   const message = {
       to: email,

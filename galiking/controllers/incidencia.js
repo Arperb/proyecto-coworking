@@ -15,7 +15,7 @@ const createIncidencia = async (req, res) => {
 
   try {
       const { id_usuario, id_coworking, estado, descripcion, fecha_creacion, fecha_modificacion } = req.body
-      console.log(id_usuario)
+     
       const response = await db.checkIncidencia(id_usuario, id_coworking)
 
       await incidenciIncidenciaValidator.validateAsync(req.body)

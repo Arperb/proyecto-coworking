@@ -6,8 +6,10 @@ const bodyParser = require('body-parser');
 const express = require('express');
 const fileUpload = require("express-fileupload");
 const uuid = require('uuid');
+const cors = require('cors');
 
 const app = express();
+
 
 const fsPromises = require('fs').promises
 
@@ -21,7 +23,6 @@ const currentPort = process.env.PORT || DEFAULT_PORT
 
     const { createUsuario,
             getUsuarioId,
-            getUsuarioEmail,
             getListOfUsuario,
             updateUsuario,
             deleteUsuario,
@@ -31,6 +32,7 @@ const currentPort = process.env.PORT || DEFAULT_PORT
             resetContrasena,
             contrasenaUpdateCode,
             recoverContrasena,
+            logout,
             createFotoUsuario } = require('./controllers/usuario');
 
  const { createCoworking, 
@@ -61,6 +63,7 @@ const {
 
 //app.use(morgan("dev"));
 app.use(bodyParser.json())
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(fileUpload());
 
@@ -91,9 +94,7 @@ app.get('/usuario', getListOfUsuario, usuarioIsAdmin)
 
 app.get('/usuario/:id_usuario', getUsuarioId)
 
-//obtener todos los datos de un usuario a través del email
 
-app.get('/usuario/:email', getUsuarioEmail)
 
 
 
@@ -122,7 +123,7 @@ app.post('/usuario/login', login)
 
 //Actualizar la contraseña de un usuario
 
-app.put('/usuario/:id/update-contrasena', updateContrasena, isAuthenticated)
+app.put('/usuario/:id/update-contrasena', isAuthenticated, updateContrasena)
 
 
 
@@ -130,13 +131,18 @@ app.put('/usuario/:id/update-contrasena', updateContrasena, isAuthenticated)
 
 app.post('/usuario/recover-contrasena', recoverContrasena)
 
-//Actualizar la contraseña con el código de actualización al haber olvidado la contraseña(endpoint anterior)
+//Comprobar el code para poder actualizar la contraseña
+//se envia un email con el mismo. El siguiente endpoint es para poner una contraseña nueva
 
 app.get('/usuario/contrasena/reset/:code', contrasenaUpdateCode)
 
 //actualizar la contraseña(recuperación de contraseña)
 
-app.put('/update-reset-contrasena/:id', resetContrasena)
+app.put('/update-reset-contrasena/:code', resetContrasena)
+
+//Desautenticar usuario
+
+app.post('/usuario/logout', isAuthenticated, logout)
 
 //////////////////////////////////////////////////
 //////           ESPACIO COWORKING           /////
