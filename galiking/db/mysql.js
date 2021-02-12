@@ -70,6 +70,13 @@ const createFotoUsuario = async (id_usuario, foto) => {
     }
 }
 
+const uploadFotoUsuario = async (foto, id_usuario) => {
+    const query = `UPDATE usuario SET foto=? where id_usuario=?`
+    const params = [foto, id_usuario]
+
+    await performQuery(query, params)
+}
+
 
 const listUsuario = async (nombre, telefono) => {
    
@@ -226,18 +233,6 @@ try {
 
  }
 
-
- const uploadFotoUsuario = async (foto, id_usuario) => {
-    const query = `UPDATE usuario SET foto=? where id_usuario=?`
-    const params = [foto, id_usuario]
-
-    await performQuery(query, params)
-}
-    
-
-    
-      
-
  //////////////////////////////////////////////////
 //////           ESPACIO COWORKING           /////
 //////////////////////////////////////////////////
@@ -256,7 +251,7 @@ try {
             [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web])
 
     } catch (e) {
-     
+        console.log(e)
         throw new Error('database-error')
 
     } finally {
@@ -265,6 +260,31 @@ try {
         }
     }
 }
+
+// COMPROBAR SI COWORKING EXISTE
+ const checkCoworking = async (web, id_usuario) => {
+ 	let connection;
+
+ 	try {
+ 		connection = await getConnection();
+
+// 		// me quedo con el primer elemento (array destructuring)
+ 		const [result] = await connection.query(
+ 			`
+             select * from coworking where web = ? and id_usuario=?
+         `,
+ 			[web, id_usuario]
+ 		);
+
+ 		return result; // potential bug because connection is not released
+ 	} catch (e) {
+ 		throw new Error("database-error");
+ 	} finally {
+ 		if (connection) {
+ 			connection.release();
+ 		}
+ 	}
+ };
 
 const getCoworking = async (id_coworking) => {
     let connection;
@@ -375,6 +395,171 @@ const deleteCoworking = async (id_coworking) => {
             connection.release()
         }
     }
+}
+
+
+ //////////////////////////////////////////////////
+//////                   SALA                /////
+//////////////////////////////////////////////////
+
+
+const createSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+       let SQL = await connection.query(`
+            INSERT INTO sala (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion])
+
+    } catch (e) {
+     console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+// COMPROBAR SI LA SALA EXISTE
+ const checkSala = async (id_coworking) => {
+ 	let connection;
+
+ 	try {
+ 		connection = await getConnection();
+
+// 		// me quedo con el primer elemento (array destructuring)
+ 		const [result] = await connection.query(
+ 			`
+             select * from sala where id_coworking=?
+         `,
+ 			[id_coworking]
+ 		);
+
+ 		return result; // potential bug because connection is not released
+ 	} catch (e) {
+ 		throw new Error("database-error");
+ 	} finally {
+ 		if (connection) {
+ 			connection.release();
+ 		}
+ 	}
+ };
+
+ const updateSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion, id_sala) => {
+    let connection;
+    
+    try {
+        connection = await getConnection();
+
+       let SQL = await connection.query(`
+            update sala SET id_coworking=?, tipo=?, descripcion=?, capacidad=?, tarifa=?, tarifa_tipo=?, disponibilidad=?, equipacion=?
+            where id_sala=?
+        `,
+            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion, id_sala])
+            
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+        res.send(sala)
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const getSala = async (id_sala) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            select * from sala where id_sala = ?
+        `,
+            [id_sala])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const deleteSala = async (id_sala) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from sala where id_sala = ?
+        `,
+            [id_sala])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const getListSala = async (id_coworking, tipo) => {
+   
+    let connection;
+
+    try {
+        connection = await getConnection();
+        let result;
+
+        if (tipo && id_coworking) {
+            result = await connection.query(`
+                select id_sala, tipo, id_coworking from sala where tipo = ? and id_coworking = ?
+                `, [tipo, id_coworking])
+        } else if (!tipo && id_coworking) {
+            result = await connection.query(`
+            select id_sala, tipo, id_coworking from sala where id_coworking = ?
+            `, [id_coworking])
+        } else if (tipo && !id_coworking) {
+            result = await connection.query(`
+            select id_sala, tipo, id_coworking from sala where tipo = ?
+            `, [tipo])
+        } else {
+            result = await connection.query(`
+            select id_sala, tipo, id_coworking from sala
+            `)
+        }
+    
+        
+        return result[0]  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+
 }
 
 
@@ -699,19 +884,27 @@ module.exports = {
     createUsuario,
     createFotoUsuario,
     uploadFotoUsuario,
-    createCoworking,
+    listUsuario,
     getUsuarioEmail,
     getUsuarioId,
-    getCoworking,
-    listUsuario,
-    getListCoworking,
     updateUsuario,
-    updateContrasena,
-    updateValidationCode,
-    updateCoworking,
     deleteUsuario,
-    deleteCoworking,
     checkValidationCode,
+    updateValidationCode,
+    updateContrasena,
+    getUsuarioByCode,
+    createCoworking,
+    checkCoworking,
+    getCoworking,
+    getListCoworking,
+    updateCoworking,
+    deleteCoworking,
+    createSala,
+    checkSala,
+    updateSala,
+    getSala,
+    deleteSala,
+    getListSala,
     createReserva,
     getListReserva,
     getReserva,
@@ -723,5 +916,5 @@ module.exports = {
     updateIncidencia,
     deleteIncidencia,
     checkIncidencia,
-    getUsuarioByCode
+    
 }

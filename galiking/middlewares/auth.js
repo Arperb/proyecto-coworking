@@ -105,18 +105,19 @@ const usuarioIsUser = async (req, res, next) => {
 }
 
 //COMPROBARÁ EL USUARIO DEL TOKEN CON EL .PARAMS O SI ES ADMIN
-// const isSameUser = (req, res, next) => {
-//     //OBTENEMOS ID USUARIO DE LA RUTA
-//     const { id_usuario } = req.params;
 
-//     //COMPROBAMOS SI EL USUARIO ES EL REGISTRADO O SI ES ADMIN
-//     if (id_usuario === req.auth.email || req.auth.isAdmin) {
-//         next()
-//     } else {
-//         res.status(403).send()
-//         return 
-//     }
-// }
+ const isSameUser = (req, res, next) => {
+     //OBTENEMOS ID USUARIO DE LA RUTA
+     const { id_usuario } = req.params;
+
+     //COMPROBAMOS SI EL USUARIO ES EL REGISTRADO O SI ES ADMIN
+     if (id_usuario === req.auth.email || req.auth.isAdmin) {
+         next()
+     } else {
+         res.status(403).send()
+         return 
+     }
+ }
 
 //COMPROBACIÓN DE SI EXISTE RESERVA 
 // const isReserva = (req, res, next) => {
@@ -200,7 +201,7 @@ module.exports = {
     usuarioIsOwner,
     usuarioIsUser,
     isAuthenticated,
-    //isSameUser,
+    isSameUser,
     //isReserva,
     //checkIncidencia,
     //checkCoworking

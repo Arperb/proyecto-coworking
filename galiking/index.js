@@ -40,6 +40,13 @@ const currentPort = process.env.PORT || DEFAULT_PORT
          getListCoworking, 
          updateCoworking, 
         deleteCoworking } = require('./controllers/espacioCoworking');
+
+const { createSala, 
+        getSala, 
+        getListSala, 
+        updateSala, 
+        deleteSala } = require('./controllers/sala');
+
  const { createReserva, 
          updateReserva, 
          deleteReserva, 
@@ -87,7 +94,7 @@ app.post('/usuario', createUsuario)
 
 //Crear una lista de datos de usuario a partir de unos parámetros dados
 
-app.get('/usuario', getListOfUsuario, usuarioIsAdmin)
+app.get('/usuario', usuarioIsAdmin, getListOfUsuario)
 
 
 //obtener todos los datos de un usuario a través del ID
@@ -167,6 +174,30 @@ app.put('/coworking/:id_coworking', updateCoworking)
 //borrar espacio coworking
 
 app.delete('/coworking/:id_coworking', deleteCoworking)
+
+//////////////////////////////////////////////////
+//////                SALA                   /////
+//////////////////////////////////////////////////
+
+//Crear una nueva
+
+app.post('/sala', usuarioIsOwner, createSala)
+
+//obtener todos los datos de una sala a través del ID
+
+app.get('/sala/:id_sala', getSala)
+
+//Crear una lista de espacios coworking a partir de unos parámetros dados
+
+app.get('/sala', getListSala)
+
+//modificar datos de una sala
+
+app.put('/sala/:id_sala', updateSala)
+
+//borrar una sala
+
+app.delete('/sala/:id_sala', deleteSala)
 
 
 ///////////////////////////////////////////////////////////////////////

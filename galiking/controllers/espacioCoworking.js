@@ -44,18 +44,7 @@ const createCoworking = async (req, res) => {
 
 }
 
-const validateCoworking = async (req, res) => {
-   
-  const { code } = req.params;
-
-  try {
-      db.checkValidationCode(code)
-      res.send('espacio coworking validado correctamente')
-  } catch(e) {
-      res.status(401).send('espacio coworking no validado')
-  }
-
-}   
+ 
 
 const updateCoworking = async (req, res) => {
 
@@ -163,6 +152,5 @@ const getCoworking = async (req, res) => {
     getCoworking,
     getListCoworking,
     updateCoworking,
-    deleteCoworking,
-    validateCoworking
+    deleteCoworking
   } 
