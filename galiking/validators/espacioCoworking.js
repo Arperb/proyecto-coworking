@@ -56,11 +56,20 @@ const coworkingValidator = Joi.object({
             new Error('descripcion should be a string between 100 and 800 characters')
         ),
 
-    servicios: Joi.string()
-        .valid('wifi', 'vending', 'limpieza', 'seguridad', 'recepción', 'cocina', 'espacio común', 'parking')
+    wifi: Joi.boolean()
         .error(
-            new Error('servicios should be a string valid:wifi/vending/limpieza/seguridad/recepcion/cocina/espacio comun/parking')
-        ),
+         new Error('wifi should be true or false')
+    ),
+
+    limpieza: Joi.boolean()
+        .error(
+         new Error('limpieza should be true or false')
+    ),
+
+    parking: Joi.boolean()
+        .error(
+         new Error('wifi should be true or false')
+    ),
 
     web: Joi.string()
         .min(10)

@@ -2,7 +2,7 @@ const db = require('../db/mysql')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
-const {sendConfirmationMail, sendConfirmationMailIncidencia} = require('../utils/utils')
+const { sendConfirmationMailIncidencia } = require('../utils/utils')
 
 const { incidenciaValidator } = require('../validators/incidencia');
 const { getConnection } = require('../db/db');
@@ -12,21 +12,19 @@ const { getConnection } = require('../db/db');
 //creamos incidencia
 const createIncidencia = async (req, res) => {
     
-
   try {
-      const { id_usuario, id_coworking, estado, descripcion, fecha_creacion, fecha_modificacion } = req.body
+      const { id_usuario, id_sala, estado, categoria, descripcion } = req.body
      
-      const response = await db.checkIncidencia(id_usuario, id_coworking)
 
-      await incidenciIncidenciaValidator.validateAsync(req.body)
+      await incidenciaValidator.validateAsync(req.body)
 
-      await db.createIncidencia( id_usuario, id_coworking, estado, descripcion, fecha_creacion, fecha_modificacion )
-        let connection;
+      await db.createIncidencia(id_usuario, id_sala, estado, categoria, descripcion)
+
+      let connection;
+        
       try {
-          const usuario = await db.getUsuario(id_usuario)
-          const email = usuario[0]
-       
-          await sendConfirmationMailIncidencia(email)
+          const usuario = await db.getUsuarioId(id_usuario)
+          await sendConfirmationMailIncidencia(usuario.email)
       } catch(e) {
           console.log(e)
       }
@@ -38,7 +36,7 @@ const createIncidencia = async (req, res) => {
   } catch (e) {
        res.send({
           status: 'false',
-          message: 'esta incidencia ya ha sido registrada'
+          message: 'no se ha podido registrar la incidencia'
        })
   }
 
@@ -46,7 +44,7 @@ const createIncidencia = async (req, res) => {
  
 
 const updateIncidencia = async (req, res) => {
-    const { id_usuario, id_coworking, estado, descripcion, fecha_creacion, fecha_modificacion } = req.body
+    const { id_usuario, id_sala, estado, categoria, descripcion } = req.body
     const { id_incidencia } = req.params
 
     // TODO: considerar el caso en el que el ID pasado no existe
@@ -54,7 +52,7 @@ const updateIncidencia = async (req, res) => {
     try {
         await incidenciaValidator.validateAsync(req.body)
 
-        await db.updateIncidencia(id_incidencia, id_usuario, id_coworking, estado, descripcion, fecha_creacion, fecha_modificacion)
+        await db.updateIncidencia(id_usuario, id_sala, estado, categoria, descripcion, id_incidencia)
 
     } catch (e) {
         
@@ -76,18 +74,10 @@ const updateIncidencia = async (req, res) => {
     const { id_incidencia } = req.params;
 
     try {
-        // Para considerar el caso de que no existe el ID que nos 
-        // pasamos podemos resolverlo aquí haciendo una petición
-        // específica a la BBDD o bien resolverlo en el módulo de
-        // BBDD leyendo la respuesta de la consulta (affectedRows)
+       
         const incidencia = await db.getIncidencia(id_incidencia)
 
-        // Si nos piden eliminar un ID que no existe
-        // tenemos que informar a quién hizo la llamada y lo
-        // hacemos a través del statusCode, que será 404
-        // En caso contrario, el programador que programa contra la API
-        // podría pensar que efectivamente se hizo un DELETE cuando 
-        // en realidad no es así
+      
         if (!incidencia.length) {
             res.status(404).send()
             return

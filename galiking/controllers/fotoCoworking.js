@@ -5,47 +5,90 @@ const randomstring = require('randomstring');
 const uuid = require('uuid');
 const fsPromises = require('fs').promises;
 const { getConnection } = require('../db/db');
+const sharp = require('sharp');
 
-const addFotoCoworking = async (req, res) => {
-	const { id_coworking } = req.params;
+const getFotoCoworking = async (req, res) => {
 
-	try {
-		//POST coworking/:id/picture
-		if (req.files) {
-			//CREA CARPETA SI NO EXISTE
-			await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/cwk`, {
-				recursive: true,
-			});
+    const { id_coworking } = req.params
+  
+    try {
+        const foto_coworking = await db.getFotoCoworking(id_coworking)
+        res.send(foto_coworking)
+    } catch (e) {
+        res.status(500).send()
+    }
+  }
 
-			//DEFINE NOMBRE
-			const fileID = uuid.v4();
-			//DEFINE LA RUTA DEL FICHERO
-			const outputFileName = `${process.env.TARGET_FOLDER}/cwk/${fileID}.png`;
+const createFotoCoworking = async (req, res) => {  
 
-			//CREA EL FICHER
-			await fsPromises.writeFile(req.files.image.name, req.files.image.data);
-			console.log(req.files);
+    const { id_coworking } = req.params
 
-			// guardar una referencia a este UUID En la base de datos, de forma que
-			// cuando nos pidan la lista de nuestros recursos (productos, conciertos, etc) o
-			// el detalle de uno de ellos, accedemos a la BBDD para leer los UUID, y después el
-			// front llamará al GET con el UUID correspondiente
-			await db.uploadFotoCoworking(outputFileName, id_coworking);
-		}
-	} catch (e) {
-		let statusCode = 400;
-		// averiguar el tipo de error para enviar un código u otro
-		if (e.message === "database-error") {
-			statusCode = 500;
-		}
+    //recibimos los ficheros(si no existe la carpeta la crea)
+     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/cwk`, { recursive: true })
 
-		res.status(statusCode).send(e.message);
-		return;
-	}
+    try {
 
-	res.send("Datos actualizados correctamente");
-};
+        //les damos un identificador único
+        const fileID = uuid.v4()
+        // los guardamos en la carpeta que nos interesa
+        const outputFileName = `${process.env.TARGET_FOLDER}/cwk/${fileID}.jpg`
+
+        await fsPromises.writeFile(outputFileName, req.files.foto.data)
+
+        //guardar una referencia a este uuid en la base de datos
+        //para que luego el front llame al get para que le de el uuid
+        try {
+            await db.createFotoCoworking(fileID, id_coworking)
+
+
+        } catch (e) {
+            console.log(e)
+            res.status(400).send("error uuid")
+            return
+        }
+
+		res.send()
+    
+    } catch (e) {
+        console.log('Error: ', e)
+        res.status(500).send
+    }
+}
+
+const deleteFotoCoworking = async (req, res) => {
+    const { foto } = req.params;
+
+    try {
+    
+        const foto_coworking = await db.getFotoCoworking(foto)
+
+        if (!foto_coworking) {
+            res.status(404).send()
+            return
+        }
+
+        await db.deleteFotoCoworking(foto)
+
+        res.send("foto eliminada con éxito")
+    } catch (e) {
+        console.log(e)
+        if (e.message === 'unknown-id') {
+            res.status(404).send('este uuid no existe')
+
+        } else {
+            res.status(500).send('')
+        }
+    }
+}
+
+
+
+
+
+
 
 module.exports = {
-	addFotoCoworking,
-};
+	createFotoCoworking,
+	getFotoCoworking,
+    deleteFotoCoworking
+}

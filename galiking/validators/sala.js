@@ -35,9 +35,10 @@ const salaValidator = Joi.object({
         ),
 
     tarifa_tipo: Joi.string()
-        .valid('hora', 'mes')
+        .min(1)
+        .max(30)
         .error(
-            new Error('tarifa tipo should be a string valid:hora/mes')
+            new Error('tarifa tipo should be a string between 1 and 30 characteres')
         ),
 
     disponibilidad: Joi.string()
@@ -46,11 +47,15 @@ const salaValidator = Joi.object({
             new Error('disponibilidad should be a string valid: si/no')
         ),
 
-    equipacion: Joi.string()
-        .valid('proyector', 'impresora', 'fotocopiadora', 'mobiliario', 'sistema de audio')
+    proyector: Joi.boolean()
         .error(
-            new Error('equipacion should be a string valid: proyector/impresora/fotocopiadora/mobiliario/sistema de audio')
-        ),
+         new Error('proyector should be true or false')
+    ),
+
+    impresora: Joi.boolean()
+        .error(
+         new Error('impresora should be true or false')
+    ),
     })
 
     module.exports = {

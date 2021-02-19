@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
 const uuid = require('uuid');
 const fsPromises = require('fs').promises
+const sharp = require('sharp');
 const { sendConfirmationMail, forgotPasswordMail } = require('../utils/utils')
 
 
@@ -37,7 +38,7 @@ const createUsuario = async (req, res) => {
     res.send("usuario registrado con éxito")
 }
 
-const createFotoUsuario = async (req, res) => {
+const uploadFotoUsuario = async (req, res) => {
 
     const { id_usuario } = req.params;
 
@@ -45,19 +46,18 @@ const createFotoUsuario = async (req, res) => {
     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/profile`, { recursive: true })
 
     try {
-        //         //les damos un identificador único
+        
+        //les damos un identificador único
         const fileID = uuid.v4()
-        //         //los guardamos en la carpeta que nos interesa
+        // los guardamos en la carpeta que nos interesa
         const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.png`
 
-        //         console.log(outputFileName)
-
-        await fsPromises.writeFile(outputFileName, req.files.image.data)
+        await fsPromises.writeFile(outputFileName, req.files.foto.data)
 
         //         //guardar una referencia a este uuid en la base de datos
         //         //para que luego el front llame al get para que le de el uuid
         try {
-            await db.uploadFotoUsuario(outputFileName, id_usuario)
+            await db.uploadFotoUsuario(fileID, id_usuario)
 
 
         } catch (e) {
@@ -76,21 +76,24 @@ const createFotoUsuario = async (req, res) => {
 
 const getFotoUsuario = async (req, res) => {
 
-    const { foto } = req.params
+     const { foto } = req.params
 
-    //     //comprobar si la imagen existe
-    const path = `${__dirname}/images/profile/${foto}.png`
-    try {
-        const checkExists = await fsPromises.stat(path)
-        //         //aquí devolvemos el fichero
-        res.sendFile(path)
-    } catch (e) {
-        console.log('el fichero no existe')
-        res.status(404).send()
-    }
+     //comprobar si la imagen existe
+     //const path = `/home/hack21/proyecto-coworking/galiking/images/profile/${foto}.png`
+     const path = `${__dirname}/process.env.TARGET_FOLDER/profile/${foto}.png`
+     console.log(path)
+   
+     try {
+         await fsPromises.stat(path)
+         //aquí devolvemos el fichero
+         res.sendFile(path)
+     } catch (e) {
 
-}
+         console.log(e)
+         res.status(404).send('el fichero no existe')
+     }
 
+ }
 
 const validate = async (req, res) => {
 
@@ -105,9 +108,6 @@ const validate = async (req, res) => {
     }
 
 }
-
-
-
 
 const login = async (req, res) => {
 
@@ -394,7 +394,7 @@ const logout = async (req, res, next) => {
 
 module.exports = {
     createUsuario,
-    createFotoUsuario,
+    uploadFotoUsuario,
     getFotoUsuario,
     validate,
     login,

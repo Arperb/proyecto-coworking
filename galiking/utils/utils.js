@@ -1,5 +1,9 @@
 require('dotenv').config()
+const moment = require('moment')
 const sendgrid = require("@sendgrid/mail");
+
+
+
 
 const sendConfirmationMail = async (email, link) => {
     sendgrid.setApiKey(process.env.EMAIL_API_KEY);
@@ -73,11 +77,78 @@ const forgotPasswordMail = async (email, link) => {
   await sendgrid.send(message);
 }
 
+const sendConfirmationMailReserva = async (email) => {
+  sendgrid.setApiKey(process.env.EMAIL_API_KEY);
 
+  const message = {
+      to: email,
+      from: 'esther_h_e@hotmail.com',
+      subject: 'Confirmation de reserva',
+      text: ``,
+      html: `
+      <div>
+        <h1> Confirmación de reserva </h1>
+        <p> Tu reserva se ha realizado con éxito </p>
+        
+      </div>
+    `,
+  };
+
+  
+
+  // Enviar mensaje de validación del registro
+  await sendgrid.send(message);
+}
+
+const sendConfirmationMailIncidencia = async (email) => {
+  sendgrid.setApiKey(process.env.EMAIL_API_KEY);
+
+  const message = {
+      to: email,
+      from: 'esther_h_e@hotmail.com',
+      subject: 'Confirmación de incidencia',
+      text: ``,
+      html: `
+      <div>
+        <h1> Confirmación de la incidencia </h1>
+        <p> Tu incidencia ha sido registrada con éxito </p>
+        
+      </div>
+    `,
+  };
+
+  
+
+  // Enviar mensaje de validación del registro
+  await sendgrid.send(message);
+}
+
+const sendConfirmationMailValoracion = async (email) => {
+  sendgrid.setApiKey(process.env.EMAIL_API_KEY);
+
+  const message = {
+      to: email,
+      from: 'esther_h_e@hotmail.com',
+      subject: 'Confirmación de validación',
+      text: ``,
+      html: `
+      <div>
+        <h1> Confirmación de la validación </h1>
+        <p> Tu validación ha sido registrada con éxito </p>
+        
+      </div>
+    `,
+  };
+
+  
+
+  // Enviar mensaje de validación del registro
+  await sendgrid.send(message);
+}
 //conversor de formato de fecha 
 function dateToDB(date) {
   //usamos librería moment para dar formato sql
-  const dateSQL = moment(date.format("YYYY-MM-DD"));
+  const dateSQL = moment(date).format("YYYY-MM-DD");
   //devolvemos la fecha
   return dateSQL;
 
@@ -95,6 +166,9 @@ module.exports = {
     sendConfirmationMail,
     sendConfirmationMailCoworking,
     forgotPasswordMail,
+    sendConfirmationMailReserva,
+    sendConfirmationMailIncidencia,
+    sendConfirmationMailValoracion,
     dateToDB,
     oneDay
 }

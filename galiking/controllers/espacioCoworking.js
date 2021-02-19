@@ -2,7 +2,7 @@ const db = require('../db/mysql')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
-const {sendConfirmationMail, sendConfirmationMailCoworking} = require('../utils/utils')
+const {sendConfirmationMailCoworking} = require('../utils/utils')
 
 const { coworkingValidator } = require('../validators/espacioCoworking');
 const { getConnection } = require('../db/db');
@@ -14,13 +14,13 @@ const createCoworking = async (req, res) => {
     
 
   try {
-      const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web } = req.body
+      const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web } = req.body
    
       const response = await db.checkCoworking(web, id_usuario)
 
       await coworkingValidator.validateAsync(req.body)
 
-      await db.createCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web)
+      await db.createCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web)
         let connection;
       try {
          
@@ -49,7 +49,7 @@ const createCoworking = async (req, res) => {
 const updateCoworking = async (req, res) => {
 
     
-    const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web } = req.body
+    const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web } = req.body
 
     const { id_coworking } = req.params
     
@@ -61,7 +61,7 @@ const updateCoworking = async (req, res) => {
 
        await coworkingValidator.validateAsync(req.body)
 
-       await db.updateCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web, id_coworking)
+       await db.updateCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking)
 
      } catch (e) {
         
@@ -110,7 +110,7 @@ const updateCoworking = async (req, res) => {
             res.status(404).send()
 
         } else {
-            res.status(500).send()
+            res.status(500).send('Debes borrar primero las fotos,reservas o salas asociadas a este coworking')
         }
     }
 }

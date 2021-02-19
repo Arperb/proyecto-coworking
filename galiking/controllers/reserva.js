@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 const randomstring = require("randomstring");
 const {
 	dateToDB,
-	sendConfirmationMail,
 	sendConfirmationMailReserva,
 } = require("../utils/utils");
 
@@ -20,6 +19,7 @@ const createReserva = async (req, res) => {
 
 		await db.createReserva(id_sala, id_usuario, checkInDB, checkOutDB);
 		try {
+			const usuario = await db.getUsuarioId(id_usuario)
 			await sendConfirmationMailReserva(usuario.email);
 		} catch (e) {
 			console.log(e);
@@ -32,21 +32,22 @@ const createReserva = async (req, res) => {
 		console.warn(e);
 		res.send({
 			status: "false",
-			message: "la reserva no se puedo completar",
+			message: "la reserva no se pudo completar",
 		});
 	}
+
 };
 
 const updateReserva = async (req, res) => {
-	const { valoracion, estado, fecha_inicio, fecha_fin } = req.body;
+	const { id_sala, id_usuario, fecha_inicio, fecha_fin } = req.body;
 	const { id_reserva } = req.params;
 
 	try {
 		await reservaValidator.validateAsync(req.body);
 
 		await db.updateReserva(
-			valoracion,
-			estado,
+			id_sala,
+			id_usuario,
 			fecha_inicio,
 			fecha_fin,
 			id_reserva
@@ -98,7 +99,7 @@ const getReserva = async (req, res) => {
 	}
 };
 
-//Obtener lista de reservas filtrando por nombre y/o teléfono
+//Obtener lista de reservas
 const getListReserva = async (req, res) => {
 	try {
 		// /get user/:id/reservas LISTADO RESERVAS USUARIO
@@ -115,10 +116,11 @@ const getListReserva = async (req, res) => {
 	}
 };
 
+
 module.exports = {
 	createReserva,
 	updateReserva,
 	deleteReserva,
 	getReserva,
-	getListReserva,
+	getListReserva
 };

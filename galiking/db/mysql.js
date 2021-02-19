@@ -1,36 +1,36 @@
 const { send } = require('@sendgrid/mail');
 const moment = require('moment')
+const { dateToDB } = require("../utils/utils");
 
 const { getConnection } = require("./db");
 
 const performQuery = async (query, params) => {
-     let connection;
-
-    try {
-         connection = await getConnection();
-
-        const [result] = await connection.query(query, params)
-
-        return result;
-     } catch (e) {
-        
-         throw new Error('database-error')
-     } finally {
-        if (connection) {
-             connection.release()
-         }
-     }
- }
-
-
-const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode) => {
     let connection;
- 
 
     try {
         connection = await getConnection();
 
-       let SQL = await connection.query(`
+        const [result] = await connection.query(query, params)
+
+        return result;
+    } catch (e) {
+        throw new Error('database-error')
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+
+const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode) => {
+    let connection;
+
+
+    try {
+        connection = await getConnection();
+
+        let SQL = await connection.query(`
             INSERT INTO usuario (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, validationCode)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
@@ -47,39 +47,25 @@ const createUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, c
     }
 }
 
-const createFotoUsuario = async (id_usuario, foto) => {
-    let connection;
-    
+const uploadFotoUsuario = async (fileID, id_usuario) => {
 
-    try {
-        connection = await getConnection();
-
-        await connection.query(`
-            INSERT INTO usuario (foto)
-            VALUES (?) 
-        `,
-            [foto])
-    } catch (e) {
-        console.log(e)
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
-}
-
-const uploadFotoUsuario = async (foto, id_usuario) => {
-    const query = `UPDATE usuario SET foto=? where id_usuario=?`
-    const params = [foto, id_usuario]
+    const query = `UPDATE usuario SET foto = ? where id_usuario = ?`
+    const params = [fileID, id_usuario]
 
     await performQuery(query, params)
 }
 
+const getFotoUsuario = async (foto) => {
+
+    const query = `select * from usuario where foto = ?`
+    const params = [foto]
+    const [result] = await performQuery(query, params)
+    return result
+}
+
 
 const listUsuario = async (nombre, telefono) => {
-   
+
     let connection;
 
     try {
@@ -103,7 +89,7 @@ const listUsuario = async (nombre, telefono) => {
             select id_usuario, telefono, nombre from usuario
             `)
         }
-        
+
         return result[0]  // potential bug because connection is not released
     } catch (e) {
         throw new Error('database-error')
@@ -117,27 +103,27 @@ const listUsuario = async (nombre, telefono) => {
 }
 
 const getUsuarioEmail = async (email) => {
-   
-    const query = `select * from usuario where email = ?`  
+
+    const query = `select * from usuario where email = ?`
     const params = [email]
     const [result] = await performQuery(query, params)
     return result
 }
 
 const getUsuarioId = async (id_usuario) => {
-    
+
     const query = `select * from usuario where id_usuario = ?`
     const params = [id_usuario]
-   
+
     const [result] = await performQuery(query, params)
     return result
-   
+
 }
 
 
 const updateUsuario = async (nif_cif, email, telefono, bio, foto, nombre, rol, contrasena, id_usuario) => {
     let connection;
-    
+
 
     try {
         connection = await getConnection();
@@ -184,71 +170,71 @@ const deleteUsuario = async (id_usuario) => {
 
 
 const checkValidationCode = async (code) => {
-   
-     // comprobar si existe un usuario que esté pendiente de validación
-try {
-    const query = `select * from usuario where validationCode = ?`
-    const params = [code]
-   
-    const [result] = await performQuery(query, params)
-   
-    // si existe un usuario con ese código de validación
-    // lo marcamos como activo
-    if (result) {
-        const query = `update usuario set validado = true, validationCode = ''`
-        await performQuery(query, [])
-    } else {
-        throw new Error('validation-error')
-        
-    }
 
-} catch (e) {
- 
- }
+    // comprobar si existe un usuario que esté pendiente de validación
+    try {
+        const query = `select * from usuario where validationCode = ?`
+        const params = [code]
+
+        const [result] = await performQuery(query, params)
+
+        // si existe un usuario con ese código de validación
+        // lo marcamos como activo
+        if (result) {
+            const query = `update usuario set validado = true, validationCode = ''`
+            await performQuery(query, [])
+        } else {
+            throw new Error('validation-error')
+
+        }
+
+    } catch (e) {
+
+    }
 }
 
 
- const updateValidationCode = async (email, validationCode) => {
+const updateValidationCode = async (email, validationCode) => {
     const query = `update usuario SET validationCode = ? where email=?`
     const params = [validationCode, email]
 
     await performQuery(query, params)
 }
 
- const updateContrasena = async (id_usuario, contrasena) => {
-  
+const updateContrasena = async (id_usuario, contrasena) => {
+
     const query = `update usuario SET contrasena=?, validationCode='' where id_usuario=?`
     const params = [contrasena, id_usuario]
-  
+
     await performQuery(query, params)
 
- }
+}
 
- const getUsuarioByCode = async (code) => {
+const getUsuarioByCode = async (code) => {
 
     const query = `select * from usuario where validationCode=?`
     const params = [code]
     const [result] = await performQuery(query, params)
     return result
 
- }
+}
 
- //////////////////////////////////////////////////
+//////////////////////////////////////////////////
 //////           ESPACIO COWORKING           /////
 //////////////////////////////////////////////////
 
 
- const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web) => {
+const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web) => {
     let connection;
 
     try {
         connection = await getConnection();
 
-       let SQL = await connection.query(`
-            INSERT INTO coworking (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        let SQL = await connection.query(`
+            INSERT INTO coworking (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `,
-            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web])
+            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web])
 
     } catch (e) {
         console.log(e)
@@ -262,29 +248,29 @@ try {
 }
 
 // COMPROBAR SI COWORKING EXISTE
- const checkCoworking = async (web, id_usuario) => {
- 	let connection;
+const checkCoworking = async (web, id_usuario) => {
+    let connection;
 
- 	try {
- 		connection = await getConnection();
+    try {
+        connection = await getConnection();
 
-// 		// me quedo con el primer elemento (array destructuring)
- 		const [result] = await connection.query(
- 			`
+        // 		// me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(
+            `
              select * from coworking where web = ? and id_usuario=?
          `,
- 			[web, id_usuario]
- 		);
+            [web, id_usuario]
+        );
 
- 		return result; // potential bug because connection is not released
- 	} catch (e) {
- 		throw new Error("database-error");
- 	} finally {
- 		if (connection) {
- 			connection.release();
- 		}
- 	}
- };
+        return result; // potential bug because connection is not released
+    } catch (e) {
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+};
 
 const getCoworking = async (id_coworking) => {
     let connection;
@@ -311,7 +297,7 @@ const getCoworking = async (id_coworking) => {
 
 
 const getListCoworking = async (nombre, telefono) => {
-   
+
     let connection;
 
     try {
@@ -335,7 +321,7 @@ const getListCoworking = async (nombre, telefono) => {
             select id_coworking, telefono, nombre from coworking
             `)
         }
-        
+
         return result[0]  // potential bug because connection is not released
     } catch (e) {
         throw new Error('database-error')
@@ -348,18 +334,18 @@ const getListCoworking = async (nombre, telefono) => {
 
 }
 
-const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web) => {
+const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web) => {
     let connection;
-    
+
     try {
         connection = await getConnection();
 
-       let SQL = await connection.query(`
-            update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, servicios=?, web=?
+        let SQL = await connection.query(`
+            update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, wifi=?, limpieza=?, parking=?, web=?
             where id_coworking=?
         `,
-            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, servicios, web, id_coworking])
-               
+            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking])
+
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -397,26 +383,71 @@ const deleteCoworking = async (id_coworking) => {
     }
 }
 
+const createFotoCoworking = async (fileID, id_coworking) => {
 
- //////////////////////////////////////////////////
-//////                   SALA                /////
-//////////////////////////////////////////////////
+    const query = `INSERT INTO foto_coworking (foto, id_coworking)
+                     VALUES (?, ?)`
+    const params = [fileID, id_coworking]
+
+    await performQuery(query, params)
+}
+
+const getFotoCoworking = async (id_coworking) => {
+
+    const query = `select id_coworking, JSON_ARRAYAGG(foto) AS fotos
+                    FROM foto_coworking GROUP BY id_coworking`
+    const params = [id_coworking]
+    const [result] = await performQuery(query, params)
+    return result
+}
 
 
-const createSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion) => {
+const deleteFotoCoworking = async (foto) => {
     let connection;
 
     try {
         connection = await getConnection();
 
-       let SQL = await connection.query(`
-            INSERT INTO sala (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from foto_coworking where foto = ?
         `,
-            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion])
+            [foto])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+
+
+
+//////////////////////////////////////////////////
+//////                   SALA                /////
+//////////////////////////////////////////////////
+
+
+const createSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        let SQL = await connection.query(`
+            INSERT INTO sala (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `,
+            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora])
 
     } catch (e) {
-     console.log(e)
+        console.log(e)
         throw new Error('database-error')
 
     } finally {
@@ -427,42 +458,42 @@ const createSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, ta
 }
 
 // COMPROBAR SI LA SALA EXISTE
- const checkSala = async (id_coworking) => {
- 	let connection;
-
- 	try {
- 		connection = await getConnection();
-
-// 		// me quedo con el primer elemento (array destructuring)
- 		const [result] = await connection.query(
- 			`
-             select * from sala where id_coworking=?
-         `,
- 			[id_coworking]
- 		);
-
- 		return result; // potential bug because connection is not released
- 	} catch (e) {
- 		throw new Error("database-error");
- 	} finally {
- 		if (connection) {
- 			connection.release();
- 		}
- 	}
- };
-
- const updateSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion, id_sala) => {
+const checkSala = async (id_coworking) => {
     let connection;
-    
+
     try {
         connection = await getConnection();
 
-       let SQL = await connection.query(`
-            update sala SET id_coworking=?, tipo=?, descripcion=?, capacidad=?, tarifa=?, tarifa_tipo=?, disponibilidad=?, equipacion=?
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(
+            `
+             select * from sala where id_coworking=?
+         `,
+            [id_coworking]
+        );
+
+        return result; // potential bug because connection is not released
+    } catch (e) {
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+};
+
+const updateSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        let SQL = await connection.query(`
+            update sala SET id_coworking=?, tipo=?, descripcion=?, capacidad=?, tarifa=?, tarifa_tipo=?, disponibilidad=?, proyector=?, impresora=?
             where id_sala=?
         `,
-            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion, id_sala])
-            
+            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala])
+
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -523,7 +554,7 @@ const deleteSala = async (id_sala) => {
 }
 
 const getListSala = async (id_coworking, tipo) => {
-   
+
     let connection;
 
     try {
@@ -547,8 +578,8 @@ const getListSala = async (id_coworking, tipo) => {
             select id_sala, tipo, id_coworking from sala
             `)
         }
-    
-        
+
+
         return result[0]  // potential bug because connection is not released
     } catch (e) {
         console.log(e)
@@ -568,178 +599,174 @@ const getListSala = async (id_coworking, tipo) => {
 //////////////////////////////////////////////////
 
 const createReserva = async (
-	id_coworking,
-	id_usuario,
-	valoracion,
-	estado,
-	fecha_inicio,
-	fecha_fin
+    id_sala,
+    id_usuario,
+    fecha_inicio,
+    fecha_fin
 ) => {
-	let connection;
-	try {
-		connection = await getConnection();
+    let connection;
+    try {
+        connection = await getConnection();
+        console.log(id_usuario)
 
-		let SQL = await connection.query(
-			`
-        
-            INSERT INTO reserva (id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin)
-            VALUES (?, ?, ?, ?, ?, ?)
+        let SQL = await connection.query(
+            `
+            
+            INSERT INTO reserva (id_sala, id_usuario, fecha_inicio, fecha_fin)
+            VALUES (?, ?, ?, ?)
         `,
-			[id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin]
-		);
-	} catch (e) {
-		console.log(e);
-		throw new Error("database-error");
-	} finally {
-		if (connection) {
-			connection.release();
-		}
-	}
+            [id_sala, id_usuario, fecha_inicio, fecha_fin]
+
+        );
+    } catch (e) {
+        console.log(e);
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
 };
 const getListReserva = async (id_usuario, id_sala) => {
-	let connection;
+    let connection;
 
-	try {
-		connection = await getConnection();
+    try {
+        connection = await getConnection();
 
-		let result;
-		//OBTENER RESERVAS DE USUARIO - COMPRADOR
-		if (id_usuario) {
-			result = await connection.query(
-				`
+        let result;
+        //OBTENER RESERVAS DE USUARIO - COMPRADOR
+        if (id_usuario) {
+            result = await connection.query(
+                `
             SELECT * FROM reserva WHERE id_usuario = ?`,
-				[id_usuario]
-			);
-			//OBTENER RESERVAS DE UNA SALA DETERMINADA
-		} else if (id_sala) {
-			result = await connection.query(
-				`
+                [id_usuario]
+            );
+            //OBTENER RESERVAS DE UNA SALA DETERMINADA
+        } else if (id_sala) {
+            result = await connection.query(
+                `
             SELECT * FROM reserva WHERE id_usuario = ?`,
-				[id_sala]
-			);
-			//OBTENER RESERVA DE TODO EL ESPACIO DE COWORKING
-		} else if (id_coworking) {
-			result = await connection.query(
-				`
+                [id_sala]
+            );
+            //OBTENER RESERVA DE TODO EL ESPACIO DE COWORKING
+        } else if (id_coworking) {
+            result = await connection.query(
+                `
             SELECT * FROM reserva 
             INNER JOIN sala ON reserva.id_sala = sala.id
             INNER JOIN coworking ON sala.id_coworking = coworking.id
             WHERE id = ?`,
-				[id_coworking]
-			);
-		}
+                [id_coworking]
+            );
+        }
 
-		console.log(result);
-		return result[0]; // potential bug because connection is not released
-	} catch (e) {
-		throw new Error("database-error");
-	} finally {
-		if (connection) {
-			connection.release();
-		}
-	}
+        console.log(result);
+        return result[0]; // potential bug because connection is not released
+    } catch (e) {
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
 };
 const getReserva = async (id_reserva) => {
-	let connection;
+    let connection;
 
-	try {
-		connection = await getConnection();
+    try {
+        connection = await getConnection();
 
-		// me quedo con el primer elemento (array destructuring)
-		const [result] = await connection.query(
-			`
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(
+            `
             select * from reserva where id_reserva = ?
         `,
-			[id_reserva]
-		);
+            [id_reserva]
+        );
 
-		return result; // potential bug because connection is not released
-	} catch (e) {
-		throw new Error("database-error");
-	} finally {
-		if (connection) {
-			connection.release();
-		}
-	}
+        return result; // potential bug because connection is not released
+    } catch (e) {
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
 };
 const updateReserva = async (
-	id_reserva,
-	id_coworking,
-	id_usuario,
-	valoracion,
-	estado,
-	fecha_inicio,
-	fecha_fin
+    id_sala,
+    id_usuario,
+    fecha_inicio,
+    fecha_fin,
+    id_reserva
 ) => {
-	let connection;
+    let connection;
 
-	try {
-		connection = await getConnection();
+    try {
+        connection = await getConnection();
 
-		await connection.query(
-			`
-            update reserva SET valoracion=?, estado=?, fecha_inicio=?, fecha_fin=?
+        await connection.query(
+            `
+            update reserva SET id_sala=?, id_usuario=?, fecha_inicio=?, fecha_fin=?
             where id_reserva=? 
         `,
-			[
-				id_reserva,
-				id_coworking,
-				id_usuario,
-				valoracion,
-				estado,
-				fecha_inicio,
-				fecha_fin,
-			]
-		);
-	} catch (e) {
-		console.log(e);
-		throw new Error("database-error");
-	} finally {
-		if (connection) {
-			connection.release();
-		}
-	}
+            [
+                id_sala,
+                id_usuario,
+                fecha_inicio,
+                fecha_fin,
+                id_reserva,
+            ]
+        );
+    } catch (e) {
+        console.log(e);
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
 };
 
 const deleteReserva = async (id_reserva) => {
-	let connection;
+    let connection;
 
-	try {
-		connection = await getConnection();
+    try {
+        connection = await getConnection();
 
-		// me quedo con el primer elemento (array destructuring)
-		const [result] = await connection.query(
-			`
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(
+            `
             delete from reserva where id_reserva = ?
         `,
-			[id_reserva]
-		);
+            [id_reserva]
+        );
 
-		return result; // potential bug because connection is not released
-	} catch (e) {
-		console.log(e);
-		throw new Error("database-error");
-	} finally {
-		if (connection) {
-			connection.release();
-		}
-	}
+        return result; // potential bug because connection is not released
+    } catch (e) {
+        console.log(e);
+        throw new Error("database-error");
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
 };
 
 /////////////////////////////////////////////////////////////////////
 //////////////            INCIDENCIA                       /////////
 ////////////////////////////////////////////////////////////////////
 
-const createIncidencia = async (estado, descripcion, fecha_inicio, fecha_fin) => {
+const createIncidencia = async (id_usuario, id_sala, estado, categoria, descripcion) => {
     let connection;
     try {
         connection = await getConnection();
 
         let SQL = await connection.query(`
-            INSERT INTO incidencia (estado, descripcion, fecha_inicio, fecha_fin)
-            VALUES (?, ?, ?, ?,)
+            INSERT INTO incidencia (id_usuario, id_sala, estado, categoria, descripcion)
+            VALUES (?, ?, ?, ?, ?)
         `,
-            [estado, descripcion, fecha_inicio, fecha_fin])
+            [id_usuario, id_sala, estado, categoria, descripcion])
 
     } catch (e) {
         console.log(e)
@@ -810,7 +837,7 @@ const getIncidencia = async (id_incidencia) => {
         }
     }
 }
-const updateIncidencia = async (id_incidencia, id_coworking, id_usuario, valoracion, estado, fecha_inicio, fecha_fin) => {
+const updateIncidencia = async (id_usuario, id_sala, estado, categoria, descripcion, id_incidencia) => {
     let connection;
 
 
@@ -818,10 +845,10 @@ const updateIncidencia = async (id_incidencia, id_coworking, id_usuario, valorac
         connection = await getConnection();
 
         await connection.query(`
-            update incidencia SET valoracion=?, estado=?, fecha_inicio=?, fecha_fin=?
+            update incidencia SET id_usuario = ?, id_sala = ?, estado = ?, categoria = ?, descripcion = ?
             where id_incidencia=? 
         `,
-            [id_incidencia, id_coworking, id_usuario,estado, descripcion, fecha_inicio, fecha_fin])
+            [id_usuario, id_sala, estado, categoria, descripcion, id_incidencia])
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -856,7 +883,34 @@ const deleteIncidencia = async (id_incidencia) => {
         }
     }
 }
-const checkIncidencia = async (estado, descripcion) => {
+
+/////////////////////////////////////////////////////////////////////
+//////////////                 RATING                       /////////
+////////////////////////////////////////////////////////////////////
+
+const createRating = async (id_usuario, id_reserva, valoracion) => {
+    let connection;
+    try {
+        connection = await getConnection();
+
+        let SQL = await connection.query(`
+            INSERT INTO rating (id_usuario, id_reserva, valoracion)
+            VALUES (?, ?, ?)
+        `,
+            [id_usuario, id_reserva, valoracion])
+
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const getRating = async (id_rating) => {
     let connection;
 
     try {
@@ -864,9 +918,9 @@ const checkIncidencia = async (estado, descripcion) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            select * from incidencia where estado = ? and descripcion=?
+            select * from rating where id_rating = ?
         `,
-            [estado, descripcion])
+            [id_rating])
 
         return result  // potential bug because connection is not released
     } catch (e) {
@@ -878,12 +932,242 @@ const checkIncidencia = async (estado, descripcion) => {
         }
     }
 }
+const updateRating = async (id_usuario, id_reserva, valoracion, id_rating) => {
+    let connection;
+
+
+    try {
+        connection = await getConnection();
+
+        await connection.query(`
+            update rating SET id_usuario = ?, id_reserva = ?, valoracion = ?
+            where id_rating=? 
+        `,
+            [id_usuario, id_reserva, valoracion, id_rating])
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const deleteRating = async (id_rating) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from rating where id_rating = ?
+        `,
+            [id_rating])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////
+//////////////                 BUSCADOR                     /////////
+////////////////////////////////////////////////////////////////////
+
+const buscador = async (req, res, next) => {
+    let connection;
+
+
+    try {
+
+        connection = await getConnection();
+
+        //obtenemos criterios de búsqueda de usuario
+
+        const buscador = async (
+            provincia,
+            ciudad,
+            fecha_inicio,
+            fecha_fin,
+            capacidad,
+            wifi,
+            limpieza,
+            parking,
+            proyector,
+            impresora,
+            tipo,
+            valoracion,
+            tarifa1,
+            tarifa2,
+            order,
+            direction) => {
+
+            //nombramos la query base
+            let query = `SELECT * FROM reserva;
+            SELECT * FROM sala
+            LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+            LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala`;
+
+            //establecer criterio de sentido de la búsqueda
+
+            const orderDirection = (direction && direction.toLowerCase()) === "asc" ? "ASC" : "DESC";
+
+            //establecer criterio de orden de búsqueda
+
+            let orderBy;
+            switch (order) {
+                case "tarifa":
+                    orderBy = "tarifa";
+                    break;
+                case "creationDate":
+                    orderBy = "sala.fecha_creacion";
+                    break;
+                default:
+                    orderBy = "sala.fecha_creacion";
+            }
+            //establecemos los parámetros de búsqueda
+        const params = [];
+
+        //establecemos condiciones para la query
+        const conditions = [];
+
+         //construimos query multibúsqueda
+         if (provincia || ciudad || (fecha_inicio && fecha_fin) || capacidad || wifi || limpieza || parking || proyector ||
+            impresora || tipo || valoracion || (tarifa1 && tarifa2)) {
+            console.log("hola");
+            if (provincia) {
+                conditions.push(`provincia LIKE ?`);
+                params.push(`%${provincia}%`);
+            }
+            if (ciudad) {
+                conditions.push(`ciudad LIKE ?`)
+                params.push(`${ciudad}`);
+            }
+            if (fecha_inicio && fecha_fin) {
+                const fecha_inicioDB = dateToDB(fecha_inicio);
+                const fecha_finDB = dateToDB(fecha_fin);
+                conditions.push(`SELECT * FROM reserva;
+                SELECT * FROM sala
+                 LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+                 LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala
+                 WHERE provincia= ?
+                 AND fecha_inicio NOT BETWEEN fecha_inicioDB AND fecha_finDB
+                 AND fecha_fin NOT BETWEEN fecha_inicioDB AND fecha_finDB
+                 AND NOT (fecha_inicio < fecha_inicioDB AND fecha_fin > fecha_finDB
+                 AND NOT (fecha_inicio > fecha_inicioDB AND fecha_fin < fecha_finDB
+                 ORDER BY sala.fecha_creacion DESC`);
+                params.push(
+                    `${fecha_inicioDB}`,
+                    `${fecha_finDB}`,
+                    `${fecha_inicioDB}`,
+                    `${fecha_finDB}`
+                );
+            }
+            if (capacidad) {
+                conditions.push(`capacidad>=?`);
+                params.push(`${capacidad}`);
+            }
+            if (wifi) {
+                conditions.push(`wifi=?`);
+                params.push(`${wifi}`);
+            }
+            if (limpieza) {
+                conditions.push(`limpieza=?`);
+                params.push(`${limpieza}`);
+            }
+            if (parking) {
+                conditions.push(`parking=?`);
+                params.push(`${parking}`);
+            }
+            if (proyector) {
+                conditions.push(`proyector=?`);
+                params.push(`${proyector}`);
+            }
+            if (impresora) {
+                conditions.push(`impresora=?`);
+                params.push(`${impresora}`);
+            }
+            if (tipo) {
+                conditions.push(`tipo=?`);
+                params.push(`${tipo}`);
+            }
+            if (valoracion) {
+                conditions.push(`valoracion>=?`);
+                params.push(`${valoracion}`);
+            }
+
+            if (tarifa1 && tarifa2) {
+                conditions.push(`tarifa1 BETWEEN ? AND ?`);
+                params.push(`${tarifa1}`, `${tarifa2}`);
+            }
+        }
+        
+         //finalizamos la construcción de la query
+
+         query = `${query} WHERE ${conditions.join(` AND `)} ORDER BY ${orderBy} ${orderDirection}`;
+
+        console.log(query, params);
+
+        //ejecutamos la query
+        const [result] = await connection.query(query, params);
+
+        //mandamos respuesta
+        res.send({
+            data: result,
+        })}
+    
+    } catch (error) {
+        next(error);
+    } finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+}
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+
+       
+
+            //     LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+            // LEFT OUTER JOIN reserva on reserva.id_sala = sala.id_sala
+            // WHERE provincia= 'Pontevedra'
+            // AND fecha_inicio NOT BETWEEN ${fecha_inicioDB} AND ${fecha_finDB}
+            // AND fecha_fin NOT BETWEEN ${fecha_inicioDB} AND ${fecha_finDB}
+            // AND NOT (fecha_inicio < ${fecha_inicioDB} AND  fecha_fin > ${fecha_finDB}
+            // AND NOT (fecha_inicio > ${fecha_inicioDB} AND  fecha_fin < ${fecha_finDB}
+            // ORDER BY sala.fecha_creacion DESC 
+
+            
+        
+
+       
 
 
 module.exports = {
     createUsuario,
-    createFotoUsuario,
     uploadFotoUsuario,
+    getFotoUsuario,
     listUsuario,
     getUsuarioEmail,
     getUsuarioId,
@@ -899,6 +1183,9 @@ module.exports = {
     getListCoworking,
     updateCoworking,
     deleteCoworking,
+    createFotoCoworking,
+    getFotoCoworking,
+    deleteFotoCoworking,
     createSala,
     checkSala,
     updateSala,
@@ -915,6 +1202,9 @@ module.exports = {
     getIncidencia,
     updateIncidencia,
     deleteIncidencia,
-    checkIncidencia,
-    
+    createRating,
+    getRating,
+    updateRating,
+    deleteRating,
+    buscador
 }

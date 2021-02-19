@@ -33,7 +33,10 @@ const currentPort = process.env.PORT || DEFAULT_PORT
             contrasenaUpdateCode,
             recoverContrasena,
             logout,
-            createFotoUsuario } = require('./controllers/usuario');
+            uploadFotoUsuario,
+            getFotoUsuario } = require('./controllers/usuario');
+
+//CONTROLADORES COWORKING
 
  const { createCoworking, 
          getCoworking, 
@@ -41,17 +44,43 @@ const currentPort = process.env.PORT || DEFAULT_PORT
          updateCoworking, 
         deleteCoworking } = require('./controllers/espacioCoworking');
 
+const { createFotoCoworking,
+        getFotoCoworking,
+        deleteFotoCoworking } = require('./controllers/fotoCoworking');
+
+//CONTROLADORES SALA      
+
 const { createSala, 
         getSala, 
         getListSala, 
         updateSala, 
         deleteSala } = require('./controllers/sala');
 
+//CONTROLADORES RESERVA
+
  const { createReserva, 
          updateReserva, 
          deleteReserva, 
-        getReserva, 
-         getListReserva } = require('./controllers/reserva')
+         getReserva, 
+         getListReserva } = require('./controllers/reserva');
+
+//CONTROLADORES INCIDENCIA
+
+const { createIncidencia,
+        updateIncidencia,
+        deleteIncidencia,
+        getIncidencia } = require('./controllers/incidencia')
+
+//CONTROLADORES RATING
+
+const { createRating,
+        updateRating,
+        deleteRating,
+        getRating } = require('./controllers/rating')
+
+//CONTROLADOR BUSCADOR
+
+const { buscador } = require('./controllers/buscador')
 
 //MIDDLEWARES
 
@@ -64,7 +93,8 @@ const {
         isReserva,
         checkIncidencia,
         checkCoworking
-        } = require('./middlewares/auth')
+        } = require('./middlewares/auth');
+const { lstat } = require('fs');
 
 //LIBRERIAS SOBRE EXPRESS-APP
 
@@ -94,31 +124,30 @@ app.post('/usuario', createUsuario)
 
 //Crear una lista de datos de usuario a partir de unos parámetros dados
 
-app.get('/usuario', usuarioIsAdmin, getListOfUsuario)
+app.get('/usuario', isAuthenticated, isSameUser, getListOfUsuario)
 
 
 //obtener todos los datos de un usuario a través del ID
 
-app.get('/usuario/:id_usuario', getUsuarioId)
+app.get('/usuario/:id_usuario', isAuthenticated, isSameUser, getUsuarioId)
 
 
+//Añadir foto usuario
 
+app.post('/usuario/:id_usuario/profile', isAuthenticated, isSameUser, uploadFotoUsuario)
 
+//Ver foto usuario
 
-
-//Añadir foto
-
-app.post('/usuario/:id/profile', createFotoUsuario)
-
+app.get('/profile/:foto', isAuthenticated, isSameUser, getFotoUsuario)
 
 
 //modificar datos usuario
 
-app.put('/usuario/:id_usuario', updateUsuario)
+app.put('/usuario/:id_usuario', isAuthenticated, isSameUser, updateUsuario)
 
 //borrar usuario
 
-app.delete('/usuario/:id_usuario', deleteUsuario)
+app.delete('/usuario/:id_usuario', isAuthenticated, isSameUser, deleteUsuario)
 
 //validar un usuario
 
@@ -130,7 +159,7 @@ app.post('/usuario/login', login)
 
 //Actualizar la contraseña de un usuario
 
-app.put('/usuario/:id/update-contrasena', isAuthenticated, updateContrasena)
+app.put('/usuario/:id/update-contrasena', isAuthenticated, isSameUser, updateContrasena)
 
 
 
@@ -151,29 +180,70 @@ app.put('/update-reset-contrasena/:code', resetContrasena)
 
 app.post('/usuario/logout', isAuthenticated, logout)
 
+//El usuario puede consultar sus reservas
+
+app.get('/usuario/reservas/:id_usuario', isAuthenticated, isSameUser,)
+
+//El usuario puede consultar sus incidencias registradas
+
+app.get('/usuario/incidencias/:id_usuario', isAuthenticated, isSameUser,)
+
+//El usuario puede consultar sus valoraciones
+
+app.get('/usuario/reservas/:id_usuario', isAuthenticated, isSameUser,)
+
 //////////////////////////////////////////////////
 //////           ESPACIO COWORKING           /////
 //////////////////////////////////////////////////
 
 //Crear un nuevo espacio coworking
 
-app.post('/coworking', usuarioIsOwner, createCoworking)
+app.post('/coworking', isAuthenticated, usuarioIsOwner, isSameUser, createCoworking)
 
 //obtener todos los datos de un espacio coworking a través del ID
 
-app.get('/coworking/:id_coworking', getCoworking)
+app.get('/coworking/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser, getCoworking)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 
-app.get('/coworking', getListCoworking)
+app.get('/coworking', isAuthenticated, usuarioIsOwner, isSameUser, getListCoworking)
+
+//Ver reservas de un coworking
+
+app.get('/coworking/reservas/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser, )
+
+//Ver valoraciones de un coworking
+
+app.get('/coworking/rating/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser,)
+
+//Ver incidencias de un coworking
+
+app.get('/coworking/incidencias/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser,)
+
+//Ver salas de un coworking
+
+app.get('/coworking/salas/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser,)
 
 //modificar datos espacio coworking
 
-app.put('/coworking/:id_coworking', updateCoworking)
+app.put('/coworking/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser, updateCoworking)
 
 //borrar espacio coworking
 
-app.delete('/coworking/:id_coworking', deleteCoworking)
+app.delete('/coworking/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser, deleteCoworking)
+
+
+//Añadir foto a coworking
+
+app.post('/foto-coworking/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser, createFotoCoworking)
+
+//Ver foto coworking
+
+app.get('/foto-coworking/:id_coworking', isAuthenticated, usuarioIsOwner, isSameUser, getFotoCoworking)
+
+//borrar foto
+
+app.delete('/foto-coworking/:foto', isAuthenticated, usuarioIsOwner, isSameUser, deleteFotoCoworking)
 
 //////////////////////////////////////////////////
 //////                SALA                   /////
@@ -181,23 +251,23 @@ app.delete('/coworking/:id_coworking', deleteCoworking)
 
 //Crear una nueva
 
-app.post('/sala', usuarioIsOwner, createSala)
+app.post('/sala', isAuthenticated, usuarioIsOwner, isSameUser, createSala)
 
 //obtener todos los datos de una sala a través del ID
 
-app.get('/sala/:id_sala', getSala)
+app.get('/sala/:id_sala', isAuthenticated, usuarioIsOwner, isSameUser, getSala)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 
-app.get('/sala', getListSala)
+app.get('/sala', isAuthenticated, usuarioIsAdmin, getListSala)
 
 //modificar datos de una sala
 
-app.put('/sala/:id_sala', updateSala)
+app.put('/sala/:id_sala', isAuthenticated, usuarioIsOwner, isSameUser, updateSala)
 
 //borrar una sala
 
-app.delete('/sala/:id_sala', deleteSala)
+app.delete('/sala/:id_sala', isAuthenticated, usuarioIsOwner, isSameUser, deleteSala)
 
 
 ///////////////////////////////////////////////////////////////////////
@@ -205,25 +275,65 @@ app.delete('/sala/:id_sala', deleteSala)
 //////////////////////////////////////////////////////////////////////
 
 //Crear una reserva
-app.post('/reserva', createReserva)
+app.post('/reserva', isAuthenticated, isSameUser, createReserva)
 
 //modificar datos de la reserva
-app.put('/reserva/:id_reserva', updateReserva)
+app.put('/reserva/:id_reserva', isAuthenticated, isSameUser, createReserva, updateReserva)
 
 //borrar reserva
-app.delete('/reserva/:id_reserva', deleteReserva)
+app.delete('/reserva/:id_reserva', isAuthenticated, isSameUser, createReserva, deleteReserva)
 
 //obtener todos los datos de una reserva través del ID
-app.get('/reserva/:id_reserva', getReserva)
+app.get('/reserva/:id_reserva', isAuthenticated, isSameUser, createReserva, getReserva)
 
 //Crear una lista de reservas a través de los parámetros dados
-app.get('/reserva', getListReserva)
+app.get('/reserva', isAuthenticated, usuarioIsAdmin, getListReserva)
+
+
+///////////////////////////////////////////////////////////////////////
+////////////////                INCIDENCIA                /////////////
+//////////////////////////////////////////////////////////////////////
+
+//Crear una incidencia
+app.post('/incidencia', isAuthenticated, usuarioIsUser, createIncidencia)
+
+//modificar datos de una incidencia
+app.put('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, updateIncidencia)
+
+//borrar incidencia
+app.delete('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, deleteIncidencia)
+
+//obtener todos los datos de una incidencia través del ID
+app.get('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, getIncidencia)
+
+
+///////////////////////////////////////////////////////////////////////
+////////////////                  RATING                  /////////////
+//////////////////////////////////////////////////////////////////////
+
+//Crear una valoración
+app.post('/rating', isAuthenticated, usuarioIsUser, createRating)
+
+//modificar datos de una valoración
+app.put('/rating/:id_rating', isAuthenticated, usuarioIsUser, updateRating)
+
+//borrar valoración
+app.delete('/rating/:id_rating', isAuthenticated, usuarioIsUser, deleteRating)
+
+//obtener todos los datos de una valoración
+app.get('/rating/:id_rating', isAuthenticated, usuarioIsUser, getRating)
+
+//obterner la valoracion media de una sala
+
+app.get('/rating/sala/:id_sala', isAuthenticated, usuarioIsUser, )
+
+
 
 ///////////////////////////////////////////////////////////////////////
 //////////////////         BUSCADOR                      /////////////
 /////////////////////////////////////////////////////////////////////
 
-
+app.get('/buscador', buscador )
 
 
 

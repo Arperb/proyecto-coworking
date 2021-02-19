@@ -14,13 +14,13 @@ const createSala = async (req, res) => {
     
 
   try {
-      const { id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion } = req.body
+      const { id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora } = req.body
    
       const response = await db.checkSala(id_coworking)
 
       await salaValidator.validateAsync(req.body)
 
-      await db.createSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion)
+      await db.createSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora)
         let connection;
       try {
          
@@ -49,7 +49,7 @@ const createSala = async (req, res) => {
 const updateSala = async (req, res) => {
 
     
-    const { id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion } = req.body
+    const { id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora } = req.body
 
     const { id_sala } = req.params
     
@@ -61,7 +61,7 @@ const updateSala = async (req, res) => {
 
        await salaValidator.validateAsync(req.body)
        
-       await db.updateSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, equipacion, id_sala)
+       await db.updateSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala)
 
      } catch (e) {
         
