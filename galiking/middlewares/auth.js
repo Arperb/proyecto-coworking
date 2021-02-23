@@ -67,8 +67,8 @@ const usuarioIsOwner = async (req, res, next) => {
 
         const usuario = await db.getUsuarioEmail(decodedToken.email)
      
-     if (usuario.rol !=="propietario") {
-         const error = new Error("tu deberías de ser propietario de un coworking para acceder a este recurso");
+     if (usuario.rol =="cliente") {
+         const error = new Error("tu deberías de ser propietario de un coworking o administrador para acceder a este recurso");
         error.httpCode = 401;
          next(error);
          
@@ -91,8 +91,8 @@ const usuarioIsUser = async (req, res, next) => {
 
         const usuario = await db.getUsuarioEmail(decodedToken.email)
      
-     if (usuario.rol !=="cliente") {
-         const error = new Error("tu deberías de ser cliente para acceder a este recurso");
+     if (usuario.rol =="propietario") {
+         const error = new Error("tu deberías de ser cliente o administrador para acceder a este recurso");
         error.httpCode = 401;
          next(error);
          

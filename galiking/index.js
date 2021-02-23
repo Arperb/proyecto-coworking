@@ -66,10 +66,6 @@ const { createSala,
         deleteSala,
         getSalaAvgRating } = require('./controllers/sala');
 
- const { createFotoSala,
-         getFotoSala,
-         deleteFotoSala } = require('./controllers/fotoSala');
-
 //CONTROLADORES RESERVA
 
  const { createReserva, 
@@ -253,18 +249,6 @@ app.put('/sala/:id_sala', isAuthenticated, usuarioIsOwner, updateSala)
 //borrar una sala
 
 app.delete('/sala/:id_sala', isAuthenticated, usuarioIsOwner, deleteSala)
-
-//Añadir foto a sala
-
-app.post('/foto-sala/:id_sala', isAuthenticated, usuarioIsOwner, createFotoSala)
-
-//Ver foto sala
-
-app.get('/foto-sala/:id_sala', isAuthenticated, usuarioIsOwner, getFotoSala)
-
-//borrar foto
-
-app.delete('/foto-sala/:foto', isAuthenticated, usuarioIsOwner, deleteFotoSala)
 
 
 ///////////////////////////////////////////////////////////////////////

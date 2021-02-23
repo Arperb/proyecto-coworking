@@ -368,7 +368,7 @@ const getListCoworking = async (nombre, telefono) => {
 
 }
 
-const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web) => {
+const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking) => {
     let connection;
 
     try {
@@ -383,7 +383,7 @@ const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, 
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
-        res.send(coworking)
+        res.send(updateCoworking)
 
     } finally {
         if (connection) {
@@ -703,49 +703,6 @@ const getListSala = async (id_coworking, tipo) => {
         }
     }
 
-}
-
-const createFotoSala = async (fileID, id_sala) => {
-
-    const query = `INSERT INTO foto_sala (foto, id_sala)
-                     VALUES (?, ?)`
-    const params = [fileID, id_sala]
-
-    await performQuery(query, params)
-}
-
-const getFotoSala = async (id_sala) => {
-
-    const query = `select id_sala, JSON_ARRAYAGG(foto) AS fotos
-                    FROM foto_sala GROUP BY id_sala`
-    const params = [id_sala]
-    const [result] = await performQuery(query, params)
-    return result
-}
-
-
-const deleteFotoSala = async (foto) => {
-    let connection;
-
-    try {
-        connection = await getConnection();
-
-        // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
-            delete from foto_sala where foto = ?
-        `,
-            [foto])
-
-        return result  // potential bug because connection is not released
-    } catch (e) {
-        console.log(e)
-        throw new Error('database-error')
-
-    } finally {
-        if (connection) {
-            connection.release()
-        }
-    }
 }
 
 const getSalaAvgRating = async (id_sala) => {
@@ -1320,9 +1277,6 @@ module.exports = {
     getSala,
     deleteSala,
     getListSala,
-    createFotoSala,
-    getFotoSala,
-    deleteFotoSala,
     getSalaAvgRating,
     createReserva,
     getListReserva,

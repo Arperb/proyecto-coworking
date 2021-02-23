@@ -1,6 +1,7 @@
 const Joi = require('joi');
 
 const coworkingValidator = Joi.object({
+    
     id_usuario: Joi.string()
         .min(1)
         .max(5)

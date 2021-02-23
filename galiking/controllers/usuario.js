@@ -52,13 +52,13 @@ const uploadFotoUsuario = async (req, res) => {
         // los guardamos en la carpeta que nos interesa
         const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.jpg`
         
-        const image = sharp(req.files.foto.data)
-        const imageInfo = await image.metadata()
-        if (imageInfo.width>1000) {
-            image.resize(720, 796)
-        }
-        console.log(image.width)
-        await fsPromises.writeFile(outputFileName, image)
+        //const image = sharp(req.files.foto.data)
+        // const imageInfo = await image.metadata()
+        // if (imageInfo.width>1000) {
+        //     image.resize(720, 796)
+        // }
+        // console.log(image.width)
+        await fsPromises.writeFile(outputFileName, req.files.foto.data)
 
         //         //guardar una referencia a este uuid en la base de datos
         //         //para que luego el front llame al get para que le de el uuid
