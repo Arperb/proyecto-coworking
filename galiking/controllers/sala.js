@@ -139,11 +139,31 @@ const getSala = async (req, res) => {
     }
   }
 
+  const getSalaAvgRating = async (req, res) => {
+
+    const { id_sala } = req.params
+
+    try {
+        const salaAvgRating = await db.getSalaAvgRating(id_sala)
+       
+        if (!salaAvgRating) {
+            res.status(404).send()
+            
+        } else {
+            res.send(salaAvgRating)
+        }
+    } catch (e) {
+        console.warn(e)
+        res.status(500).send('Esta sala no tiene valoraciones')
+    }
+}
+
 
 module.exports = {
     createSala,
     updateSala,
     deleteSala,
     getSala,
-    getListSala
+    getListSala,
+    getSalaAvgRating
 } 

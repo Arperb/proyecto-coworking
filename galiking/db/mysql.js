@@ -14,6 +14,7 @@ const performQuery = async (query, params) => {
 
         return result;
     } catch (e) {
+        console.log(e)
         throw new Error('database-error')
     } finally {
         if (connection) {
@@ -175,9 +176,9 @@ const checkValidationCode = async (code) => {
     try {
         const query = `select * from usuario where validationCode = ?`
         const params = [code]
-
-        const [result] = await performQuery(query, params)
-
+       
+        const result = await performQuery(query, params)
+        
         // si existe un usuario con ese código de validación
         // lo marcamos como activo
         if (result) {
@@ -214,6 +215,39 @@ const getUsuarioByCode = async (code) => {
 
     const query = `select * from usuario where validationCode=?`
     const params = [code]
+    const [result] = await performQuery(query, params)
+    return result
+
+}
+
+const getUsuarioReserva = async (id_reserva, id_usuario) => {
+
+    const query = `select * from reserva
+                  left outer join usuario on usuario.id_usuario = reserva.id_usuario`
+    const params = [id_reserva, id_usuario]
+
+    const [result] = await performQuery(query, params)
+    return result
+
+}
+
+const getUsuarioIncidencia = async (id_incidencia, id_usuario) => {
+
+    const query = `select * from incidencia
+                  left outer join usuario on usuario.id_usuario = incidencia.id_usuario`
+    const params = [id_incidencia, id_usuario]
+
+    const [result] = await performQuery(query, params)
+    return result
+
+}
+
+const getUsuarioRating = async (id_rating, id_usuario) => {
+
+    const query = `select * from rating
+                  left outer join usuario on usuario.id_usuario = rating.id_usuario`
+    const params = [id_rating, id_usuario]
+
     const [result] = await performQuery(query, params)
     return result
 
@@ -426,6 +460,84 @@ const deleteFotoCoworking = async (foto) => {
     }
 }
 
+const getCoworkingReserva = async (id_coworking) => {
+
+    const query = `
+                    SELECT * FROM sala
+            LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+            LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala
+            where sala.id_coworking = ?
+            order by sala.fecha_creacion ASC`
+    const params = [id_coworking]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
+
+const getCoworkingRating = async (id_coworking) => {
+
+    const query = `
+                    SELECT * FROM sala
+            LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+            LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala
+            LEFT OUTER JOIN rating ON rating.id_reserva = sala.id_sala
+            where sala.id_coworking = ?
+            order by sala.fecha_creacion ASC`
+    const params = [id_coworking]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
+
+const getCoworkingIncidencia = async (id_coworking) => {
+
+    const query = `
+                    SELECT * FROM sala
+            LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+            LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala
+            LEFT OUTER JOIN incidencia ON incidencia.id_sala = sala.id_sala
+            where sala.id_coworking = ?
+            order by sala.fecha_creacion ASC`
+    const params = [id_coworking]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
+
+const getCoworkingSalas = async (id_coworking) => {
+
+    const query = `
+                    SELECT * FROM sala
+            LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
+            where sala.id_coworking = ?
+            order by sala.fecha_creacion ASC`
+    const params = [id_coworking]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
+
+const getCoworkingAvgRating = async (id_coworking) => {
+
+    const query = `
+                 SELECT avg(valoracion) AS 'coworkingRating'
+                 FROM sala LEFT OUTER JOIN coworking ON coworking.id_coworking=sala.id_coworking
+                 LEFT OUTER JOIN reserva ON reserva.id_sala=sala.id_sala
+                 LEFT OUTER JOIN rating ON rating.id_reserva=sala.id_sala
+                 where coworking.id_coworking = ?
+                 group by coworking.id_coworking`
+
+    const params = [id_coworking]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
+
 
 
 
@@ -593,6 +705,64 @@ const getListSala = async (id_coworking, tipo) => {
 
 }
 
+const createFotoSala = async (fileID, id_sala) => {
+
+    const query = `INSERT INTO foto_sala (foto, id_sala)
+                     VALUES (?, ?)`
+    const params = [fileID, id_sala]
+
+    await performQuery(query, params)
+}
+
+const getFotoSala = async (id_sala) => {
+
+    const query = `select id_sala, JSON_ARRAYAGG(foto) AS fotos
+                    FROM foto_sala GROUP BY id_sala`
+    const params = [id_sala]
+    const [result] = await performQuery(query, params)
+    return result
+}
+
+
+const deleteFotoSala = async (foto) => {
+    let connection;
+
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const [result] = await connection.query(`
+            delete from foto_sala where foto = ?
+        `,
+            [foto])
+
+        return result  // potential bug because connection is not released
+    } catch (e) {
+        console.log(e)
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
+
+const getSalaAvgRating = async (id_sala) => {
+
+    const query = `
+                SELECT avg(valoracion) AS 'salaRating'
+                FROM sala LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala
+                LEFT OUTER JOIN rating ON rating.id_reserva = sala.id_sala
+                where sala.id_sala = ? 
+                group by sala.id_sala`
+
+    const params = [id_sala]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
 
 ////////////////////////////////////////////////////
 ///////////            RESERVAS          //////////
@@ -983,7 +1153,8 @@ const deleteRating = async (id_rating) => {
 //////////////                 BUSCADOR                     /////////
 ////////////////////////////////////////////////////////////////////
 
-const buscador = async (req, res, next) => {
+const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, wifi, limpieza, parking, proyector,
+         impresora, tipo, valoracion, tarifa1, tarifa2, order, direction) => {
     let connection;
 
 
@@ -991,28 +1162,8 @@ const buscador = async (req, res, next) => {
 
         connection = await getConnection();
 
-        //obtenemos criterios de búsqueda de usuario
-
-        const buscador = async (
-            provincia,
-            ciudad,
-            fecha_inicio,
-            fecha_fin,
-            capacidad,
-            wifi,
-            limpieza,
-            parking,
-            proyector,
-            impresora,
-            tipo,
-            valoracion,
-            tarifa1,
-            tarifa2,
-            order,
-            direction) => {
-
             //nombramos la query base
-            let query = `SELECT * FROM reserva;
+             query = `
             SELECT * FROM sala
             LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
             LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala`;
@@ -1028,12 +1179,13 @@ const buscador = async (req, res, next) => {
                 case "tarifa":
                     orderBy = "tarifa";
                     break;
-                case "creationDate":
+                case "fechaCreacion":
                     orderBy = "sala.fecha_creacion";
                     break;
                 default:
                     orderBy = "sala.fecha_creacion";
-            }
+                }
+        
             //establecemos los parámetros de búsqueda
         const params = [];
 
@@ -1043,10 +1195,10 @@ const buscador = async (req, res, next) => {
          //construimos query multibúsqueda
          if (provincia || ciudad || (fecha_inicio && fecha_fin) || capacidad || wifi || limpieza || parking || proyector ||
             impresora || tipo || valoracion || (tarifa1 && tarifa2)) {
-            console.log("hola");
+            
             if (provincia) {
                 conditions.push(`provincia LIKE ?`);
-                params.push(`%${provincia}%`);
+                params.push(`${provincia}`);
             }
             if (ciudad) {
                 conditions.push(`ciudad LIKE ?`)
@@ -1055,16 +1207,11 @@ const buscador = async (req, res, next) => {
             if (fecha_inicio && fecha_fin) {
                 const fecha_inicioDB = dateToDB(fecha_inicio);
                 const fecha_finDB = dateToDB(fecha_fin);
-                conditions.push(`SELECT * FROM reserva;
-                SELECT * FROM sala
-                 LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
-                 LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala
-                 WHERE provincia= ?
-                 AND fecha_inicio NOT BETWEEN fecha_inicioDB AND fecha_finDB
-                 AND fecha_fin NOT BETWEEN fecha_inicioDB AND fecha_finDB
-                 AND NOT (fecha_inicio < fecha_inicioDB AND fecha_fin > fecha_finDB
-                 AND NOT (fecha_inicio > fecha_inicioDB AND fecha_fin < fecha_finDB
-                 ORDER BY sala.fecha_creacion DESC`);
+                conditions.push(`
+                 fecha_inicio NOT BETWEEN ${fecha_inicioDB} AND ${fecha_finDB}
+                 AND fecha_fin NOT BETWEEN ${fecha_inicioDB} AND ${fecha_finDB}
+                 AND NOT (fecha_inicio < ${fecha_inicioDB} AND fecha_fin > ${fecha_finDB})
+                 AND NOT (fecha_inicio > ${fecha_inicioDB} AND fecha_fin < ${fecha_finDB})`)
                 params.push(
                     `${fecha_inicioDB}`,
                     `${fecha_finDB}`,
@@ -1113,20 +1260,21 @@ const buscador = async (req, res, next) => {
         
          //finalizamos la construcción de la query
 
-         query = `${query} WHERE ${conditions.join(` AND `)} ORDER BY ${orderBy} ${orderDirection}`;
+         query = `${query} WHERE ${conditions.join(
+                            ` AND `
+             )} ORDER BY ${orderBy} ${orderDirection}`;
 
         console.log(query, params);
-
+     
         //ejecutamos la query
         const [result] = await connection.query(query, params);
 
         //mandamos respuesta
-        res.send({
-            data: result,
-        })}
-    
-    } catch (error) {
-        next(error);
+        return result
+        
+    } catch (e) {
+        console.warn(e)
+        throw new Error('database-error')
     } finally {
         if (connection) {
             connection.release();
@@ -1134,34 +1282,6 @@ const buscador = async (req, res, next) => {
     }
 }
 
-
-
-        
-
-
-
-
-
-
-
-
-        
-
-       
-
-            //     LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
-            // LEFT OUTER JOIN reserva on reserva.id_sala = sala.id_sala
-            // WHERE provincia= 'Pontevedra'
-            // AND fecha_inicio NOT BETWEEN ${fecha_inicioDB} AND ${fecha_finDB}
-            // AND fecha_fin NOT BETWEEN ${fecha_inicioDB} AND ${fecha_finDB}
-            // AND NOT (fecha_inicio < ${fecha_inicioDB} AND  fecha_fin > ${fecha_finDB}
-            // AND NOT (fecha_inicio > ${fecha_inicioDB} AND  fecha_fin < ${fecha_finDB}
-            // ORDER BY sala.fecha_creacion DESC 
-
-            
-        
-
-       
 
 
 module.exports = {
@@ -1177,6 +1297,9 @@ module.exports = {
     updateValidationCode,
     updateContrasena,
     getUsuarioByCode,
+    getUsuarioReserva,
+    getUsuarioIncidencia,
+    getUsuarioRating,
     createCoworking,
     checkCoworking,
     getCoworking,
@@ -1186,12 +1309,21 @@ module.exports = {
     createFotoCoworking,
     getFotoCoworking,
     deleteFotoCoworking,
+    getCoworkingReserva,
+    getCoworkingRating,
+    getCoworkingIncidencia,
+    getCoworkingSalas,
+    getCoworkingAvgRating,
     createSala,
     checkSala,
     updateSala,
     getSala,
     deleteSala,
     getListSala,
+    createFotoSala,
+    getFotoSala,
+    deleteFotoSala,
+    getSalaAvgRating,
     createReserva,
     getListReserva,
     getReserva,

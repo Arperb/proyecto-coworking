@@ -147,10 +147,109 @@ const getCoworking = async (req, res) => {
   }
 }
 
+const getCoworkingReserva = async (req, res) => {
+
+    const { id_coworking } = req.params
+
+    try {
+        const coworkingReserva = await db.getCoworkingReserva(id_coworking)
+       
+        if (!coworkingReserva) {
+            res.status(404).send()
+            
+        } else {
+            res.send(coworkingReserva)
+        }
+    } catch (e) {
+        console.warn(e)
+        res.status(500).send('Este coworking no tiene reservas')
+    }
+}
+
+const getCoworkingRating = async (req, res) => {
+
+    const { id_coworking } = req.params
+
+    try {
+        const coworkingRating = await db.getCoworkingRating(id_coworking)
+       
+        if (!coworkingRating) {
+            res.status(404).send()
+            
+        } else {
+            res.send(coworkingRating)
+        }
+    } catch (e) {
+        console.warn(e)
+        res.status(500).send('Este coworking no tiene valoraciones')
+    }
+}
+
+const getCoworkingIncidencia = async (req, res) => {
+
+    const { id_coworking } = req.params
+
+    try {
+        const coworkingIncidencia = await db.getCoworkingIncidencia(id_coworking)
+       
+        if (!coworkingIncidencia) {
+            res.status(404).send()
+            
+        } else {
+            res.send(coworkingIncidencia)
+        }
+    } catch (e) {
+        console.warn(e)
+        res.status(500).send('Este coworking no tiene incidencias')
+    }
+}
+
+const getCoworkingSalas = async (req, res) => {
+
+    const { id_coworking } = req.params
+
+    try {
+        const coworkingSalas = await db.getCoworkingSalas(id_coworking)
+       
+        if (!coworkingSalas) {
+            res.status(404).send()
+            
+        } else {
+            res.send(coworkingSalas)
+        }
+    } catch (e) {
+        res.status(500).send('Este coworking aún no tiene salas registradas')
+    }
+}
+
+const getCoworkingAvgRating = async (req, res) => {
+
+    const { id_coworking } = req.params
+
+    try {
+        const coworkingAvgRating = await db.getCoworkingAvgRating(id_coworking)
+       
+        if (!coworkingAvgRating) {
+            res.status(404).send()
+            
+        } else {
+            res.send(coworkingAvgRating)
+        }
+    } catch (e) {
+        console.warn(e)
+        res.status(500).send('Este coworking no tiene valoraciones')
+    }
+}
+
   module.exports = {
     createCoworking,
     getCoworking,
     getListCoworking,
     updateCoworking,
-    deleteCoworking
+    deleteCoworking,
+    getCoworkingReserva,
+    getCoworkingRating,
+    getCoworkingIncidencia,
+    getCoworkingSalas,
+    getCoworkingAvgRating
   } 

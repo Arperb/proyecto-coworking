@@ -106,18 +106,42 @@ const usuarioIsUser = async (req, res, next) => {
 
 //COMPROBARÁ EL USUARIO DEL TOKEN CON EL .PARAMS O SI ES ADMIN
 
- const isSameUser = (req, res, next) => {
-     //OBTENEMOS ID USUARIO DE LA RUTA
-     const { id_usuario } = req.params;
+//  const isSameUser = (req, res, next) => {
 
-     //COMPROBAMOS SI EL USUARIO ES EL REGISTRADO O SI ES ADMIN
-     if (id_usuario === req.auth.email || req.auth.isAdmin) {
-         next()
-     } else {
-         res.status(403).send()
-         return 
-     }
- }
+//     //const { authorization } = req.headers;
+//     const { id_usuario } = req.params;
+//     //const decodedToken = jwt.verify(authorization,process.env.SECRET)
+//     //const usuario = await db.getUsuarioEmail(decodedToken.email)
+//     //req.auth = decodedToken
+//    console.log(req.auth.email)
+
+//     if (id_usuario === req.auth.email || req.auth.isAdmin){
+//         next()
+//     } else {
+//         res.status(403).send()
+//         return
+//     }
+
+// }
+
+const isSameUser = async (req, res, next) => {
+    const { authorization } = req.headers;
+    const { id_usuario } = req.params;
+    const decodedToken = jwt.verify(authorization,process.env.SECRET)
+    const usuario = await db.getUsuarioEmail(decodedToken.email)
+    //req.auth = decodedToken
+
+    if ((id_usuario == usuario.id_usuario) || req.auth.isAdmin){
+        next()
+
+    } else {
+        res.status(403).send()
+        return
+    }
+
+}
+
+
 
 //COMPROBACIÓN DE SI EXISTE RESERVA 
 // const isReserva = (req, res, next) => {
@@ -126,7 +150,7 @@ const usuarioIsUser = async (req, res, next) => {
 
 //     //OBTENEMOS RESERVA
 //     const reserva = await db.getReserva(id_reserva);
-//     //SI E
+//    
 //     if (!reserva.length > 0) {
 //         res.status(404).send();
 //         return;

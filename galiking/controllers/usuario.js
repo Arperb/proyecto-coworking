@@ -50,9 +50,15 @@ const uploadFotoUsuario = async (req, res) => {
         //les damos un identificador único
         const fileID = uuid.v4()
         // los guardamos en la carpeta que nos interesa
-        const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.png`
-
-        await fsPromises.writeFile(outputFileName, req.files.foto.data)
+        const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.jpg`
+        
+        const image = sharp(req.files.foto.data)
+        const imageInfo = await image.metadata()
+        if (imageInfo.width>1000) {
+            image.resize(720, 796)
+        }
+        console.log(image.width)
+        await fsPromises.writeFile(outputFileName, image)
 
         //         //guardar una referencia a este uuid en la base de datos
         //         //para que luego el front llame al get para que le de el uuid
@@ -80,7 +86,7 @@ const getFotoUsuario = async (req, res) => {
 
      //comprobar si la imagen existe
      //const path = `/home/hack21/proyecto-coworking/galiking/images/profile/${foto}.png`
-     const path = `${__dirname}/process.env.TARGET_FOLDER/profile/${foto}.png`
+     const path = `${__dirname}/process.env.TARGET_FOLDER/profile/${foto}.jpg`
      console.log(path)
    
      try {
@@ -392,6 +398,63 @@ const logout = async (req, res, next) => {
      res.send('sesión finalizada correctamente')
  }
 
+ const getUsuarioReserva = async (req, res) => {
+
+    const { id_reserva, id_usuario } = req.params
+
+    try {
+        const usuarioReserva = await db.getUsuarioReserva(id_reserva, id_usuario)
+       
+        if (!usuarioReserva) {
+            res.status(404).send()
+            
+        } else {
+            res.send(usuarioReserva)
+        }
+    } catch (e) {
+        console.log(e)
+        res.status(500).send('No tienes reservas creadas')
+    }
+}
+
+const getUsuarioIncidencia = async (req, res) => {
+
+    const { id_incidencia, id_usuario } = req.params
+
+    try {
+        const usuarioIncidencia = await db.getUsuarioIncidencia(id_incidencia, id_usuario)
+       
+        if (!usuarioIncidencia) {
+            res.status(404).send()
+            
+        } else {
+            res.send(usuarioIncidencia)
+        }
+    } catch (e) {
+        console.log(e)
+        res.status(500).send('No tienes incidencias registradas')
+    }
+}
+
+const getUsuarioRating = async (req, res) => {
+
+    const { id_rating, id_usuario } = req.params
+
+    try {
+        const usuarioRating = await db.getUsuarioRating(id_rating, id_usuario)
+       
+        if (!usuarioRating) {
+            res.status(404).send()
+            
+        } else {
+            res.send(usuarioRating)
+        }
+    } catch (e) {
+        console.log(e)
+        res.status(500).send('No tienes valoraciones registradas')
+    }
+}
+
 module.exports = {
     createUsuario,
     uploadFotoUsuario,
@@ -406,5 +469,8 @@ module.exports = {
     updateUsuario,
     deleteUsuario,
     getUsuarioId,
-    logout
+    logout,
+    getUsuarioReserva,
+    getUsuarioIncidencia,
+    getUsuarioRating
 } 

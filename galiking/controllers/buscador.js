@@ -22,7 +22,7 @@ const buscador = async (req, res) => {
             direction } = req.query;
 
             try {
-                let coworking = await db.buscador(
+                let buscador = await db.buscador(
                 provincia,
                 ciudad,
                 fecha_inicio,
@@ -40,10 +40,16 @@ const buscador = async (req, res) => {
                 order,
                 direction);
 
-                res.send(coworking);
+                if (!buscador) {
+                  res.status(404).send()
+                  
+              } else {
+                  res.send(buscador)
+              }
+              
               } catch (e) {
                 console.log(e)
-                res.status(500).send();
+                res.status(500).send('Lo sentimos, no tenemos ningún coworking disponible con esas características');
               }
             };
 

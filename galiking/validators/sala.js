@@ -42,20 +42,22 @@ const salaValidator = Joi.object({
         ),
 
     disponibilidad: Joi.string()
-        .valid('si', 'no')
+        .valid('limpio', 'pendiente de limpieza')
         .error(
-            new Error('disponibilidad should be a string valid: si/no')
+            new Error('disponibilidad should be a string valid: limpio/pendiente de limpieza')
         ),
 
-    proyector: Joi.boolean()
+    proyector: Joi.string()
+        .valid('si', 'no')
         .error(
-         new Error('proyector should be true or false')
-    ),
+             new Error('proyector should be a string valid: si/no')
+        ),
 
-    impresora: Joi.boolean()
-        .error(
-         new Error('impresora should be true or false')
-    ),
+    impresora: Joi.string()
+        .valid('si', 'no')
+         .error(
+            new Error('impresora should be a string valid: si/no')
+        ),
     })
 
     module.exports = {

@@ -83,12 +83,12 @@ const sendConfirmationMailReserva = async (email) => {
   const message = {
       to: email,
       from: 'esther_h_e@hotmail.com',
-      subject: 'Confirmation de reserva',
-      text: ``,
+      subject: 'Confirmation de pago',
+      text: `La dirección de verificación es`,
       html: `
       <div>
-        <h1> Confirmación de reserva </h1>
-        <p> Tu reserva se ha realizado con éxito </p>
+        <h1> Confirmación del pago de su reserva </h1>
+        <p> El pago de tu reserva se ha realizado con éxito </p>
         
       </div>
     `,
@@ -107,7 +107,7 @@ const sendConfirmationMailIncidencia = async (email) => {
       to: email,
       from: 'esther_h_e@hotmail.com',
       subject: 'Confirmación de incidencia',
-      text: ``,
+      text: `La dirección de verificación es`,
       html: `
       <div>
         <h1> Confirmación de la incidencia </h1>
@@ -129,11 +129,11 @@ const sendConfirmationMailValoracion = async (email) => {
   const message = {
       to: email,
       from: 'esther_h_e@hotmail.com',
-      subject: 'Confirmación de validación',
-      text: ``,
+      subject: 'Confirmación de valoración',
+      text: `La dirección de verificación es`,
       html: `
       <div>
-        <h1> Confirmación de la validación </h1>
+        <h1> Confirmación de la valoración de tu reserva </h1>
         <p> Tu validación ha sido registrada con éxito </p>
         
       </div>

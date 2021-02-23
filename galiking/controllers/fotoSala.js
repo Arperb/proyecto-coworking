@@ -7,45 +7,41 @@ const fsPromises = require('fs').promises;
 const { getConnection } = require('../db/db');
 const sharp = require('sharp');
 
-const getFotoCoworking = async (req, res) => {
+const getFotoSala = async (req, res) => {
 
-    const { id_coworking } = req.params
+    const { id_sala } = req.params
   
     try {
-        const foto_coworking = await db.getFotoCoworking(id_coworking)
-        res.send(foto_coworking)
+        const foto_sala = await db.getFotoSala(id_sala)
+        res.send(foto_sala)
     } catch (e) {
         res.status(500).send()
     }
   }
 
-const createFotoCoworking = async (req, res) => {  
+const createFotoSala = async (req, res) => {  
 
-    const { id_coworking } = req.params
+    const { id_sala } = req.params
 
     //recibimos los ficheros(si no existe la carpeta la crea)
-     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/cwk`, { recursive: true })
+     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/salas`, { recursive: true })
 
     try {
+       
+        // pasamos la imagen por sharp
 
         //les damos un identificador único
         const fileID = uuid.v4()
+
         // los guardamos en la carpeta que nos interesa
-        const outputFileName = `${process.env.TARGET_FOLDER}/cwk/${fileID}.jpg`
+        const outputFileName = `${process.env.TARGET_FOLDER}/salas/${fileID}.jpg`
+         
+        await fsPromises.writeFile(outputFileName, req.files.foto.data)
 
-        const image = sharp(req.files.foto.data)
-        const imageInfo = await image.metadata()
-        if (imageInfo.width>1000) {
-            image.resize(1000)
-        }
-        console.log(image.width)
-        await fsPromises.writeFile(outputFileName, image)
-
-    
         //guardar una referencia a este uuid en la base de datos
         //para que luego el front llame al get para que le de el uuid
         try {
-            await db.createFotoCoworking(fileID, id_coworking)
+            await db.createFotoCoworking(fileID, id_sala)
 
 
         } catch (e) {
@@ -62,19 +58,19 @@ const createFotoCoworking = async (req, res) => {
     }
 }
 
-const deleteFotoCoworking = async (req, res) => {
+const deleteFotoSala = async (req, res) => {
     const { foto } = req.params;
 
     try {
     
-        const foto_coworking = await db.getFotoCoworking(foto)
+        const foto_sala = await db.getFotoSala(foto)
 
-        if (!foto_coworking) {
+        if (!foto_sala) {
             res.status(404).send()
             return
         }
 
-        await db.deleteFotoCoworking(foto)
+        await db.deleteFotoSala(foto)
 
         res.send("foto eliminada con éxito")
     } catch (e) {
@@ -89,13 +85,8 @@ const deleteFotoCoworking = async (req, res) => {
 }
 
 
-
-
-
-
-
 module.exports = {
-	createFotoCoworking,
-	getFotoCoworking,
-    deleteFotoCoworking
+	createFotoSala,
+	getFotoSala,
+    deleteFotoSala
 }
