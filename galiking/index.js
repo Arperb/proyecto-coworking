@@ -100,6 +100,7 @@ const {
         usuarioIsUser,
         isAuthenticated,
         isSameUser,
+        coworkingOwner,
         isReserva,
         checkIncidencia,
         checkCoworking
@@ -196,35 +197,35 @@ app.post('/usuario/logout', isAuthenticated, logout)
 
 //Crear un nuevo espacio coworking
 
-app.post('/coworking', isAuthenticated, usuarioIsOwner, createCoworking)
+app.post('/coworking', isAuthenticated, coworkingOwner, createCoworking)
 
 //obtener todos los datos de un espacio coworking a través del ID
 
-app.get('/coworking/:id_coworking', isAuthenticated, usuarioIsOwner, getCoworking)
+app.get('/coworking/:id_coworking', isAuthenticated, coworkingOwner, getCoworking)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 
-app.get('/coworking', isAuthenticated, usuarioIsOwner, getListCoworking)
+app.get('/coworking', isAuthenticated, coworkingOwner, getListCoworking)
 
 //modificar datos espacio coworking
 
-app.put('/coworking/:id_coworking', isAuthenticated, usuarioIsOwner, updateCoworking)
+app.put('/coworking/:id_coworking', isAuthenticated, coworkingOwner, updateCoworking)
 
 //borrar espacio coworking
 
-app.delete('/coworking/:id_coworking', isAuthenticated, usuarioIsOwner, deleteCoworking)
+app.delete('/coworking/:id_coworking', isAuthenticated, coworkingOwner, deleteCoworking)
 
 //Añadir foto a coworking
 
-app.post('/foto-coworking/:id_coworking', isAuthenticated, usuarioIsOwner, createFotoCoworking)
+app.post('/foto-coworking/:id_coworking', isAuthenticated, coworkingOwner, createFotoCoworking)
 
 //Ver foto coworking
 
-app.get('/foto-coworking/:id_coworking', isAuthenticated, usuarioIsOwner, getFotoCoworking)
+app.get('/foto-coworking/:id_coworking', isAuthenticated, coworkingOwner, getFotoCoworking)
 
 //borrar foto
 
-app.delete('/foto-coworking/:foto', isAuthenticated, usuarioIsOwner, deleteFotoCoworking)
+app.delete('/foto-coworking/:foto', isAuthenticated, coworkingOwner, deleteFotoCoworking)
 
 //////////////////////////////////////////////////
 //////                SALA                   /////

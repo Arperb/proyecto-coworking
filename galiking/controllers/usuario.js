@@ -30,7 +30,7 @@ const createUsuario = async (req, res) => {
         sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
 
     } catch (e) {
-      
+    
         res.status(400).send("error de registro")
         return
     }
@@ -123,16 +123,16 @@ const login = async (req, res) => {
     
         const usuario = await db.getUsuarioEmail(email)
 
-
         if (!usuario) {
-            res.status(401).send()
+            res.status(401).send('este usuario no existe')
             return
+            
         }
 
         const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
 
         if (!validContrasena) {
-            res.status(401).send()
+            res.status(401).send('la contraseña no es valida')
             return
         }
 

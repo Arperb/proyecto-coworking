@@ -15,9 +15,7 @@ const buscador = async (req, res) => {
             proyector,
             impresora,
             tipo,
-            valoracion,
-            tarifa1,
-            tarifa2,
+            tarifa,
             order,
             direction } = req.query;
 
@@ -34,15 +32,13 @@ const buscador = async (req, res) => {
                 proyector,
                 impresora,
                 tipo,
-                valoracion,
-                tarifa1,
-                tarifa2,
+                tarifa,
                 order,
                 direction);
 
                 if (!buscador) {
                   res.status(404).send()
-                  
+                
               } else {
                   res.send(buscador)
               }

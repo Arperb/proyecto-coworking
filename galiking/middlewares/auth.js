@@ -67,8 +67,8 @@ const usuarioIsOwner = async (req, res, next) => {
 
         const usuario = await db.getUsuarioEmail(decodedToken.email)
      
-     if (usuario.rol =="cliente") {
-         const error = new Error("tu deberías de ser propietario de un coworking o administrador para acceder a este recurso");
+     if (usuario.rol !=="propietario") {
+         const error = new Error("tu deberías de ser propietario de un coworking para acceder a este recurso");
         error.httpCode = 401;
          next(error);
          
@@ -132,6 +132,25 @@ const isSameUser = async (req, res, next) => {
     //req.auth = decodedToken
 
     if ((id_usuario == usuario.id_usuario) || req.auth.isAdmin){
+        next()
+
+    } else {
+        res.status(403).send()
+        return
+    }
+
+}
+
+const coworkingOwner = async (req, res, next) => {
+    const { authorization } = req.headers;
+    const decodedToken = jwt.verify(authorization,process.env.SECRET)
+    const usuario = await db.getUsuarioEmail(decodedToken.email)
+    const { id_coworking } = req.params;
+    const owner = await db.getCoworkingOwner(id_coworking)
+    const ownerId = owner[0]
+    req.auth = decodedToken
+   
+    if ((usuario.id_usuario == ownerId.id_usuario) || req.auth.isAdmin) {
         next()
 
     } else {
@@ -226,6 +245,7 @@ module.exports = {
     usuarioIsUser,
     isAuthenticated,
     isSameUser,
+    coworkingOwner
     //isReserva,
     //checkIncidencia,
     //checkCoworking

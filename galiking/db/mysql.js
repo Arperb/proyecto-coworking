@@ -538,6 +538,20 @@ const getCoworkingAvgRating = async (id_coworking) => {
 
 }
 
+const getCoworkingOwner = async (id_coworking) => {
+
+    const query = `
+                SELECT coworking.id_coworking,
+                       usuario.id_usuario,
+                       usuario.email from usuario LEFT OUTER JOIN coworking ON coworking.id_usuario=usuario.id_usuario
+                       where coworking.id_coworking=?`
+
+    const params = [id_coworking]
+
+    const result = await performQuery(query, params)
+    return result
+
+}
 
 
 
@@ -1111,7 +1125,7 @@ const deleteRating = async (id_rating) => {
 ////////////////////////////////////////////////////////////////////
 
 const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, wifi, limpieza, parking, proyector,
-         impresora, tipo, valoracion, tarifa1, tarifa2, order, direction) => {
+         impresora, tipo, tarifa, order, direction) => {
     let connection;
 
 
@@ -1151,7 +1165,7 @@ const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, w
 
          //construimos query multibúsqueda
          if (provincia || ciudad || (fecha_inicio && fecha_fin) || capacidad || wifi || limpieza || parking || proyector ||
-            impresora || tipo || valoracion || (tarifa1 && tarifa2)) {
+            impresora || tipo || tarifa) {
             
             if (provincia) {
                 conditions.push(`provincia LIKE ?`);
@@ -1204,15 +1218,13 @@ const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, w
                 conditions.push(`tipo=?`);
                 params.push(`${tipo}`);
             }
-            if (valoracion) {
-                conditions.push(`valoracion>=?`);
-                params.push(`${valoracion}`);
-            }
-
-            if (tarifa1 && tarifa2) {
-                conditions.push(`tarifa1 BETWEEN ? AND ?`);
-                params.push(`${tarifa1}`, `${tarifa2}`);
-            }
+           
+             if (tarifa) {
+                 if (tarifa) {
+                 conditions.push(`tarifa <=?`);
+                 params.push(`${tarifa}`);
+                } 
+             }
         }
         
          //finalizamos la construcción de la query
@@ -1271,6 +1283,7 @@ module.exports = {
     getCoworkingIncidencia,
     getCoworkingSalas,
     getCoworkingAvgRating,
+    getCoworkingOwner,
     createSala,
     checkSala,
     updateSala,
