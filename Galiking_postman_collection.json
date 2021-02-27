@@ -1,0 +1,2169 @@
+{
+	"info": {
+		"_postman_id": "e0752143-cf21-4e50-9a88-33e7c3555852",
+		"name": "Galiking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuario ",
+			"item": [
+				{
+					"name": "listar usuarios",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiZW1haWwiOiJ0Z3YxNTA3NEBjdW9seS5jb20iLCJpYXQiOjE2MTMwOTkzMzQsImV4cCI6MTYxMzE4NTczNH0.72B1cq0uUFKdBwKMR6dWS61j1NR7OrHxfoVQ0gQB4DQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario?telefono=986789652",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario"
+							],
+							"query": [
+								{
+									"key": "telefono",
+									"value": "986789652"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver usuario",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEyODkyNTgxLCJleHAiOjE2MTI5Nzg5ODF9.y9IYNUcgtsiH0VxA6jn27UJnP3BY1DC9_Dg7966ZvHw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/usuario/178",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"178"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nif_cif",
+									"value": "74508602p",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "zux39369@cuoly.com",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "658412042",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Administrador galiking",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nombre",
+									"value": "Galiking",
+									"type": "text"
+								},
+								{
+									"key": "rol",
+									"value": "administrador",
+									"type": "text"
+								},
+								{
+									"key": "contrasena",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/213",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"213"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiZW1haWwiOiJ6dXgzOTM2OUBjdW9seS5jb20iLCJpYXQiOjE2MTM5MTU2MzksImV4cCI6MTYxNDAwMjAzOX0.5TQ0S03snmYXHdkzRdkf7DnPDm-jC2GS4Iuh6u_LGUU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/216",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"216"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear-registrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "nif_cif",
+									"value": "66147410t",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "oay52337@eoopy.com",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "698452777",
+									"type": "text"
+								},
+								{
+									"key": "bio",
+									"value": "Administrador Galiking",
+									"type": "text"
+								},
+								{
+									"key": "foto",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nombre",
+									"value": "Galiking",
+									"type": "text"
+								},
+								{
+									"key": "rol",
+									"value": "administrador",
+									"type": "text"
+								},
+								{
+									"key": "contrasena",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "id_usuario",
+									"value": "18",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validar usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9999/usuario/validate/pOVxZSEMbwkFzwCaHhRTOGozlAVUbqZHS8ZGFGd4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"validate",
+								"pOVxZSEMbwkFzwCaHhRTOGozlAVUbqZHS8ZGFGd4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "oay52337@eoopy.com",
+									"type": "text"
+								},
+								{
+									"key": "contrasena",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/login/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "actualizar contraseña",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoibXZuMzg2ODBAZW9vcHkuY29tIiwiaWF0IjoxNjEzODU2Njg4LCJleHAiOjE2MTM5NDMwODh9.TOFKRgMtsR-PfL2IgQaGoA-R-zZyLSIQk0-wIHAXxmc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "176",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nif_cif",
+									"value": "80177290n",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "email",
+									"value": "mvn38680@eoopy.com",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "986789652",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nombre",
+									"value": "prueba login",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "rol",
+									"value": "propietario",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "contrasena",
+									"value": "12345678910",
+									"type": "text"
+								},
+								{
+									"key": "newContrasena",
+									"value": "123456",
+									"type": "text"
+								},
+								{
+									"key": "newContrasenaRepeat",
+									"value": "123456",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/210/update-contrasena",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"210",
+								"update-contrasena"
+							],
+							"query": [
+								{
+									"key": "authorization",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "recuperar contraseña",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "aperbarc@gmail.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/recover-contrasena",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"recover-contrasena"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "code para poder actualizar contraseña olvidada",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/contrasena/reset/hqkX4TXW7qfO50OaIwwSMZEQ9zj39NXnTD8dma9j",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"contrasena",
+								"reset",
+								"hqkX4TXW7qfO50OaIwwSMZEQ9zj39NXnTD8dma9j"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar contraseña olvidada",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email",
+									"value": "aperbarc@gmail.com",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "newContrasena",
+									"value": "12345678910",
+									"type": "text"
+								},
+								{
+									"key": "newContrasenaRepeat",
+									"value": "12345678910",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/update-reset-contrasena/hqkX4TXW7qfO50OaIwwSMZEQ9zj39NXnTD8dma9j",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"update-reset-contrasena",
+								"hqkX4TXW7qfO50OaIwwSMZEQ9zj39NXnTD8dma9j"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiZW1haWwiOiJvYXk1MjMzN0Blb29weS5jb20iLCJpYXQiOjE2MTQxODM1MDEsImV4cCI6MTYxNDI2OTkwMX0.yagxGcImwo6R3c40SmA7Fhi7GM9AfQBUblzsT4WENug",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver foto",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InZvajQwODM3QGN1b2x5LmNvbSIsImlhdCI6MTYxMzYwMjI4NiwiZXhwIjoxNjEzNjg4Njg2fQ.Y-wTFwef2GE56NNUJnmb4jyYUKEkoXGZVpl8sxSH_8g",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/profile/2500d43d-28e3-4eb6-a4f7-8fb6943d8480",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"profile",
+								"2500d43d-28e3-4eb6-a4f7-8fb6943d8480"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir foto usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiZW1haWwiOiJvYXk1MjMzN0Blb29weS5jb20iLCJpYXQiOjE2MTQxMzY5ODQsImV4cCI6MTYxNDIyMzM4NH0.P4NNlHFcnOuIow5pKi0NchWm6leHPiqBpmS4rfXDv5o",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/home/hack21/Downloads/perfiles/perfil1.jpg"
+								},
+								{
+									"key": "id_usuario",
+									"value": "159",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/usuario/233/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"233",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Espacio coworking",
+			"item": [
+				{
+					"name": "listar espacios coworking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9999/coworking?telefono=986547213",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking"
+							],
+							"query": [
+								{
+									"key": "telefono",
+									"value": "986547213"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver espacio coworking",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9999/coworking/52",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear espacio coworking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InR5Zzg3OTIzQGVvb3B5LmNvbSIsImlhdCI6MTYxNDA5Njg0OSwiZXhwIjoxNjE0MTgzMjQ5fQ.7S9Cd8ZuVaKhPIkTQ9inqi1LEXGbgDWecDVeTF_VXfc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "232",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Coworking Vigo",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "986 13 61 55",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "Rúa de Pontevedra, 1",
+									"type": "text"
+								},
+								{
+									"key": "ciudad",
+									"value": "VIgo",
+									"type": "text"
+								},
+								{
+									"key": "provincia",
+									"value": "Pontevedra",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Somos la mejor solución para PYMES, delegaciones comerciales, emprendedores y autónomos.",
+									"type": "text"
+								},
+								{
+									"key": "wifi",
+									"value": "si",
+									"type": "text"
+								},
+								{
+									"key": "limpieza",
+									"value": "si",
+									"type": "text"
+								},
+								{
+									"key": "parking",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "web",
+									"value": "www.coworking-vigo.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/coworking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editar espacio coworking",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InR5Zzg3OTIzQGVvb3B5LmNvbSIsImlhdCI6MTYxNDEzNjkyNiwiZXhwIjoxNjE0MjIzMzI2fQ.gzfTwzZPEgQKfZ2QachYDKxCW1CAXnqfRfkHPMrT-mM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "232",
+									"type": "text"
+								},
+								{
+									"key": "nombre",
+									"value": "Coworking Vigo",
+									"type": "text"
+								},
+								{
+									"key": "telefono",
+									"value": "986 13 61 55",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "Rúa de Pontevedra, 1",
+									"type": "text"
+								},
+								{
+									"key": "ciudad",
+									"value": "VIgo",
+									"type": "text"
+								},
+								{
+									"key": "provincia",
+									"value": "Pontevedra",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "s la mejor solución para PYMES, delegaciones comerciales, emprendedores y autónomos.",
+									"type": "text"
+								},
+								{
+									"key": "wifi",
+									"value": "si",
+									"type": "text"
+								},
+								{
+									"key": "limpieza",
+									"value": "si",
+									"type": "text"
+								},
+								{
+									"key": "parking",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "web",
+									"value": "www.coworking-vigo.com",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/coworking/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar espacio coworking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:9999/coworking/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir foto coworking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiZW1haWwiOiJ6dXgzOTM2OUBjdW9seS5jb20iLCJpYXQiOjE2MTQxMDEyMTUsImV4cCI6MTYxNDE4NzYxNX0.Mql6ungKN_CO8wzwVTthqhVybKgfbGPd10eOX1Mjq3w"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "foto",
+									"type": "file",
+									"src": "/home/hack21/Downloads/sala29.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/foto-coworking/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"foto-coworking",
+								"11"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver foto coworking",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InZvajQwODM3QGN1b2x5LmNvbSIsImlhdCI6MTYxMzYwMjI4NiwiZXhwIjoxNjEzNjg4Njg2fQ.Y-wTFwef2GE56NNUJnmb4jyYUKEkoXGZVpl8sxSH_8g",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/foto-coworking/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"foto-coworking",
+								"1"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar foto coworking",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "foto",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/foto-coworking/a2a7817d-824d-4f7b-97c9-6f082bcd3674",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"foto-coworking",
+								"a2a7817d-824d-4f7b-97c9-6f082bcd3674"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Salas",
+			"item": [
+				{
+					"name": "Crear sala",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InR5Zzg3OTIzQGVvb3B5LmNvbSIsImlhdCI6MTYxNDEwNjUzMywiZXhwIjoxNjE0MTkyOTMzfQ.kluQpwGItiqpNZMJ3dDaemPA1UoE2u55WnPvDOXM8pA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_coworking",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "id_incidencia",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "tipo",
+									"value": "compartida",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Mesa de trabajo doble de 180x100cm",
+									"type": "text"
+								},
+								{
+									"key": "capacidad",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "tarifa",
+									"value": "270",
+									"type": "text"
+								},
+								{
+									"key": "tarifa_tipo",
+									"value": "mes",
+									"type": "text"
+								},
+								{
+									"key": "disponibilidad",
+									"value": "limpio",
+									"type": "text"
+								},
+								{
+									"key": "proyector",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "impresora",
+									"value": "si",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/sala",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sala"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar sala",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InZvajQwODM3QGN1b2x5LmNvbSIsImlhdCI6MTYxMzAxMDMwMCwiZXhwIjoxNjEzMDk2NzAwfQ.BE3sRXYHdw0mHJ3hkBq4DR6nCPCKMYuLdjDVgh1RIhM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_coworking",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "tipo",
+									"value": "sala de reuniones",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "hemos añadido otra mesa",
+									"type": "text"
+								},
+								{
+									"key": "capacidad",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "tarifa",
+									"value": "18",
+									"type": "text"
+								},
+								{
+									"key": "tarifa_tipo",
+									"value": "mes",
+									"type": "text"
+								},
+								{
+									"key": "disponibilidad",
+									"value": "si",
+									"type": "text"
+								},
+								{
+									"key": "proyector",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "impresora",
+									"value": "true",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/sala/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sala",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar sala",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InZvajQwODM3QGN1b2x5LmNvbSIsImlhdCI6MTYxMzAxMDMwMCwiZXhwIjoxNjEzMDk2NzAwfQ.BE3sRXYHdw0mHJ3hkBq4DR6nCPCKMYuLdjDVgh1RIhM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/sala/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sala",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ver sala",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InZvajQwODM3QGN1b2x5LmNvbSIsImlhdCI6MTYxMzAxMDMwMCwiZXhwIjoxNjEzMDk2NzAwfQ.BE3sRXYHdw0mHJ3hkBq4DR6nCPCKMYuLdjDVgh1RIhM"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/sala/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sala",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar salas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjp0cnVlLCJyb2wiOiJhZG1pbmlzdHJhZG9yIiwiZW1haWwiOiJ0Z3YxNTA3NEBjdW9seS5jb20iLCJpYXQiOjE2MTMwOTkzMzQsImV4cCI6MTYxMzE4NTczNH0.72B1cq0uUFKdBwKMR6dWS61j1NR7OrHxfoVQ0gQB4DQ"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/sala?id_coworking=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sala"
+							],
+							"query": [
+								{
+									"key": "id_coworking",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reserva",
+			"item": [
+				{
+					"name": "Crear reserva",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoia3VjODUyMzhAY3VvbHkuY29tIiwiaWF0IjoxNjE0MDAwMDM2LCJleHAiOjE2MTQwODY0MzZ9.rgSZgDv1ky4_hvj3rCRy9OuL42WfcPHti4tu-mayqoo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_sala",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "id_usuario",
+									"value": "231",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "activado",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2021-01-01",
+									"type": "text"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2021-01-31",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/reserva",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"reserva"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Editar reserva",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzMTgyMjA5LCJleHAiOjE2MTMyNjg2MDl9.2h4-0dn0t-LylKXdqQrIqNyLWDQNnLf5zAvMtDW2aaQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_sala",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "id_coworking",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "activado",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2021-06-20",
+									"type": "text"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2021-06-24",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/reserva/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"reserva",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar reserva",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzMTgyMjA5LCJleHAiOjE2MTMyNjg2MDl9.2h4-0dn0t-LylKXdqQrIqNyLWDQNnLf5zAvMtDW2aaQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_sala",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "id_coworking",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "activado",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2021-06-20",
+									"type": "text"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2021-06-24",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/reserva/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"reserva",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver reserva",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzMTgyMjA5LCJleHAiOjE2MTMyNjg2MDl9.2h4-0dn0t-LylKXdqQrIqNyLWDQNnLf5zAvMtDW2aaQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_sala",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "id_coworking",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "estado",
+									"value": "activado",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "fecha_inicio",
+									"value": "2021-06-20",
+									"type": "text"
+								},
+								{
+									"key": "fecha_fin",
+									"value": "2021-06-24",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/reserva/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"reserva",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Incidencia",
+			"item": [
+				{
+					"name": "Crear incidencia",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYnl4MTA0ODFAZW9vcHkuY29tIiwiaWF0IjoxNjEzOTUxMTU0LCJleHAiOjE2MTQwMzc1NTR9.qMM1pZCbffRKTIDhiZp2itmvv9ozK4XPFjO3C93OEg8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "230",
+									"type": "text"
+								},
+								{
+									"key": "id_sala",
+									"value": "10",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "categoria",
+									"value": "equipacion",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "El proyector parpadea",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/incidencia",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"incidencia"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar incidencia",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzNTA5MDg5LCJleHAiOjE2MTM1OTU0ODl9.hLm9CdWBhweL2ceSDLd1HFAYIT-1D8yFDfTiOl7QB18",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "id_sala",
+									"value": "2",
+									"type": "text"
+								},
+								{
+									"key": "estado",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "categoria",
+									"value": "limpieza",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "Había papeles en la papelera, pero pocos",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/incidencia/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"incidencia",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar incidencia",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzNTA5MDg5LCJleHAiOjE2MTM1OTU0ODl9.hLm9CdWBhweL2ceSDLd1HFAYIT-1D8yFDfTiOl7QB18",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/incidencia/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"incidencia",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver incidencia",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzNTA5MDg5LCJleHAiOjE2MTM1OTU0ODl9.hLm9CdWBhweL2ceSDLd1HFAYIT-1D8yFDfTiOl7QB18",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "http://localhost:9999/incidencia/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"incidencia",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rating",
+			"item": [
+				{
+					"name": "Crear valoración",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoia3VjODUyMzhAY3VvbHkuY29tIiwiaWF0IjoxNjE0MDAwMDM2LCJleHAiOjE2MTQwODY0MzZ9.rgSZgDv1ky4_hvj3rCRy9OuL42WfcPHti4tu-mayqoo",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "231",
+									"type": "text"
+								},
+								{
+									"key": "id_reserva",
+									"value": "11",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar valoración",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzNTE3MzE1LCJleHAiOjE2MTM2MDM3MTV9.9s9jWUVDYMzxGu_QqNSYmuJVKiiWLlh7yEpWjV-iDzY"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "id_reserva",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/rating/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"rating",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ver valoración",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzNTE3MzE1LCJleHAiOjE2MTM2MDM3MTV9.9s9jWUVDYMzxGu_QqNSYmuJVKiiWLlh7yEpWjV-iDzY"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "id_reserva",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/rating/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"rating",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar valoración",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoiYXBlcmJhcmNAZ21haWwuY29tIiwiaWF0IjoxNjEzNTE3MzE1LCJleHAiOjE2MTM2MDM3MTV9.9s9jWUVDYMzxGu_QqNSYmuJVKiiWLlh7yEpWjV-iDzY"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_usuario",
+									"value": "178",
+									"type": "text"
+								},
+								{
+									"key": "id_reserva",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "valoracion",
+									"value": "4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:9999/rating/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"rating",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Consulta de datos",
+			"item": [
+				{
+					"name": "Usuario ve sus reservas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoibXJjOTMyMzhAZW9vcHkuY29tIiwiaWF0IjoxNjEzOTUyNzgxLCJleHAiOjE2MTQwMzkxODF9.YMz-dYZ_v4lUMKaW3PiClSgB21HctodvTsvpWI9cWsQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/usuario/224/reservas/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"224",
+								"reservas",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario ve sus incidencias",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoibXJjOTMyMzhAZW9vcHkuY29tIiwiaWF0IjoxNjEzOTUyNzgxLCJleHAiOjE2MTQwMzkxODF9.YMz-dYZ_v4lUMKaW3PiClSgB21HctodvTsvpWI9cWsQ"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/usuario/224/incidencias/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"224",
+								"incidencias",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario ve sus valoraciones",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoiY2xpZW50ZSIsImVtYWlsIjoibXJjOTMyMzhAZW9vcHkuY29tIiwiaWF0IjoxNjEzOTUyNzgxLCJleHAiOjE2MTQwMzkxODF9.YMz-dYZ_v4lUMKaW3PiClSgB21HctodvTsvpWI9cWsQ"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/usuario/224/rating/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"usuario",
+								"224",
+								"rating",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coworking ve sus reservas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InpjdDgyMjUyQGN1b2x5LmNvbSIsImlhdCI6MTYxMzk1NjAyNiwiZXhwIjoxNjE0MDQyNDI2fQ.u2MJAB1EfXZI8iZCTiD50L6vvhwbRYA5DzXQKOoQS1Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/coworking/3/reservas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"3",
+								"reservas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coworking ve sus valoraciones",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InpjdDgyMjUyQGN1b2x5LmNvbSIsImlhdCI6MTYxMzk1NjAyNiwiZXhwIjoxNjE0MDQyNDI2fQ.u2MJAB1EfXZI8iZCTiD50L6vvhwbRYA5DzXQKOoQS1Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/coworking/3/rating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"3",
+								"rating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coworking ve sus incidencias",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InpjdDgyMjUyQGN1b2x5LmNvbSIsImlhdCI6MTYxMzk1NjAyNiwiZXhwIjoxNjE0MDQyNDI2fQ.u2MJAB1EfXZI8iZCTiD50L6vvhwbRYA5DzXQKOoQS1Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/coworking/3/incidencias",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"3",
+								"incidencias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Coworking ve sus salas registradas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InpjdDgyMjUyQGN1b2x5LmNvbSIsImlhdCI6MTYxMzk1NjAyNiwiZXhwIjoxNjE0MDQyNDI2fQ.u2MJAB1EfXZI8iZCTiD50L6vvhwbRYA5DzXQKOoQS1Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/coworking/3/salas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"3",
+								"salas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valoración media de un coworking",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InpjdDgyMjUyQGN1b2x5LmNvbSIsImlhdCI6MTYxMzk1NjAyNiwiZXhwIjoxNjE0MDQyNDI2fQ.u2MJAB1EfXZI8iZCTiD50L6vvhwbRYA5DzXQKOoQS1Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/coworking/4/avgRating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"coworking",
+								"4",
+								"avgRating"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Valoración media de una sala",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"type": "text",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjpmYWxzZSwicm9sIjoicHJvcGlldGFyaW8iLCJlbWFpbCI6InpjdDgyMjUyQGN1b2x5LmNvbSIsImlhdCI6MTYxMzk1NjAyNiwiZXhwIjoxNjE0MDQyNDI2fQ.u2MJAB1EfXZI8iZCTiD50L6vvhwbRYA5DzXQKOoQS1Y"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9999/sala/4/avgRating",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9999",
+							"path": [
+								"sala",
+								"4",
+								"avgRating"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Buscador",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"fecha_inicio\": \"2021-06-10\",\n    \"fecha_fin\": \"2021-06-15\",\n    \"provincia\": \"Pontevedra\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:9999/buscador?fecha_inicio=2021-06-13T00:00&fecha_fin=2021-06-23T00:00&provincia=Pontevedra",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9999",
+					"path": [
+						"buscador"
+					],
+					"query": [
+						{
+							"key": "fecha_inicio",
+							"value": "2021-06-13T00:00"
+						},
+						{
+							"key": "fecha_fin",
+							"value": "2021-06-23T00:00"
+						},
+						{
+							"key": "provincia",
+							"value": "Pontevedra"
+						},
+						{
+							"key": "ciudad",
+							"value": "vIgo",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
