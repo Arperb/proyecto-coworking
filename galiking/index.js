@@ -7,6 +7,7 @@ const express = require('express');
 const fileUpload = require("express-fileupload");
 const uuid = require('uuid');
 const cors = require('cors');
+const path = require("path");
 
 
 const app = express();
