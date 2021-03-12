@@ -1,0 +1,4 @@
+.page.map .leaflet-container{
+    height: 500px;
+    max-width: 700px;
+}

@@ -1,72 +1,76 @@
-import { Route, Switch, useHistory } from 'react-router-dom';
-
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './App.css';
 
- import Header from './componentes/Header';
-  import Home from './paginas/Home';
-// import ShowCoworking from './Coworking/ShowCoworking'
- import Login from './componentes/Auth/Login';
+import Header from './Header';
+import Home from './Home/Home';
+import CreateCoworking from './Coworking/CreateCoworking'
 
-import Recover from './componentes/Auth/Recover';
-import Registro from './componentes/Auth/Registro';
-// import CreateCoworking from './Coworking/CreateCoworking';
-import Buscador from './paginas/Buscador';
+import Login from './Auth/Login';
+import Recovery from './Auth/Recovery';
+import Register from './Auth/Register';
 
-import Reset from './componentes/Auth/Reset';
-// import Profile from './Usuario/Profile';
-// import MyCoworkings from './Coworking/MyCoworkings';
- import UpdateUsuario from './paginas/UpdateUsuario';
-// import MyReserva from './Reserva/MyReserva';
-// import UpdateCoworking from './Coworking/UpdateCoworking';
-// import Id_reserva from './Reserva/Id_reserva';
-// import Reservar from './Reserva/Reservar';
-// import Acordeon from './Home/Acordeon';
-// import Map from './Contacto/Map';
-// import Contacto from './Contacto/Contacto'
+import Buscador from './Buscador/Buscador';
+
+import Reset from './Auth/Reset';
 
 
-import Footer from './componentes/Footer';
+
+
+
+
+import Map from './Contacto/Map';
+import Contacto from './Contacto/Contacto'
+
+
+import Footer from './Footer';
 
 function App() {
 
- return (
+  const login = useSelector(s => s.login)
 
-  
+  return (
     <div className="App">
       <Header />
       <Switch>
-      <Route path="/" exact>
-          <Home/>
+        <Route path='/' exact>
+          <Home /> 
+          <Map/>
+          <Contacto/>      
         </Route>
-        <Route path="/login" exact>
-          <Login/>
+        <Route path='/Contacto'>
+          <Contacto/>
         </Route>
-        <Route path="/usuario" exact>
-          <Registro/>
+        <Route path='/Login' exact>
+          <Login />
         </Route>
-        <Route path="/usuario/recover-contrasena" exact>
-          <Recover/>
+        <Route path='/Register' exact>
+          <Register />
         </Route>
-        <Route path="/update-reset-contrasena" exact>
-          <Reset/>
+        <Route path='/recovery' exact>
+          <Recovery />
         </Route>
-        <Route path="/usuario/${id_usuario}" exact>
-          <UpdateUsuario/>
+        <Route path='/reset/:code' exact>
+          <Reset />
         </Route>
-        <Route path="/buscador" exact>
-          <Buscador/>
+        <Route path='/buscador' exact>
+          <div className='buscador'>
+            <Buscador />
+          </div>
         </Route>
-       
+        <Route path='/crear-coworking' exact>
+        
+            <CreateCoworking />
+        
+        </Route>
+     
+        <Route path='/'>Vaya, página no encontrada </Route>
       </Switch>
       <Footer />
-     
     </div>
   );
 }
 
 export default App;
-        
-       
-
 
 

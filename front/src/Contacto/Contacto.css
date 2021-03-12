@@ -1,0 +1,72 @@
+.page.form {
+    height: 70vh;
+    background-color: white;
+    box-sizing: border-box;
+}
+
+.page.form h1 {
+    padding: 0 1vw;
+    text-align: center;
+    font-weight: bolder;
+}
+
+
+.page.form .formu{
+    display: flex;
+    justify-content: space-evenly;
+    box-sizing: border-box;
+    max-width: 60vw;
+    height: 50vh; 
+} 
+
+
+.page.form .contact{
+    flex-direction: column;
+    width: 30vw;
+    height: 40vh;
+    padding-top: 0;
+} 
+
+
+.page.form h1 {
+    padding: 3vh 1vw;
+    text-align: center;
+    font-weight: bolder;
+    margin-top: 1vh;
+}
+
+.page.form .formu{
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(215, 187, 81, 0.3);
+    box-shadow: 2px 2px 5px rgb(215, 187, 81);
+    border-radius: 20px;
+    align-items: center;
+  
+  }
+
+
+  .sendbutton {
+      background-color: rgb(215, 187, 81);
+      width: 8vw;
+      height: 6vh;
+      border-radius: 10px;
+  }
+
+.page.form .envio {
+      font-weight: bolder;
+      text-align: center;
+  }
+
+.campo label {
+    width: 20vw;
+}
+
+input.formulario {
+    width: 40vw;
+}
+
+input.duda {
+    width: 40vw;
+    height: 20vh;
+}

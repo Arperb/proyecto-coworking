@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import './Footer.css'
-import logo from '../images/logo.png'
-import twitter from '../images/twitter.png'
-import facebook from '../images/facebook.png'
-import instagram from '../images/instagram.png'
-import linkedin from '../images/linkedin.png'
+import logo from './images/logo.png'
+import twitter from './images/twitter.png'
+import facebook from './images/facebook.png'
+import instagram from './images/instagram.png'
+import linkedin from './images/linkedin.png'
 
 
 
@@ -52,4 +52,6 @@ function Footer() {
 }
 
 export default Footer;
+
+
 

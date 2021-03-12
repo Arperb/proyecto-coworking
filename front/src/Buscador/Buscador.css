@@ -1,0 +1,33 @@
+.buscador {
+    padding: 1rem;
+  }
+  
+  .buscador h1 {
+    margin-bottom: 2rem;
+  }
+  
+  .buscador form {
+    width: 20rem;
+  }
+  
+  .buscador form fieldset {
+    margin-bottom: 1rem;
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 0.5rem 1rem 1rem 1rem;
+  }
+  
+  .buscador form label {
+    display: block;
+    font-size: 0.85rem;
+    margin: 0.5rem 0;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .buscador form input,
+  .buscador form select {
+    width: 100%;
+    padding: 0.25rem;
+    margin-bottom: 0.25rem;
+  }

@@ -1,0 +1,161 @@
+*{
+    padding: 0;
+    margin: 0px;
+    box-sizing: border-box;
+}
+
+div {
+    max-width: 100vw;
+    margin-top: 0px; 
+}
+
+.bienvenida {
+    background-image: url(../images/portada.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    flex-direction: column;
+    height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+}
+
+.bienvenida:before {
+    position: absolute;
+    content: '';
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.home.welcome {
+    width: 33vw;
+    z-index: 1;
+    margin-right: 15vw;
+}
+
+.mainlogo {
+    width: 35vw;
+    padding: 0 2vw;
+}
+
+.page.home h1 {
+    padding: 0 1vw;
+    text-align: center;
+    font-weight: 300;
+}
+.button1 {
+    display: inline-flex;
+    width: 510px;
+    height: 80px;
+    border-radius: 30px;
+    margin-top: 2vw;
+    margin-left: 4vw;
+    border: 2px solid #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+}
+
+.button1:hover {
+    background-color: rgb(215, 187, 81, 0.3);
+    filter: drop-shadow(2px 2px 5px gold);
+    color: black;
+    font-weight: bolder;
+}
+
+.section.elegir {
+    background-image: url(../images/coworkers.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-attachment: fixed;
+    flex-direction: column;
+    height: calc(100vh);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;   
+}
+
+
+.home .subt  {
+    color: white;
+    font-size: 2em;
+    font-weight: bolder;
+    padding: 0;
+    margin-top: 30vh;
+}
+
+.elegir.botones {
+    flex-direction: row;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.sub.button {
+    text-decoration: none;
+    text-align: center;
+    margin-left: 5vw;
+    margin-top: 15vh;
+    color: black;
+    border: 1px solid black;
+    border: 2px solid #fff;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    width: 30vw;
+    height: 8vh;
+    text-transform: uppercase;
+}
+
+.sub.style {
+    padding:25px
+}
+.sub.button:hover {
+    background-color: rgb(215, 187, 81, 0.3);
+    filter: drop-shadow(2px 2px 5px gold);
+    color: black;
+    font-weight: normal;
+    z-index: 1;
+}
+
+.page.home h2 {
+    color: black;
+}
+
+.page.home .razones {
+    background-image: url(../images/portada2.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    height: 100vh;
+  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 1rem;
+}
+
+.why {
+    color: black;
+    text-transform: uppercase;
+    font-size: 2em;
+    font-weight: bolder;
+    grid-column: 1 / 3;
+    place-self: center center;
+}
+
+.estoesflex {
+    display: flex;
+    flex-direction: row;
+    padding-top: 0;
+
+}
+.page.home .dir {
+    flex-direction: column;
+}
