@@ -20,22 +20,25 @@ function CreateCoworking() {
     const [parking,setParking] = useState('')
     const [web,setWeb] = useState('')
 
-    const login = useSelector(s => s.login)
+    //const login = useSelector(s => s.login)
+    const { usuario, token } = useSelector(s => s.login)
     const history = useHistory()
+ 
 
 
     const handleSubmit = async e => {
         e.preventDefault()
         setStatus('loading')
+        let id_usuario = usuario.id_usuario
       
          const ret = await fetch('http://localhost:9999/coworking',{
                 headers:{'Content-Type':'application/json',
-            'Authorization':login.token},
-                body:JSON.stringify(nombre,telefono,direccion,ciudad,provincia,descripcion,wifi,limpieza,parking,web),
+            'Authorization':token},
+                body:JSON.stringify({id_usuario,nombre,telefono,direccion,ciudad,provincia,descripcion,wifi,limpieza,parking,web}),
                 method:'POST'
     })
     if(ret.ok) {
-        history.push(`/usuario/${login.id_usuario}/Coworking`)
+        history.push(`/usuario/${usuario.id_usuario}/Coworking`)
     } else {
         console.log('Error')
         setStatus(true)

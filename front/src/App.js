@@ -5,6 +5,7 @@ import './App.css';
 import Header from './Header';
 import Home from './Home/Home';
 import CreateCoworking from './Coworking/CreateCoworking'
+import CreateSala from './Sala/CreateSala'
 
 import Login from './Auth/Login';
 import Recovery from './Auth/Recovery';
@@ -61,6 +62,11 @@ function App() {
         <Route path='/crear-coworking' exact>
         
             <CreateCoworking />
+        
+        </Route>
+        <Route path='/coworking/crear-sala' exact>
+        
+            <CreateSala />
         
         </Route>
      
