@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import "./Buscador.css";
 
 function Buscador() {
@@ -203,6 +204,7 @@ function Buscador() {
               {r.proyector}
               {r.impresora}
               {r.tipo}
+             <NavLink to = {`/coworking/${r.id}`}>Ver coworking</NavLink>
             </div>
           ))}
           {/*results.length &&

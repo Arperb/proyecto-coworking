@@ -1,14 +1,14 @@
 import {useState} from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory, useParams } from 'react-router-dom'
+import { useHistory, useParams, NavLink } from 'react-router-dom'
 
 
 
 function CreateSala() {
 
-  
-    const [status,setStatus] = useState()
-    const { id_coworking } = useParams()
+    const [error, setError] = useState();
+    //const [status,setStatus] = useState()
+ 
     const [tipo,setTipo] = useState('')
     const [descripcion,setDescripcion] = useState('')
     const [capacidad,setCapacidad] = useState('')
@@ -18,27 +18,29 @@ function CreateSala() {
     const [proyector,setProyector] = useState('')
     const [impresora,setImpresora] = useState('')
 
-    const { usuario, token } = useSelector(s => s.login)
+    const { id_coworking } = useParams()
+    const login = useSelector(s => s.login)
     const history = useHistory()
  
 
 
     const handleSubmit = async e => {
         e.preventDefault()
-        setStatus('loading')
-        //let id_usuario = usuario.id_usuario
+       // setStatus('loading')
+       
       
-         const ret = await fetch('http://localhost:9999/sala',{
-                headers:{'Content-Type':'application/json',
-            'Authorization':token},
-                body:JSON.stringify({id_coworking,tipo,descripcion,capacidad,tarifa,tarifa_tipo,disponibilidad,proyector,impresora}),
+         const res = await fetch(`http://localhost:9999/coworking/${id_coworking}/CreateSala`,{
+                headers:{"Content-Type":"application/json",
+            Authorization:login.token},
+                body:JSON.stringify({tipo,descripcion,capacidad,tarifa,tarifa_tipo,disponibilidad,proyector,impresora}),
                 method:'POST'
     })
-    if(ret.ok) {
-        history.push(`/coworking/${id_coworking}`)
+    if(res.ok) {
+        const { id_sala } = await res.json();
+       // history.push(`/coworking/${id_coworking}/sala`)
     } else {
         console.log('Error')
-        setStatus(true)
+        setError(true)
     }
 }
         
@@ -99,6 +101,8 @@ function CreateSala() {
            
            
             <button>Registrar sala</button>
+
+            <NavLink to = {`/`}>He terminado</NavLink>
         
         </form>
     )

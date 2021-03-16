@@ -1,13 +1,13 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Redirect, Link } from 'react-router-dom'
 
 
 
 function CreateCoworking() {
 
   
-    const [status,setStatus] = useState()
+    //const [status,setStatus] = useState()
 
     const [nombre,setNombre] = useState('')
     const [telefono,setTelefono] = useState('')
@@ -21,29 +21,39 @@ function CreateCoworking() {
     const [web,setWeb] = useState('')
 
     //const login = useSelector(s => s.login)
-    const { usuario, token } = useSelector(s => s.login)
+    //const { usuario, token } = useSelector(s => s.login)
+    const [error, setError] = useState();
+    const login = useSelector((s) => s.login);
     const history = useHistory()
  
+    if (!login || login.usuario.rol == "cliente") {
+        return <Redirect to="/" />;
+      }
 
 
     const handleSubmit = async e => {
         e.preventDefault()
-        setStatus('loading')
-        let id_usuario = usuario.id_usuario
+       // setStatus('loading')
+        //let id_usuario = usuario.id_usuario
       
-         const ret = await fetch('http://localhost:9999/coworking',{
-                headers:{'Content-Type':'application/json',
-            'Authorization':token},
-                body:JSON.stringify({id_usuario,nombre,telefono,direccion,ciudad,provincia,descripcion,wifi,limpieza,parking,web}),
+         const res = await fetch('http://localhost:9999/coworking',{
+                headers:{"Content-Type":"application/json",
+            Authorization:login.token},
+                body:JSON.stringify({nombre,telefono,direccion,ciudad,provincia,descripcion,wifi,limpieza,parking,web}),
                 method:'POST'
     })
-    if(ret.ok) {
-        history.push(`/usuario/${usuario.id_usuario}/Coworking`)
-    } else {
-        console.log('Error')
-        setStatus(true)
-    }
-}
+
+    if (res.ok) {
+        const { id_coworking } = await res.json();
+        const newId = id_coworking[0].insertId
+        console.log(newId)
+        history.push(`/coworking/${newId}/CreateSala`);
+     
+      } else {
+        console.log("Error");
+        setError(true);
+      }
+    };
         
        
 

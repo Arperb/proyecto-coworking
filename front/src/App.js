@@ -12,6 +12,7 @@ import Recovery from './Auth/Recovery';
 import Register from './Auth/Register';
 
 import Buscador from './Buscador/Buscador';
+import VerCoworking from './Coworking/VerCoworking'
 
 import Reset from './Auth/Reset';
 
@@ -64,11 +65,18 @@ function App() {
             <CreateCoworking />
         
         </Route>
-        <Route path='/coworking/crear-sala' exact>
+     
+        <Route path='/coworking/:id_coworking/CreateSala' exact>
         
             <CreateSala />
         
         </Route>
+
+        <Route path='/coworking/:id_coworking' exact>
+             <VerCoworking />
+        <CreateSala />
+    
+    </Route>
      
         <Route path='/'>Vaya, página no encontrada </Route>
       </Switch>
