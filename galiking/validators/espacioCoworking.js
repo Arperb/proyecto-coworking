@@ -2,14 +2,6 @@ const Joi = require('joi');
 
 const coworkingValidator = Joi.object({
     
-    id_usuario: Joi.string()
-        .min(1)
-        .max(5)
-        .required()
-        .error(
-            new Error('ID should be a string between 1 and 5 characters')
-        ),
-
     nombre: Joi.string()
         .min(3)
         .max(100)

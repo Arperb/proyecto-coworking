@@ -1,13 +1,14 @@
 const Joi = require('joi');
 
 const salaValidator = Joi.object({
-    id_coworking: Joi.string()
-        .min(1)
-        .max(5)
-        .required()
-        .error(
-            new Error('ID should be a string between 1 and 5 characters')
-        ),
+
+    //  id_coworking: Joi.string()
+    //      .min(1)
+    //     .max(5)
+    //     .required()
+    //      .error(
+    //         new Error('id_coworking should be a string between 1 and 5 characters')
+    //     ),
 
     tipo: Joi.string()
         .valid('despacho', 'compartida', 'sala de reuniones', 'salón de eventos')

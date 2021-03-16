@@ -139,8 +139,9 @@ const login = async (req, res) => {
         const tokenPayload = {
             isAdmin: usuario.rol === 'administrador' ,
             rol: usuario.rol ,
-            email: usuario.email
-        }
+            email: usuario.email,
+            id_usuario: usuario.id_usuario,
+        };
        
 
         const token = jwt.sign(tokenPayload, process.env.SECRET, {
@@ -150,10 +151,10 @@ const login = async (req, res) => {
 
         res.json({
                 token,
-                usuario
+                usuario,
             })
             console.log(token)
-        }
+        };
 
      
 

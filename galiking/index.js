@@ -2,7 +2,7 @@ require('dotenv').config()
 
 //LIBRERIAS
 
-const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const express = require('express');
 const fileUpload = require("express-fileupload");
 const uuid = require('uuid');
@@ -110,10 +110,12 @@ const {
 
 //LIBRERIAS SOBRE EXPRESS-APP
 
-//app.use(morgan("dev"));
-app.use(bodyParser.json())
+
+//app.use(bodyParser.json());
+app.use(express.json())
 app.use(cors())
-app.use(bodyParser.urlencoded({ extended: true }))
+//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 app.use(fileUpload());
 
 //servicio para ficheros estáticos que están en disco(los background de la web, logo...)
@@ -198,7 +200,7 @@ app.post('/usuario/logout', isAuthenticated, logout)
 
 //Crear un nuevo espacio coworking
 
-app.post('/coworking', isAuthenticated, coworkingOwner, createCoworking)
+app.post('/coworking', isAuthenticated, createCoworking)
 
 //obtener todos los datos de un espacio coworking a través del ID
 
@@ -234,11 +236,11 @@ app.delete('/foto-coworking/:foto', isAuthenticated, coworkingOwner, deleteFotoC
 
 //Crear una nueva
 
-app.post('/sala', isAuthenticated, usuarioIsOwner, createSala)
+app.post('/coworking/:id_coworking/CreateSala', isAuthenticated, usuarioIsOwner, createSala)
 
 //obtener todos los datos de una sala a través del ID
 
-app.get('/sala/:id_sala', isAuthenticated, usuarioIsOwner, getSala)
+app.get('/coworking/:id_coworking/sala/:id_sala', isAuthenticated, usuarioIsOwner, getSala)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 

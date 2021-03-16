@@ -270,6 +270,8 @@ const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, 
         `,
             [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web])
 
+            return SQL
+            
     } catch (e) {
         console.log(e)
         throw new Error('database-error')

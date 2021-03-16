@@ -12,9 +12,12 @@ const { getConnection } = require('../db/db');
 //creamos una sala
 const createSala = async (req, res) => {
     
-
+    const { id_coworking } = req.params;
+    console.log(id_coworking)
   try {
-      const { id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora } = req.body
+      const { tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora } = req.body
+
+      
    
       const response = await db.checkSala(id_coworking)
 
