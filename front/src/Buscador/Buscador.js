@@ -191,7 +191,7 @@ function Buscador() {
         <div>
           <h2>Resultados:</h2>
           {results.map((r) => (
-            <div key={r.id}>
+            <div key={r.id_coworking}>
               {r.provincia}
               {r.ciudad}
               {r.tarifa}
@@ -204,7 +204,7 @@ function Buscador() {
               {r.proyector}
               {r.impresora}
               {r.tipo}
-             <NavLink to = {`/coworking/${r.id}`}>Ver coworking</NavLink>
+             <NavLink to = {`/coworking/${r.id_coworking}`}>Ver coworking</NavLink>
             </div>
           ))}
           {/*results.length &&

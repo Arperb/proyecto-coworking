@@ -12,7 +12,7 @@ function useFetch(url, key) {
       if (login) {
         opts.headers = { 'Authorization':login.token }
       }
-      fetch(url,opts)
+      fetch(url, opts)
         .then(res => res.json())
         .then(data => {
           setData(data)

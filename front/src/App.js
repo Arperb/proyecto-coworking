@@ -13,8 +13,16 @@ import Register from './Auth/Register';
 
 import Buscador from './Buscador/Buscador';
 import VerCoworking from './Coworking/VerCoworking'
+import VerUsuario from './Usuario/VerUsuario'
+import VerReservas from './Usuario/VerReservas'
 
 import Reset from './Auth/Reset';
+
+import Reservar from './Reserva/Reservar'
+import VerSalas from './Coworking/VerSalas'
+
+import CreateIncidencia from './Incidencias/CreateIncidencia';
+import CreateRating from './Valoracion/CreateRating';
 
 
 
@@ -26,6 +34,7 @@ import Contacto from './Contacto/Contacto'
 
 
 import Footer from './Footer';
+
 
 function App() {
 
@@ -74,10 +83,44 @@ function App() {
 
         <Route path='/coworking/:id_coworking' exact>
              <VerCoworking />
-        <CreateSala />
+     
+    
+    </Route>
+
+    <Route path='/usuario' exact>
+             <VerUsuario />
+       
+    
+    </Route>
+
+    <Route path='/usuario/reservas' exact>
+             <VerReservas />
+       
+    
+    </Route>
+
+    <Route path='/usuario/crear-incidencia' exact>
+             <CreateIncidencia />
+       
+    
+    </Route>
+    <Route path='/usuario/crear-valoracion' exact>
+             <CreateRating />
+       
+    
+    </Route>
+
+    <Route path='/reserva' exact>
+             <Reservar />
+       
     
     </Route>
      
+  <Route path='/salas' exact>
+             <VerSalas />
+       
+    
+    </Route>
         <Route path='/'>Vaya, página no encontrada </Route>
       </Switch>
       <Footer />

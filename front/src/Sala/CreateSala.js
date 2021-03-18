@@ -37,6 +37,8 @@ function CreateSala() {
     })
     if(res.ok) {
         const { id_sala } = await res.json();
+        // const newIdSala = id_sala[0].insertId
+        // console.log(newIdSala)
        // history.push(`/coworking/${id_coworking}/sala`)
     } else {
         console.log('Error')
