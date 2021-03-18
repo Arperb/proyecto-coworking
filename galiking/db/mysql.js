@@ -220,13 +220,14 @@ const getUsuarioByCode = async (code) => {
 
 }
 
-const getUsuarioReserva = async (id_reserva, id_usuario) => {
+const getUsuarioReserva = async (id_usuario) => {
 
     const query = `select * from reserva
                   left outer join usuario on usuario.id_usuario = reserva.id_usuario`
-    const params = [id_reserva, id_usuario]
+    const params = [id_usuario]
 
     const [result] = await performQuery(query, params)
+    console.log(result)
     return result
 
 }
@@ -270,8 +271,8 @@ const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, 
         `,
             [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web])
 
-            return SQL
-            
+         
+
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -315,7 +316,7 @@ const getCoworking = async (id_coworking) => {
         connection = await getConnection();
 
         // me quedo con el primer elemento (array destructuring)
-        const [result] = await connection.query(`
+        const result = await connection.query(`
             select * from coworking where id_coworking = ?
         `,
             [id_coworking])
@@ -574,6 +575,8 @@ const createSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, ta
         `,
             [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora])
 
+        
+
     } catch (e) {
         console.log(e)
         throw new Error('database-error')
@@ -746,6 +749,7 @@ const createReserva = async (
     id_usuario,
     fecha_inicio,
     fecha_fin
+    
 ) => {
     let connection;
     try {

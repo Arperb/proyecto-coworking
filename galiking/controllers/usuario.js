@@ -285,6 +285,7 @@ const getUsuarioId = async (req, res) => {
             
         } else {
             res.send(usuario)
+         
         }
     } catch (e) {
         res.status(500).send()
@@ -402,10 +403,11 @@ const logout = async (req, res, next) => {
 
  const getUsuarioReserva = async (req, res) => {
 
-    const { id_reserva, id_usuario } = req.params
+    const { id_usuario } = req.params
 
     try {
-        const usuarioReserva = await db.getUsuarioReserva(id_reserva, id_usuario)
+        const usuarioReserva = await db.getUsuarioReserva(id_usuario)
+       
        
         if (!usuarioReserva) {
             res.status(404).send()

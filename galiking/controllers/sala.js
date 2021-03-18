@@ -23,7 +23,7 @@ const createSala = async (req, res) => {
 
       await salaValidator.validateAsync(req.body)
 
-      await db.createSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora)
+     const id_sala= await db.createSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora)
         let connection;
       try {
          
@@ -34,6 +34,7 @@ const createSala = async (req, res) => {
       }
       return res.status(200).send({
           status: 'ok',
+          id_sala,
           message: 'enhorabuena,su sala ha sido registrada con éxito'})
       
 

@@ -204,7 +204,7 @@ app.post('/coworking', isAuthenticated, createCoworking)
 
 //obtener todos los datos de un espacio coworking a través del ID
 
-app.get('/coworking/:id_coworking', isAuthenticated, coworkingOwner, getCoworking)
+app.get('/coworking/:id_coworking', getCoworking)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 
@@ -320,7 +320,7 @@ app.get('/buscador', buscador )
 
 //El usuario puede consultar sus reservas
 
-app.get('/usuario/:id_usuario/reservas/:id_reserva', isAuthenticated, isSameUser, getUsuarioReserva)
+app.get('/usuario/:id_usuario/reservas', isAuthenticated, isSameUser, getUsuarioReserva)
 
 //El usuario puede consultar sus incidencias registradas
 
@@ -344,7 +344,7 @@ app.get('/coworking/:id_coworking/incidencias', isAuthenticated, usuarioIsOwner,
 
 //Ver salas de un coworking
 
-app.get('/coworking/:id_coworking/salas', isAuthenticated, usuarioIsOwner, getCoworkingSalas)
+app.get('/coworking/:id_coworking/salas', isAuthenticated, getCoworkingSalas)
 
 //obterner la valoracion media de un coworking
 

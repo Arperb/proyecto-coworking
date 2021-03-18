@@ -17,6 +17,8 @@ const createReserva = async (req, res) => {
 		const checkOutDB = dateToDB(fecha_fin);
 		await reservaValidator.validateAsync(req.body);
 
+		
+
 		await db.createReserva(id_sala, id_usuario, checkInDB, checkOutDB);
 		try {
 			const usuario = await db.getUsuarioId(id_usuario)

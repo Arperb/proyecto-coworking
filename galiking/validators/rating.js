@@ -3,14 +3,7 @@ const Joi = require('joi');
 const { max } = require('moment');
 
 const ratingValidator = Joi.object({
-    id_usuario: Joi.string()
-        .min(1)
-        .max(5)
-        .required()
-        .error(
-            new Error('id_usuario should be a string between 1 and 5 characters')
-        ),
-
+  
     id_reserva: Joi.string()
         .min(1)
         .max(5)

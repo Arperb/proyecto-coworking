@@ -11,9 +11,10 @@ const { getConnection } = require('../db/db');
 
 //creamos incidencia
 const createIncidencia = async (req, res) => {
+    const { id_usuario } = req.auth;
     
   try {
-      const { id_usuario, id_sala, estado, categoria, descripcion } = req.body
+      const { id_sala, estado, categoria, descripcion } = req.body
      
 
       await incidenciaValidator.validateAsync(req.body)

@@ -11,9 +11,9 @@ const { getConnection } = require('../db/db');
 
 //creamos una valoración
 const createRating = async (req, res) => {
-    
+    const { id_usuario } = req.auth;
   try {
-      const { id_usuario, id_reserva, valoracion } = req.body
+      const { id_reserva, valoracion } = req.body
      
 
       await ratingValidator.validateAsync(req.body)

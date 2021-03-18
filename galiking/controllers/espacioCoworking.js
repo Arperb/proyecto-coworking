@@ -51,7 +51,7 @@ console.log(id_coworking)
         try {
             const usuario = await db.getUsuarioId(id_usuario);
             await sendConfirmationMailCoworking(usuario.email);
-            
+
         } catch (e) {
             throw new Error("No se pudo enviar mail");
         }
@@ -146,7 +146,7 @@ const deleteCoworking = async (req, res) => {
 
 const getCoworking = async (req, res) => {
     const { id_coworking } = req.params
-
+console.log(id_coworking)
     try {
         const coworking = await db.getCoworking(id_coworking)
 
@@ -155,6 +155,7 @@ const getCoworking = async (req, res) => {
             res.status(404).send()
         } else {
             res.send(coworking)
+          
         }
     } catch (e) {
         res.status(500).send()
