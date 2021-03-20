@@ -45,6 +45,7 @@ function CreateCoworking() {
 
     if (res.ok) {
         const { id_coworking } = await res.json();
+ 
         const newId = id_coworking[0].insertId
      
         history.push(`/coworking/${newId}/CreateSala`);

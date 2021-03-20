@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react"
 import { useSelector } from "react-redux"
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, NavLink } from "react-router-dom"
 import Register from "../Auth/Register"
 import Reservar from "../Reserva/Reservar"
+
 import useFetch from "../useFetch"
+
 
 
 
@@ -12,10 +14,12 @@ function VerCoworking() {
     const { id_coworking } = useParams()
 console.log(id_coworking)
     const login = useSelector(s => s.login)
+    const [error, setError] = useState();
    const [data, setData] = useState([])
     async function getCoworking(id_coworking) {
         const res = await fetch (`http://localhost:9999/coworking/${id_coworking}`)
         const coworking = await res.json();    
+        
         return coworking
         }
        
@@ -24,11 +28,12 @@ console.log(id_coworking)
               setData(response[0])
               console.log(response)
           }) 
-          
+        
+       
          
         },[])
     
-
+     
 
 
 
@@ -66,12 +71,16 @@ console.log(id_coworking)
                             </div>
                        
                           
-                            {!(login) &&
-                                <Register />
+                            {/* {!(login) &&
+                                <VerSalas />
                             }
                             {(login) &&
                                 <Reservar />
-                            }
+                            } */}
+
+                            <NavLink to = {`/coworking/${id_coworking}/salas`}>Ver salas</NavLink>
+
+                            <NavLink to = {`/buscador`}>Volver</NavLink>
                         </div>
                     </div>
                 </div>

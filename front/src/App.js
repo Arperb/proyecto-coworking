@@ -86,6 +86,16 @@ function App() {
      
     
     </Route>
+    <Route path='/coworking/:id_coworking/salas' exact>
+             <VerSalas />
+     
+    
+    </Route>
+    <Route path='/reserva/:id_sala' exact>
+             <Reservar />
+     
+    
+    </Route>
 
     <Route path='/usuario' exact>
              <VerUsuario />
@@ -110,17 +120,7 @@ function App() {
     
     </Route>
 
-    <Route path='/reserva' exact>
-             <Reservar />
-       
-    
-    </Route>
-     
-  <Route path='/salas' exact>
-             <VerSalas />
-       
-    
-    </Route>
+  
         <Route path='/'>Vaya, página no encontrada </Route>
       </Switch>
       <Footer />

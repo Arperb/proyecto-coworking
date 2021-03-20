@@ -5,7 +5,7 @@ import { useHistory, useParams, NavLink } from 'react-router-dom'
 
 
 function Reservar () {
-
+    const { id_sala } = useParams()
     const [error, setError] = useState();
     //const [status,setStatus] = useState()
  
@@ -22,7 +22,7 @@ function Reservar () {
        // setStatus('loading')
        
       
-         const res = await fetch(`http://localhost:9999/reserva`,{
+         const res = await fetch(`http://localhost:9999/reserva/${id_sala}`,{
                 headers:{"Content-Type":"application/json",
             Authorization:login.token},
                 body:JSON.stringify({fecha_inicio,fecha_fin}),
@@ -64,7 +64,7 @@ function Reservar () {
            
             <button>Reservar</button>
 
-            <NavLink to = {`/`}>Pagar</NavLink>
+           
         
          </form>
     )
