@@ -139,36 +139,66 @@ function Buscador() {
 
         <fieldset>
           <label>limpieza:</label>
-          <input
+          <select
             value={limpieza}
             onChange={(e) => setLimpieza(e.target.value)}
-          />
+          >
+            <option value="" hidden>
+              limpieza
+            </option>
+            <option value="si">sí</option>
+            <option value="no">no</option>
+          </select>
         </fieldset>
 
         <fieldset>
           <label>parking:</label>
-          <input value={parking} onChange={(e) => setParking(e.target.value)} />
+          <select value={parking} onChange={(e) => setParking(e.target.value)}>
+            <option value="" hidden>
+              parking
+            </option>
+            <option value="si">sí</option>
+            <option value="no">no</option>
+          </select>
         </fieldset>
 
         <fieldset>
           <label>wifi:</label>
-          <input value={wifi} onChange={(e) => setWifi(e.target.value)} />
+          <select value={wifi} onChange={(e) => setWifi(e.target.value)}>
+            <option value="" hidden>
+              wifi
+            </option>
+            <option value="si">sí</option>
+            <option value="no">no</option>
+          </select>
         </fieldset>
 
         <fieldset>
           <label>proyector</label>
-          <input
+          <select
             value={proyector}
             onChange={(e) => setProyector(e.target.value)}
-          />
+          >
+            <option value="" hidden>
+              proyector
+            </option>
+            <option value="si">sí</option>
+            <option value="no">no</option>
+          </select>
         </fieldset>
 
         <fieldset>
           <label>impresora:</label>
-          <input
+          <select
             value={impresora}
             onChange={(e) => setImpresora(e.target.value)}
-          />
+          >
+            <option value="" hidden>
+              impresora
+            </option>
+            <option value="si">sí</option>
+            <option value="no">no</option>
+          </select>
         </fieldset>
 
         <fieldset>
@@ -204,7 +234,9 @@ function Buscador() {
               {r.proyector}
               {r.impresora}
               {r.tipo}
-             <NavLink to = {`/coworking/${r.id_coworking}`}>Ver coworking</NavLink>
+              <NavLink to={`/coworking/${r.id_coworking}`}>
+                Ver coworking
+              </NavLink>
             </div>
           ))}
           {/*results.length &&
