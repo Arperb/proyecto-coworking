@@ -47,7 +47,7 @@ const createCoworking = async (req, res) => {
             parking,
             web
         );
-console.log(id_coworking)
+
         try {
             const usuario = await db.getUsuarioId(id_usuario);
             await sendConfirmationMailCoworking(usuario.email);

@@ -8,21 +8,7 @@ const JoiDate = require("@hapi/joi-date");
 const Joi = JoiBase.extend(JoiDate);
 
 const reservaValidator = Joi.object({
-	id_sala: Joi.string()
-		.min(1)
-		.max(5)
-		.required()
-		.error(
-			new Error("id_sala should be a string between 1 and 5 characters")
-		),
 
-	id_usuario: Joi.string()
-		.min(1)
-		.max(5)
-		.required()
-		.error(
-			new Error("id_usuario should be a string between 1 and 5 characters")
-		),
 
 /*	estado: Joi.string()
         .valid('activado', 'desactivado')

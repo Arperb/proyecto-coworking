@@ -11,8 +11,12 @@ const { reservaValidator } = require("../validators/reserva");
 
 //creamos reserva
 const createReserva = async (req, res) => {
+
+	const { id_usuario } = req.auth;
+	const { id_sala } = req.params;
+
 	try {
-		const { id_sala, id_usuario, fecha_inicio, fecha_fin } = req.body;
+		const { fecha_inicio, fecha_fin } = req.body;
 		const checkInDB = dateToDB(fecha_inicio);
 		const checkOutDB = dateToDB(fecha_fin);
 		await reservaValidator.validateAsync(req.body);

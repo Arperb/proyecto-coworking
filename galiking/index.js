@@ -260,7 +260,7 @@ app.delete('/sala/:id_sala', isAuthenticated, usuarioIsOwner, deleteSala)
 //////////////////////////////////////////////////////////////////////
 
 //Crear una reserva
-app.post('/reserva', isAuthenticated, usuarioIsUser, createReserva)
+app.post('/reserva/:id_sala', isAuthenticated, usuarioIsUser, createReserva)
 
 //modificar datos de la reserva
 app.put('/reserva/:id_reserva', isAuthenticated, usuarioIsUser, createReserva, updateReserva)
@@ -344,7 +344,7 @@ app.get('/coworking/:id_coworking/incidencias', isAuthenticated, usuarioIsOwner,
 
 //Ver salas de un coworking
 
-app.get('/coworking/:id_coworking/salas', isAuthenticated, getCoworkingSalas)
+app.get('/coworking/:id_coworking/salas', getCoworkingSalas)
 
 //obterner la valoracion media de un coworking
 
