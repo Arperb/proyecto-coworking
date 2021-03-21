@@ -1,4 +1,4 @@
-header {
+/* header {
   display: flex;
   border-bottom: 1px solid #ccc;
   align-items: center;
@@ -58,6 +58,32 @@ width: 70%;
   text-decoration: none;
 }
 
+.links:hover {
+  color: rgb(215, 187, 81);
+  transform: scale(1.2);
+  filter: drop-shadow(2px 2px 2px gold);
+  
+  }
+  
+  .logo {
+    max-width: 10vw;
+    box-sizing: border-box;
+    transform-style: unset;
+    z-index: 1;
+  }
+  header .avatar {
+    background-color: #ddd;
+    background-position: center center;
+    background-size: cover;
+    border: 1px solid #aaa;
+    border-radius: 50%;
+    max-width: 6vw;
+    margin-right: 8px;
+   
+  } */
+
+
+
 /* .links {
 letter-spacing: 0;
 }
@@ -94,20 +120,47 @@ top: 0;
 width: 70%;
 } */
 
-.links:hover {
-color: rgb(215, 187, 81);
-transform: scale(1.2);
-filter: drop-shadow(2px 2px 2px gold);
 
+
+
+
+header {
+
+ 
+  box-shadow: 5px 0 8px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 3px 15px;
+  height: 70px;
+  width: 100%;
 }
 
-.logoprincipal {
-  max-width: 10vw;
-  box-sizing: border-box;
-  transform-style: unset;
-  z-index: 1;
+header .logo {
+
+  text-decoration: none;
+  max-width: 8vw;
+  cursor: pointer;
 }
 
+header .usuario {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+header .avatar {
+  background-color: #ddd;
+  background-position: center center;
+  background-size: cover;
+  border: 1px solid #aaa;
+  border-radius: 50%;
+  height: 32px;
+  margin-right: 8px;
+  margin-top: 20px;
+  width: 32px;
+}
 
  
 
