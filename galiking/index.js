@@ -153,6 +153,7 @@ app.post('/usuario/:id_usuario/profile', isAuthenticated, isSameUser, uploadFoto
 //Ver foto usuario
 
 app.get('/profile/:foto', isAuthenticated, isSameUser, getFotoUsuario)
+//app.get('/images/profile//:foto', isAuthenticated, isSameUser, getFotoUsuario)
 
 
 //modificar datos usuario
