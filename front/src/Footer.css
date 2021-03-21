@@ -1,4 +1,62 @@
 footer {
+  background-color: black;
+  color: white;
+  max-width: 600px;
+  margin: 0;
+  padding: 0;
+}
+
+footer {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+  max-width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+  z-index: 1;
+}
+
+.container2 {
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: space-around;
+  padding: 5px;
+  z-index: 1;
+}
+
+.finales {
+  color: white;
+  text-decoration: none;
+  font-weight: lighter;
+}
+
+.end.logo {
+  max-width: 5vw;
+  box-sizing: border-box;
+  transform-style: unset;
+  padding-left: 1vw;
+}
+
+.redes.sociales {
+  display: flex;
+  /* flex: 1 1 auto; */
+  justify-content: space-evenly;
+  padding: 2vw;
+  box-sizing: border-box;
+}
+
+.icono.media {
+  max-width: 1vw;
+  box-sizing: border-box;
+  margin: 5px;
+}
+
+.container3 {
+  font-weight: lighter;
+}
+
+/* footer {
     background-color: #000000;
     color: white;
     display: flex;
@@ -47,6 +105,4 @@ footer {
     align-items: center;
     justify-content: space-evenly;
 }
- 
-
-
+  */
