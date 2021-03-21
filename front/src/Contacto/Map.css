@@ -1,4 +1,58 @@
-.page.map .leaflet-container{
-    height: 500px;
-    max-width: 700px;
+.page.map .leaflet-container {
+  height: 500px;
+  max-width: 700px;
+}
+
+.page.map .leaflet-container {
+  height: 500px;
+  max-width: 700px;
+}
+
+.page.map {
+  height: 100vh;
+  padding: 2rem;
+}
+
+.page.map h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.page.map .find.us {
+  padding: 1%;
+  margin-top: 1%;
+}
+.page.map main {
+  display: flex;
+  justify-content: center;
+}
+
+.page.map .leaflet-container {
+  height: 500px;
+  max-width: 700px;
+  display: flex;
+  border: 3px solid rgb(215, 187, 81, 0.3);
+  box-shadow: 2px 2px 5px rgb(215, 187, 81);
+  flex-grow: 1;
+  order: 1;
+  border-radius: 30px;
+}
+
+.page.map input {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 20px;
+  font-size: 2em;
+  position: relative;
+  top: 0;
+  bottom: 0;
+  z-index: 999;
+  border: 1px solid #383838;
+  outline: none;
+  border-radius: 30px;
+}
+
+input.placeholder {
+  display: flex;
+  justify-content: flex-start;
 }
