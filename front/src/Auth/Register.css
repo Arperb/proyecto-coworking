@@ -1,11 +1,39 @@
+.registerpage {
+  background-color: rgb(215, 187, 81);
+  height: 80vh;
+}
+
+h2.tituloregistro {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
 .register.form {
   padding: 1rem;
   margin: 1rem;
   border-radius: 20px;
-  border: 1px solid red;
+  border: 1px solid black;
+  width: 55vw;
+  text-align: center;
 }
 
 input.idatos {
+  font-size: larger;
+  border-radius: 6px;
+  padding: 0.2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+input.iotros {
+  font-size: larger;
+  border-radius: 6px;
+  padding: 0.2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+input.ifoto {
   font-size: larger;
   border-radius: 6px;
   padding: 0.2rem;

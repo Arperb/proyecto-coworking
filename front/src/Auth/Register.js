@@ -23,8 +23,8 @@ function Registro() {
   };
 
   return (
-    <div>
-      <h2>Regístrate</h2>
+    <div className="registerpage">
+      <h2 className="tituloregistro">Regístrate</h2>
 
       <form className="register form" onSubmit={handleSubmit}>
         <input
@@ -49,6 +49,7 @@ function Registro() {
         />
         <br></br>
         <input
+          className="iotros"
           name="nif_cif"
           placeholder="NIF o CIF..."
           required
@@ -65,6 +66,7 @@ function Registro() {
         />
         <br></br>
         <input
+          className="iotros"
           name="telefono"
           placeholder="Teléfono..."
           value={usuario.telefono || ""}
@@ -89,11 +91,13 @@ function Registro() {
         />
         <br></br>
         <input
+          className="ifoto"
           name="foto"
           value={usuario.foto || ""}
           type="file"
           onChange={(e) => setUsuario({ ...usuario, foto: e.target.value })}
         />
+        <br></br>
         <button>Quiero coronarme</button>
 
         {error && <div>Ya existe este usuario</div>}
