@@ -40,7 +40,7 @@ const createUsuario = async (req, res) => {
 
 const uploadFotoUsuario = async (req, res) => {
 
-    const { id_usuario } = req.params;
+    const { id_usuario } = req.auth;
 
     //     //recibimos los ficheros(si no existe la carpeta la crea)
     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/profile`, { recursive: true })
@@ -327,7 +327,7 @@ const getListOfUsuario = async (req, res) => {
 
 const updateUsuario = async (req, res) => {
     const { nif_cif, email, telefono, bio, foto, nombre, rol, contrasena } = req.body
-    const { id_usuario } = req.params
+    const { id_usuario } = req.auth
 
     // TODO: considerar el caso en el que el ID pasado no existe
     // y enviar un 404

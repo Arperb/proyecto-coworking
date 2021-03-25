@@ -1,0 +1,43 @@
+.section.profile .form-main {
+    display: flex;
+  }
+  
+  .section.profile .avatar {
+    background-color: #ddd;
+    background-position: center center;
+    background-size: cover;
+    border: 1px solid #aaa;
+    height: 96px;
+    width: 96px;
+    margin: 6px 0 10px;
+  }
+  
+  .section.profile label {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .section.profile label > span {
+    flex: 0 0 150px;
+    font-size: 90%;
+    height: 33px;
+    line-height: 33px;
+  }
+  
+  .section.profile input:not([type="file"]) {
+    border: 1px solid #ccc;
+    display: block;
+    margin-bottom: 12px;
+    outline: 0;
+    padding: 8px 15px;
+    width: 250px;
+  }
+  
+  .section.profile input:focus {
+    border-color: #5f4fde;
+  }
+  
+  
+  .section.profile button {
+    margin-top: 20px;
+  }

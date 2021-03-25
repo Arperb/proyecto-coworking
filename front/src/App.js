@@ -23,6 +23,7 @@ import VerSalas from './Coworking/VerSalas'
 
 import CreateIncidencia from './Incidencias/CreateIncidencia';
 import CreateRating from './Valoracion/CreateRating';
+import Main from './Usuario/Main'
 
 
 
@@ -43,6 +44,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      {login ? <Main />: <Login />}
       <Switch>
         <Route path='/' exact>
           <Home /> 
@@ -97,11 +99,7 @@ function App() {
     
     </Route>
 
-    <Route path='/usuario' exact>
-             <VerUsuario />
-       
-    
-    </Route>
+  
 
     <Route path='/usuario/reservas' exact>
              <VerReservas />

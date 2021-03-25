@@ -2,6 +2,7 @@
 import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
+import BorrarUsuario from './BorrarUsuario';
 
 
 
@@ -45,9 +46,14 @@ return(
                   <div>{usuario.email}</div>
                    <div>{usuario.nombre}</div>
                    <div>{usuario.telefono}</div>
-                   <div>{usuario.descripcion}</div>
+                   <div>{usuario.bio}</div>
+                   <div>{usuario.nif_cif}</div>
+                   <div>{usuario.rol}</div>
+                
                    </div>
-
+                   {login && login.usuario.id_usuario &&
+                            <BorrarUsuario id={id_usuario} />
+                        }
        
        
        
