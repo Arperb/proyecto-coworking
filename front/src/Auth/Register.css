@@ -1,0 +1,14 @@
+.register.form {
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 20px;
+  border: 1px solid red;
+}
+
+input.idatos {
+  font-size: larger;
+  border-radius: 6px;
+  padding: 0.2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
