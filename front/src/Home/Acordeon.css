@@ -43,10 +43,12 @@ button {
   text-align: left;
   margin-left: 13rem;
   list-style-image: url("../images/estrella2chica.png");
+  list-style-type: square;
+
   background-repeat: no-repeat;
-  color: white;
+  color: black;
   font-size: 1.5em;
-  text-shadow: 2px 3px black;
+  /* text-shadow: 2px 3px white; */
 }
 
 .acordeon .expand ol li {

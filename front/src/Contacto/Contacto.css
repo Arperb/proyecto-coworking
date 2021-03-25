@@ -2,9 +2,10 @@
   height: 70vh;
   background-color: white;
   box-sizing: border-box;
-  background-image: url(../images/yellowback.jpg);
+  /* background-image: url(../images/yellowback.jpg);
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
+  background-color: rgb(215, 187, 81);
   height: 100vh;
 }
 

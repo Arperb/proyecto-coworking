@@ -29,7 +29,7 @@
 
 .page.map .leaflet-container {
   height: 80vh;
-  max-width: 80vw;
+  max-width: 65vw;
   display: flex;
   border: 3px solid rgb(215, 187, 81, 0.3);
   box-shadow: 2px 2px 5px rgb(215, 187, 81);
