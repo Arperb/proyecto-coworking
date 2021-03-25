@@ -1,6 +1,9 @@
 import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
+
+
 
 function VerReservas() {
 
@@ -16,6 +19,7 @@ function VerReservas() {
                     Authorization:login.token}
     })
     const data = await res.json();    
+    
     return data
     }
    
@@ -55,9 +59,18 @@ function VerReservas() {
                   <td>{reserva.fecha_fin}</td>
                   <td>{reserva.nombre}</td>
                 </tr>
+                <NavLink to={`/reserva-actualizar/${reserva.id_reserva}`}>
+                 Actualizar reserva
+               
+              </NavLink>
+              <NavLink to={`/reserva-borrar/${reserva.id_reserva}`}>
+                Borrar reserva
+              </NavLink>
           </tbody>
         </table>
+        
       }
+      
     </div>
   );
 }

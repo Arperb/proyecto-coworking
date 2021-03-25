@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
-import './Perfil.css'
+import './UpdateUsuario.css'
 import PerfilFoto from './PerfilFoto'
 
-function Perfil() {
+function UpdateUsuario() {
     const login = useSelector((s) => s.login);
     let id_usuario = login.usuario.id_usuario
    
@@ -127,4 +127,4 @@ function Perfil() {
   );
 }
 
-export default Perfil;
+export default UpdateUsuario;

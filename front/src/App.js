@@ -14,11 +14,15 @@ import Register from './Auth/Register';
 import Buscador from './Buscador/Buscador';
 import VerCoworking from './Coworking/VerCoworking'
 import VerUsuario from './Usuario/VerUsuario'
+import UpdateUsuario from './Usuario/UpdateUsuario'
 import VerReservas from './Usuario/VerReservas'
+
 
 import Reset from './Auth/Reset';
 
 import Reservar from './Reserva/Reservar'
+import UpdateReserva from './Usuario/UpdateReserva'
+import BorrarReserva from './Usuario/BorrarReserva'
 import VerSalas from './Coworking/VerSalas'
 
 import CreateIncidencia from './Incidencias/CreateIncidencia';
@@ -44,7 +48,6 @@ function App() {
   return (
     <div className="App">
       <Header />
-      {login ? <Main />: <Login />}
       <Switch>
         <Route path='/' exact>
           <Home /> 
@@ -98,11 +101,31 @@ function App() {
      
     
     </Route>
-
+    <Route path='/reserva-actualizar/:id_reserva' exact>
+             <UpdateReserva />
+     
+    
+    </Route>
+    <Route path='/reserva-borrar/:id_reserva' exact>
+             <BorrarReserva />
+     
+    
+    </Route>
   
 
-    <Route path='/usuario/reservas' exact>
+    <Route path='/usuario/:id_usuario/reservas' exact>
              <VerReservas />
+       
+    
+    </Route>
+
+    <Route path='/usuario' exact>
+             <VerUsuario />
+       
+    
+    </Route>
+    <Route path='/actualizar-usuario' exact>
+             <UpdateUsuario />
        
     
     </Route>

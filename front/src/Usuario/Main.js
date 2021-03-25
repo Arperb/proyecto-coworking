@@ -1,36 +1,48 @@
-import { Link, Switch, Route } from 'react-router-dom'
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, Switch, Route, useHistory } from 'react-router-dom'
 import Home from '../Home/Home'
 import VerUsuario from './VerUsuario'
 
-import Perfil from './Perfil'
+import UpdateUsuario from './UpdateUsuario'
 import './Main.css'
 
-function Main() {
+function Main({children}) {
+  
+  const [open, setOpen] = useState(false)
+
+  const login = useSelector(s => s.login)
+  const dispatch = useDispatch()
+
+  const handleOpen = e => {
+    e.preventDefault()
+    setOpen(!open)
+}
+
+const history = useHistory()
+
+const handleLogout = () => {
+    dispatch({ type: 'logout' })
+    history.push('/')
+}
+
+
   return (
-    <div className="body">
-      <aside className="navbar">
-        <h2>Secciones</h2>
-        <ul>
-          <li><Link to="/">Portada</Link></li>
-          <li><Link to="/usuario">Usuarios</Link></li>
-          <li><Link to="/usuario/:id_usuario">Mi perfil</Link></li>
-         
-        </ul>
-      </aside>
-      <main>
-        <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/usuario" exact>
-            <VerUsuario />
-          </Route>
-          <Route path="/usuario/:id_usuario" exact>
-            <Perfil />
-          </Route>
+    <div onClick={handleOpen}>
+      <button className='sesionUsuario'>{children}</button>
+    
         
-        </Switch>
-      </main>
+      {open &&
+         <div className='userLinks'>
+          <li><Link to="/usuario">Ver/Borrar usuario</Link></li>
+          <li><Link to="/actualizar-usuario">Actualizar usuario</Link></li>
+          <li><Link to="/usuario/${id_usuario}/reservas">Ver reservas</Link></li>
+          <button className='logout' onClick={handleLogout}>Cerrar sesión</button>
+      
+          </div>
+      }
+     
+     
     </div>
   );
 }
