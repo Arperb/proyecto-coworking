@@ -264,13 +264,13 @@ app.delete('/sala/:id_sala', isAuthenticated, usuarioIsOwner, deleteSala)
 app.post('/reserva/:id_sala', isAuthenticated, usuarioIsUser, createReserva)
 
 //modificar datos de la reserva
-app.put('/reserva/:id_reserva', isAuthenticated, usuarioIsUser, createReserva, updateReserva)
+app.put('/reserva-actualizar/:id_reserva', isAuthenticated, usuarioIsUser, updateReserva)
 
 //borrar reserva
-app.delete('/reserva/:id_reserva', isAuthenticated, usuarioIsUser, createReserva, deleteReserva)
+app.delete('/reserva-borrar/:id_reserva', isAuthenticated, usuarioIsUser, deleteReserva)
 
 //obtener todos los datos de una reserva través del ID
-app.get('/reserva/:id_reserva', isAuthenticated, usuarioIsUser, createReserva, getReserva)
+app.get('/reserva/:id_reserva', isAuthenticated, usuarioIsUser, getReserva)
 
 //Crear una lista de reservas a través de los parámetros dados
 app.get('/reserva', isAuthenticated, usuarioIsAdmin, getListReserva)

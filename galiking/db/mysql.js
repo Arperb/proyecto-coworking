@@ -842,7 +842,6 @@ const getReserva = async (id_reserva) => {
 };
 const updateReserva = async (
     id_sala,
-    id_usuario,
     fecha_inicio,
     fecha_fin,
     id_reserva
@@ -854,12 +853,11 @@ const updateReserva = async (
 
         await connection.query(
             `
-            update reserva SET id_sala=?, id_usuario=?, fecha_inicio=?, fecha_fin=?
+            update reserva SET id_sala=?, fecha_inicio=?, fecha_fin=?
             where id_reserva=? 
         `,
             [
                 id_sala,
-                id_usuario,
                 fecha_inicio,
                 fecha_fin,
                 id_reserva,
