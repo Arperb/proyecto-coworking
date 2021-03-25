@@ -10,7 +10,8 @@ div {
 }
 
 .bienvenida {
-  background-image: url(../images/portada.jpg);
+  /* background-image: url(../images/portada.jpg); */
+  background-image: url(../images/portada1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   flex-direction: column;
@@ -20,7 +21,7 @@ div {
   align-items: flex-end;
 }
 
-.bienvenida:before {
+/* .bienvenida:before {
   position: absolute;
   content: "";
   top: 0;
@@ -28,7 +29,7 @@ div {
   right: 0;
   bottom: 0;
   background-color: rgba(255, 255, 255, 0.3);
-}
+} */
 
 .home.welcome {
   width: 33vw;
@@ -72,7 +73,7 @@ div {
 }
 
 .section.elegir {
-  background-image: url(../images/coworkers.jpg);
+  background-image: url(../images/coworkers4.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -102,7 +103,7 @@ div {
   text-decoration: none;
   text-align: center;
   margin-left: 5vw;
-  margin-top: 15vh;
+  margin-top: 25vh;
   color: black;
   border: 1px solid black;
   border: 2px solid #fff;
@@ -111,49 +112,54 @@ div {
   width: 30vw;
   height: 8vh;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .sub.style {
   padding: 25px;
+  font-size: 1.3rem;
 }
 .sub.button:hover {
   background-color: rgb(215, 187, 81, 0.3);
   filter: drop-shadow(2px 2px 5px gold);
   color: black;
-  font-weight: normal;
+  font-weight: bolder;
   z-index: 1;
 }
 
-.page.home h2 {
-  color: black;
+.page.home .homesubt {
+  color: white;
+  font-size: 3em;
+  margin-top: 3em;
+  text-shadow: 2px 3px black;
 }
 
 .page.home .razones {
-  background-image: url(../images/portada2.jpg);
+  background-image: url(../images/desk.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
-.why {
-  color: black;
+.page.home .why {
+  color: white;
   text-transform: uppercase;
-  font-size: 2em;
+  font-size: 3em;
   font-weight: bolder;
   grid-column: 1 / 3;
   place-self: center center;
+  text-shadow: 2px 3px black;
 }
 
-.estoesflex {
+/* .estoesflex {
   display: flex;
   flex-direction: row;
   padding-top: 0;
-}
+} */
 .page.home .dir {
   flex-direction: column;
 }

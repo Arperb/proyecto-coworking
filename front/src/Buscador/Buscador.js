@@ -53,7 +53,7 @@ function Buscador() {
 
   return (
     <div className="buscador">
-      <h1>Buscar</h1>
+      <h1>Encuentra el sitio que se adapate a tus necesidades</h1>
       <form onSubmit={handleSubmit}>
         <fieldset>
           <label htmlFor="provincia">Provincia:</label>
@@ -70,9 +70,7 @@ function Buscador() {
             <option value="Ourense">Ourense</option>
             <option value="Pontevedra">Pontevedra</option>
           </select>
-        </fieldset>
 
-        <fieldset>
           <label>Ciudad:</label>
           <input value={ciudad} onChange={(e) => setCiudad(e.target.value)} />
         </fieldset>
@@ -128,7 +126,7 @@ function Buscador() {
             onChange={(e) => setCapacidad(e.target.value)}
           >
             <option value="" hidden>
-              personas
+              Cantidad de coworkers...
             </option>
             <option value={1}>1</option>
             <option value={2}>2-4</option>
@@ -138,79 +136,72 @@ function Buscador() {
         </fieldset>
 
         <fieldset>
-          <label>limpieza:</label>
+          <label>¿QUÉ QUIERES ALQUILAR?</label>
+          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+            <option value="" hidden>
+              Tipo de espacio...
+            </option>
+            <option value="despacho">despacho</option>
+            <option value="compartida">compartida</option>
+            <option value="sala de reuniones">sala de reuniones</option>
+            <option value="Sala de eventos">sala de eventos</option>
+          </select>
+        </fieldset>
+
+        <fieldset>
+          <h3>Comodidades y servicios</h3>
+          <label>limpieza</label>
           <select
             value={limpieza}
             onChange={(e) => setLimpieza(e.target.value)}
           >
             <option value="" hidden>
-              limpieza
+              Selecciona una opción...
             </option>
             <option value="si">sí</option>
             <option value="no">no</option>
           </select>
-        </fieldset>
 
-        <fieldset>
-          <label>parking:</label>
+          <label>parking</label>
           <select value={parking} onChange={(e) => setParking(e.target.value)}>
             <option value="" hidden>
-              parking
+              Selecciona una opción...
             </option>
             <option value="si">sí</option>
             <option value="no">no</option>
           </select>
-        </fieldset>
 
-        <fieldset>
-          <label>wifi:</label>
+          <label>wifi</label>
           <select value={wifi} onChange={(e) => setWifi(e.target.value)}>
             <option value="" hidden>
-              wifi
+              Selecciona una opción...
             </option>
             <option value="si">sí</option>
             <option value="no">no</option>
           </select>
-        </fieldset>
 
-        <fieldset>
           <label>proyector</label>
           <select
             value={proyector}
             onChange={(e) => setProyector(e.target.value)}
           >
             <option value="" hidden>
-              proyector
+              Selecciona una opción...
             </option>
             <option value="si">sí</option>
             <option value="no">no</option>
           </select>
-        </fieldset>
 
-        <fieldset>
-          <label>impresora:</label>
+          <label>impresora</label>
           <select
             value={impresora}
             onChange={(e) => setImpresora(e.target.value)}
           >
             <option value="" hidden>
-              impresora
+              Selecciona una opción...
             </option>
             <option value="si">sí</option>
             <option value="no">no</option>
-          </select>
-        </fieldset>
-
-        <fieldset>
-          <label>¿QUÉ QUIERES ALQUILAR?</label>
-          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
-            <option value="" hidden>
-              tipo de sala
-            </option>
-            <option value="despacho">despacho</option>
-            <option value="compartida">compartida</option>
-            <option value="sala de reuniones">sala de reuniones</option>
-            <option value="Sala de eventos">sala de eventos</option>
           </select>
         </fieldset>
 

@@ -1,63 +1,54 @@
-.acordeon > button {
-    background-color: rgb(227, 227, 233);
-}
-
-/* .acordeon.imagen {
-    background-image: url(/src/images/portada2.jpg);
-    background-repeat: no-repeat;
-    background-size:cover;
-    height: calc(100vh);
-    flex-direction: column;
-    height: calc(100vh);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;   
-} */
-
-.third.title {
-        color: black;
-        font-size: 2em;
-        font-weight: bolder;
-        padding: 0;
-        margin-top: 30vh;
-        justify-content: flex-start;
-        align-items: center
-}
-
 button {
-        width: 510px;
-        height: 80px;
-        border-radius: 30px;
-        margin-top: 2vw;
-        margin-left: 4vw;
-        border: 2px solid #fff;
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-        outline: none;
-        text-decoration: none;
-        background-color: rgba(255, 255, 255, 0.5);
-        color: black;
-        flex-direction: row;
-        /* display: flex; */
-        justify-content: space-between;
-        box-sizing: border-box;
-        text-align: center;
+  width: 30vw;
+  height: 8vh;
+  border-radius: 30px;
+  margin-top: 2vw;
+  margin-left: 8vw;
+  border: 2px solid #fff;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  flex-direction: row;
+  /* display: flex; */
+  justify-content: space-between;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1.3rem;
 }
 
 .buttons.style {
-    background-color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
+  background-color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
 }
 
 .buttons.style:hover {
-    background-color: rgb(215, 187, 81, 0.3);
-    filter: drop-shadow(2px 2px 5px gold);
-    color: black;
-    font-weight: bolder;
+  background-color: rgb(215, 187, 81, 0.3);
+  filter: drop-shadow(2px 2px 5px gold);
+  color: black;
+  font-weight: bolder;
 }
 
-.acordeon.buttons {
-    display: inline-flex;
-    padding: 0;
+.acordeon .expand {
+  text-align: center;
+  padding: 2rem 0;
+}
+
+.acordeon .expand ol {
+  list-style: none;
+  font-size: larger;
+  text-align: left;
+  margin-left: 13rem;
+  list-style-image: url("../images/estrella2chica.png");
+  background-repeat: no-repeat;
+  color: white;
+  font-size: 1.5em;
+  text-shadow: 2px 3px black;
+}
+
+.acordeon .expand ol li {
+  margin: 0.5rem 0;
 }

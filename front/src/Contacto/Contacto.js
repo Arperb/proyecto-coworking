@@ -16,39 +16,50 @@ function Contacto() {
     return <div>✉️ ¡Enviado!.Pronto nos pondremos en contacto contigo✉️ </div>;
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="page form" onSubmit={handleSubmit}>
       <h1>CONTACTO</h1>
       <fieldset>
-        <label>
+        {/* <fieldset> */}
+        <label className="labelform">
           Nombre
+          <br></br>
           <input
+            className="iguales"
             name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
-      </fieldset>
-      <fieldset>
-        <label>
+        {/* </fieldset> */}
+        {/* <fieldset> */}
+        <label className="labelform">
           Email
+          <br></br>
           <input
+            className="iguales"
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-      </fieldset>
-      <fieldset>
-        <label>
-          Duda, sugerencia, consulta
+        {/* </fieldset> */}
+        {/* <fieldset> */}
+        <label className="labelform">
+          Envíanos tus dudas, sugerencias o consultas.
+          <br></br>
           <input
+            className="iduda"
             name="question"
             value={question}
             onChange={(e) => setQuestion(e.target.value)}
           />
         </label>
+        {/* </fieldset> */}
+        <button className="envioformulario">
+          {" "}
+          <h3>✉️ Enviar </h3>
+        </button>
       </fieldset>
-      <button>✉️ Enviar</button>
     </form>
   );
 }
