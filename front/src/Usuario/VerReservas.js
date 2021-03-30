@@ -40,7 +40,7 @@ function VerReservas() {
          <div key={reserva.id_reserva}>
                 
          <div>
-           id_reserva:
+           <span>id_reserva:</span>
            {reserva.id_reserva}</div>
           <div>
             id_sala:

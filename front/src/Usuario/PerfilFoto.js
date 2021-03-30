@@ -1,46 +1,50 @@
 import { useState } from 'react'
-import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
 import './UpdateUsuario.css'
 
 function PerfilFoto() {
-    const login = useSelector((s) => s.login);
-    let id_usuario = login.usuario.id_usuario
-   
+  const dispatch = useDispatch();
+  const login = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario
+
   const [error, setError] = useState(false)
 
   const history = useHistory()
 
-  const handleSubmit = e => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     // Como avatar no usa state, tenemos que obtenerlo de otra forma:
-    const foto = e.target.foto.files[0] // avatar es el "name" del input
+    const foto = e.target.elements.avatar.files[0] // avatar es el "name" del input
+
 
 
     // Para enviar los datos, como la imagen es un file, usamos un FormData
     const fd = new FormData()
     fd.append('foto', foto)
-  
+
 
     // Luego hacemos un fetch normal, usando el FormData como body
     // En este caso no se pone el header content-type! Sólo el token...
-    const res = fetch(`http://localhost:9999/usuario/${id_usuario}/profile`, {
-      method: 'PUT',
-      headers: { 'Authorization': login.token},
+    const res = await fetch(`http://localhost:9999/usuario/${id_usuario}/profile`, {
+      method: 'POST',
+      headers: { 'Authorization': login.token },
       body: fd
     })
     if (res.ok) {
-        history.push(`/usuario/${id_usuario}/profile`)
+      // Falta reducer para actualizar foto de usuario
+
+      history.push(`/usuario`)
     } else {
-        setError(true)
-        console.log('Ha habido un error')
+      setError(true)
+      console.log('Ha habido un error')
     }
-}
+  }
 
   // Ver Header para más info sobre la siguiente línea
   const avatarStyle = login.usuario && login.usuario.foto && { backgroundImage: `url(http://localhost:9999/images/profile/${login.usuario.foto}.jpg)` }
 
- 
+
 
   return (
     <div className="section profile">
@@ -55,7 +59,7 @@ function PerfilFoto() {
             {/* Ojo: Los input type file no usan value/onChange! */}
           </div>
         </label>
-        
+
         <button>Actualizar foto</button>
       </form>
     </div>
