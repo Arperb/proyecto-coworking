@@ -53,7 +53,7 @@ const updateReserva = async (req, res) => {
 		await reservaValidator.validateAsync(req.body);
 
 		await db.updateReserva(
-			id_sala,
+			
 			fecha_inicio,
 			fecha_fin,
 			id_reserva

@@ -45,15 +45,16 @@ const createIncidencia = async (req, res) => {
  
 
 const updateIncidencia = async (req, res) => {
-    const { id_usuario, id_sala, estado, categoria, descripcion } = req.body
+    const { id_sala, estado, categoria, descripcion } = req.body
     const { id_incidencia } = req.params
+    const { id_usuario } = req.auth
 
     // TODO: considerar el caso en el que el ID pasado no existe
     // y enviar un 404
     try {
         await incidenciaValidator.validateAsync(req.body)
 
-        await db.updateIncidencia(id_usuario, id_sala, estado, categoria, descripcion, id_incidencia)
+        await db.updateIncidencia(id_sala, estado, categoria, descripcion, id_incidencia)
 
     } catch (e) {
         

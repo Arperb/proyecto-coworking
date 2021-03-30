@@ -405,6 +405,7 @@ const logout = async (req, res, next) => {
 
     const { id_usuario } = req.params
 
+
     try {
         const usuarioReserva = await db.getUsuarioReserva(id_usuario)
        
@@ -423,10 +424,10 @@ const logout = async (req, res, next) => {
 
 const getUsuarioIncidencia = async (req, res) => {
 
-    const { id_incidencia, id_usuario } = req.params
+    const { id_usuario } = req.params
 
     try {
-        const usuarioIncidencia = await db.getUsuarioIncidencia(id_incidencia, id_usuario)
+        const usuarioIncidencia = await db.getUsuarioIncidencia(id_usuario)
        
         if (!usuarioIncidencia) {
             res.status(404).send()
@@ -442,10 +443,10 @@ const getUsuarioIncidencia = async (req, res) => {
 
 const getUsuarioRating = async (req, res) => {
 
-    const { id_rating, id_usuario } = req.params
+    const { id_usuario } = req.params
 
     try {
-        const usuarioRating = await db.getUsuarioRating(id_rating, id_usuario)
+        const usuarioRating = await db.getUsuarioRating(id_usuario)
        
         if (!usuarioRating) {
             res.status(404).send()
@@ -456,6 +457,27 @@ const getUsuarioRating = async (req, res) => {
     } catch (e) {
         console.log(e)
         res.status(500).send('No tienes valoraciones registradas')
+    }
+}
+
+const getUsuarioCoworking = async (req, res) => {
+
+    const { id_usuario } = req.params
+
+
+    try {
+        const usuarioCoworking = await db.getUsuarioCoworking(id_usuario)
+       
+       
+        if (!usuarioCoworking) {
+            res.status(404).send()
+            
+        } else {
+            res.send(usuarioCoworking)
+        }
+    } catch (e) {
+        console.log(e)
+        res.status(500).send('No hay ningún coworking registrado')
     }
 }
 
@@ -476,5 +498,6 @@ module.exports = {
     logout,
     getUsuarioReserva,
     getUsuarioIncidencia,
-    getUsuarioRating
+    getUsuarioRating,
+    getUsuarioCoworking
 } 

@@ -44,15 +44,16 @@ const createRating = async (req, res) => {
  
 
 const updateRating = async (req, res) => {
-    const { id_usuario, id_reserva, valoracion } = req.body
+    const { id_reserva, valoracion } = req.body
     const { id_rating } = req.params
+    const { id_usuario } = req.auth
 
     // TODO: considerar el caso en el que el ID pasado no existe
     // y enviar un 404
     try {
         await ratingValidator.validateAsync(req.body)
 
-        await db.updateRating(id_usuario, id_reserva, valoracion, id_rating)
+        await db.updateRating(id_reserva, valoracion, id_rating)
 
     } catch (e) {
         

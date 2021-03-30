@@ -223,33 +223,51 @@ const getUsuarioByCode = async (code) => {
 const getUsuarioReserva = async (id_usuario) => {
 
     const query = `select * from reserva
-                  left outer join usuario on usuario.id_usuario = reserva.id_usuario`
+                  left outer join usuario on usuario.id_usuario = reserva.id_usuario
+                  where reserva.id_usuario=?
+                  order by reserva.fecha_creacion ASC`
     const params = [id_usuario]
 
+    console.log(query)
     const [result] = await performQuery(query, params)
     console.log(result)
     return result
 
 }
 
-const getUsuarioIncidencia = async (id_incidencia, id_usuario) => {
+const getUsuarioIncidencia = async (id_usuario) => {
 
     const query = `select * from incidencia
                   left outer join usuario on usuario.id_usuario = incidencia.id_usuario`
-    const params = [id_incidencia, id_usuario]
+    const params = [id_usuario]
 
     const [result] = await performQuery(query, params)
     return result
 
 }
 
-const getUsuarioRating = async (id_rating, id_usuario) => {
+const getUsuarioRating = async (id_usuario) => {
 
     const query = `select * from rating
                   left outer join usuario on usuario.id_usuario = rating.id_usuario`
-    const params = [id_rating, id_usuario]
+    const params = [id_usuario]
 
     const [result] = await performQuery(query, params)
+    return result
+
+}
+
+const getUsuarioCoworking = async (id_usuario) => {
+
+    const query = `select * from coworking
+                  left outer join usuario on usuario.id_usuario = coworking.id_usuario
+                  where coworking.id_usuario=?
+                  order by coworking.fecha_creacion ASC`
+    const params = [id_usuario]
+
+    console.log(query)
+    const [result] = await performQuery(query, params)
+    console.log(result)
     return result
 
 }
@@ -371,17 +389,17 @@ const getListCoworking = async (nombre, telefono) => {
 
 }
 
-const updateCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking) => {
+const updateCoworking = async (nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking) => {
     let connection;
 
     try {
         connection = await getConnection();
 
         let SQL = await connection.query(`
-            update coworking SET id_usuario=?, nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, wifi=?, limpieza=?, parking=?, web=?
+            update coworking SET nombre=?, telefono=?, direccion=?, ciudad=?, provincia=?, descripcion=?, wifi=?, limpieza=?, parking=?, web=?
             where id_coworking=?
         `,
-            [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking])
+            [nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking])
 
     } catch (e) {
         console.log(e)
@@ -841,7 +859,7 @@ const getReserva = async (id_reserva) => {
     }
 };
 const updateReserva = async (
-    id_sala,
+   
     fecha_inicio,
     fecha_fin,
     id_reserva
@@ -853,11 +871,11 @@ const updateReserva = async (
 
         await connection.query(
             `
-            update reserva SET id_sala=?, fecha_inicio=?, fecha_fin=?
+            update reserva SET fecha_inicio=?, fecha_fin=?
             where id_reserva=? 
         `,
             [
-                id_sala,
+               
                 fecha_inicio,
                 fecha_fin,
                 id_reserva,
@@ -1273,6 +1291,7 @@ module.exports = {
     getUsuarioReserva,
     getUsuarioIncidencia,
     getUsuarioRating,
+    getUsuarioCoworking,
     createCoworking,
     checkCoworking,
     getCoworking,

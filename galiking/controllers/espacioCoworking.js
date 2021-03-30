@@ -75,9 +75,11 @@ const createCoworking = async (req, res) => {
 const updateCoworking = async (req, res) => {
 
 
-    const { id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web } = req.body
+    const { nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web } = req.body
 
     const { id_coworking } = req.params
+
+    const { id_usuario } = req.auth
 
 
     // TODO: considerar el caso en el que el ID pasado no existe

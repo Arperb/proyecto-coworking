@@ -39,7 +39,8 @@ const currentPort = process.env.PORT || DEFAULT_PORT
             getFotoUsuario,
             getUsuarioReserva,
             getUsuarioIncidencia,
-            getUsuarioRating } = require('./controllers/usuario');
+            getUsuarioRating,
+            getUsuarioCoworking } = require('./controllers/usuario');
 
 //CONTROLADORES COWORKING
 
@@ -213,11 +214,11 @@ app.get('/coworking', isAuthenticated, coworkingOwner, getListCoworking)
 
 //modificar datos espacio coworking
 
-app.put('/coworking/:id_coworking', isAuthenticated, coworkingOwner, updateCoworking)
+app.put('/coworking-actualizar/:id_coworking', isAuthenticated, coworkingOwner, updateCoworking)
 
 //borrar espacio coworking
 
-app.delete('/coworking/:id_coworking', isAuthenticated, coworkingOwner, deleteCoworking)
+app.delete('/coworking-borrar/:id_coworking', isAuthenticated, coworkingOwner, deleteCoworking)
 
 //Añadir foto a coworking
 
@@ -284,10 +285,10 @@ app.get('/reserva', isAuthenticated, usuarioIsAdmin, getListReserva)
 app.post('/incidencia', isAuthenticated, usuarioIsUser, createIncidencia)
 
 //modificar datos de una incidencia
-app.put('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, updateIncidencia)
+app.put('/incidencia-actualizar/:id_incidencia', isAuthenticated, usuarioIsUser, updateIncidencia)
 
 //borrar incidencia
-app.delete('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, deleteIncidencia)
+app.delete('/incidencia-borrar/:id_incidencia', isAuthenticated, usuarioIsUser, deleteIncidencia)
 
 //obtener todos los datos de una incidencia través del ID
 app.get('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, getIncidencia)
@@ -301,10 +302,10 @@ app.get('/incidencia/:id_incidencia', isAuthenticated, usuarioIsUser, getInciden
 app.post('/rating', isAuthenticated, usuarioIsUser, createRating)
 
 //modificar datos de una valoración
-app.put('/rating/:id_rating', isAuthenticated, usuarioIsUser, updateRating)
+app.put('/rating-actualizar/:id_rating', isAuthenticated, usuarioIsUser, updateRating)
 
 //borrar valoración
-app.delete('/rating/:id_rating', isAuthenticated, usuarioIsUser, deleteRating)
+app.delete('/rating-borrar/:id_rating', isAuthenticated, usuarioIsUser, deleteRating)
 
 //obtener todos los datos de una valoración
 app.get('/rating/:id_rating', isAuthenticated, usuarioIsUser, getRating)
@@ -325,11 +326,15 @@ app.get('/usuario/:id_usuario/reservas', isAuthenticated, isSameUser, getUsuario
 
 //El usuario puede consultar sus incidencias registradas
 
-app.get('/usuario/:id_usuario/incidencias/:id_incidencia', isAuthenticated, isSameUser, getUsuarioIncidencia)
+app.get('/usuario/:id_usuario/incidencias', isAuthenticated, isSameUser, getUsuarioIncidencia)
 
 //El usuario puede consultar sus valoraciones
 
-app.get('/usuario/:id_usuario/rating/:id_rating', isAuthenticated, isSameUser, getUsuarioRating)
+app.get('/usuario/:id_usuario/rating', isAuthenticated, isSameUser, getUsuarioRating)
+
+//El usuario propietario puede ver su coworking
+
+app.get('/usuario/:id_usuario/coworking', isAuthenticated, usuarioIsOwner, getUsuarioCoworking)
 
 //Ver reservas de un coworking
 
