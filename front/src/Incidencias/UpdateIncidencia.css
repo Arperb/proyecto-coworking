@@ -1,0 +1,35 @@
+.section.incidencia .form-main {
+    display: flex;
+  }
+  
+ 
+  
+  .section.section.incidencia label {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .section.incidencia label > span {
+    flex: 0 0 150px;
+    font-size: 90%;
+    height: 33px;
+    line-height: 33px;
+  }
+  
+  .section.section.incidencia input:not([type="file"]) {
+    border: 1px solid #ccc;
+    display: block;
+    margin-bottom: 12px;
+    outline: 0;
+    padding: 8px 15px;
+    width: 250px;
+  }
+  
+  .section.section.incidencia input:focus {
+    border-color: #5f4fde;
+  }
+  
+  
+  .section.section.incidencia button {
+    margin-top: 20px;
+  }

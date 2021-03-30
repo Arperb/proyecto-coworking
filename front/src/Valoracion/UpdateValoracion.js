@@ -1,21 +1,17 @@
 import { useState } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
+import './UpdateValoracion.css'
 
 
-
-function UpdateReserva() {
+function UpdateValoracion() {
     const login = useSelector((s) => s.login);
     let id_usuario = login.usuario.id_usuario
    
-    const { id_reserva } = useParams();
+    const { id_rating } = useParams();
    
-
- 
-  const [fecha_inicio, setFecha_inicio] = useState("");
-  const [fecha_fin, setFecha_fin] = useState("");
-
-
+  const [id_reserva, setId_reserva] = useState("");
+  const [valoracion, setValoracion] = useState("");
   const [error, setError] = useState(false)
 
   const history = useHistory()
@@ -23,7 +19,7 @@ function UpdateReserva() {
   const handleSubmit = e => {
     e.preventDefault()
    
-    const res = fetch(`http://localhost:9999/reserva-actualizar/${id_reserva}`, {
+    const res = fetch(`http://localhost:9999/rating-actualizar/${id_rating}`, {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",
@@ -31,12 +27,12 @@ function UpdateReserva() {
       },
       body: JSON.stringify({
        
-         fecha_inicio,
-         fecha_fin,
+         id_reserva,
+         valoracion,
       }),
     })
     if (res.ok) {
-        history.push(`/reserva-actualizar/${id_reserva}`)
+        history.push(`/rating-actualizar/${id_rating}`)
     } else {
         setError(true)
         console.log('Ha habido un error')
@@ -48,34 +44,32 @@ function UpdateReserva() {
  
 
   return (
-    <div className="section reserva">
+    <div className="section valoracion">
      
       <form onSubmit={handleSubmit}>
      
       
         <label>
-          <span>Fecha inicio:</span>
+          <span>Id_reserva:</span>
           <input
-            type="date"
-            name="fecha_inicio"
-            value={fecha_inicio}
-            onChange={e => setFecha_inicio(e.target.value)}
+            name="id_reserva"
+            value={id_reserva}
+            onChange={e => setId_reserva(e.target.value)}
           />
         </label>
         <label>
-          <span>Fecha fin:</span>
+          <span>Valoración:</span>
           <input
-            type="date"
-            name="fecha_fin"
-            value={fecha_fin}
-            onChange={e => setFecha_fin(e.target.value)}
+            name="valoracion"
+            value={valoracion}
+            onChange={e => setValoracion(e.target.value)}
           />
         </label>
-        
+      
         <button>Actualizar</button>
       </form>
     </div>
   );
 }
 
-export default UpdateReserva;
+export default UpdateValoracion;

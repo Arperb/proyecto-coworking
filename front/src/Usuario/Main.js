@@ -21,6 +21,10 @@ function Main({children}) {
 
 const history = useHistory()
 
+const isUser = login.usuario.rol=="cliente" || login.usuario.rol=="administrador"
+const isOwner = login.usuario.rol=="propietario" || login.usuario.rol=="administrador"
+
+
 const handleLogout = () => {
     dispatch({ type: 'logout' })
     history.push('/')
@@ -34,9 +38,31 @@ const handleLogout = () => {
         
       {open &&
          <div className='userLinks'>
+      
           <li><Link to="/usuario">Ver/Borrar usuario</Link></li>
           <li><Link to="/actualizar-usuario">Actualizar usuario</Link></li>
-          <li><Link to="/usuario/${id_usuario}/reservas">Ver reservas</Link></li>
+          { isUser  && 
+          <li><Link to="/usuario/reservas">Ver reservas</Link></li>
+          }
+          { isUser  && 
+          <li><Link to="/usuario/crear-valoracion">Crear valoración</Link></li>
+          }
+          { isUser  && 
+          <li><Link to="/usuario/ver-valoracion">Ver valoración</Link></li>
+          }
+           { isUser  && 
+          <li><Link to="/usuario/crear-incidencia">Crear incidencia</Link></li>
+          }
+          { isUser  && 
+          <li><Link to="/usuario/ver-incidencia">Ver incidencias</Link></li>
+          }
+          { isOwner && 
+           <li><Link to="/crear-coworking">Crear coworking</Link></li>
+          }
+          { isOwner && 
+           <li><Link to="/usuario/coworking">Ver coworking</Link></li>
+          }
+          
           <button className='logout' onClick={handleLogout}>Cerrar sesión</button>
       
           </div>

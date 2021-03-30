@@ -16,6 +16,10 @@ import VerCoworking from './Coworking/VerCoworking'
 import VerUsuario from './Usuario/VerUsuario'
 import UpdateUsuario from './Usuario/UpdateUsuario'
 import VerReservas from './Usuario/VerReservas'
+import VerUsuarioCoworking from './Usuario/VerUsuarioCoworking'
+import UpdateCoworking from './Coworking/UpdateCoworking'
+import BorrarCoworking from './Coworking/BorrarCoworking'
+import CoworkingFoto from './Coworking/CoworkingFoto'
 
 
 import Reset from './Auth/Reset';
@@ -26,7 +30,14 @@ import BorrarReserva from './Usuario/BorrarReserva'
 import VerSalas from './Coworking/VerSalas'
 
 import CreateIncidencia from './Incidencias/CreateIncidencia';
+import VerIncidencia from './Incidencias/VerIncidencia';
+import UpdateIncidencia from './Incidencias/UpdateIncidencia';
+import BorrarIncidencia from './Incidencias/BorrarIncidencia';
+
 import CreateRating from './Valoracion/CreateRating';
+import VerValoracion from './Valoracion/VerValoracion';
+import UpdateValoracion from './Valoracion/UpdateValoracion';
+import BorrarValoracion from './Valoracion/BorrarValoracion';
 import Main from './Usuario/Main'
 
 
@@ -39,6 +50,9 @@ import Contacto from './Contacto/Contacto'
 
 
 import Footer from './Footer';
+import VerReservasCoworking from './Coworking/VerReservasCoworking';
+
+
 
 
 function App() {
@@ -88,9 +102,10 @@ function App() {
 
         <Route path='/coworking/:id_coworking' exact>
              <VerCoworking />
-     
-    
-    </Route>
+        </Route>
+        <Route path='/coworking/:id_coworking/reservas' exact>
+             <VerReservasCoworking />
+        </Route>
     <Route path='/coworking/:id_coworking/salas' exact>
              <VerSalas />
      
@@ -113,8 +128,30 @@ function App() {
     </Route>
   
 
-    <Route path='/usuario/:id_usuario/reservas' exact>
+    <Route path='/usuario/reservas' exact>
              <VerReservas />
+       
+    
+    </Route>
+
+    <Route path='/usuario/coworking' exact>
+             <VerUsuarioCoworking />
+       
+    
+    </Route>
+    <Route path='/coworking-actualizar/:id_coworking' exact>
+             <UpdateCoworking />
+       
+    
+    </Route>
+    <Route path='/foto-coworking/:id_coworking' exact>
+             <CoworkingFoto />
+       
+    
+    </Route>
+
+    <Route path='/coworking-borrar/:id_coworking' exact>
+             <BorrarCoworking />
        
     
     </Route>
@@ -132,13 +169,28 @@ function App() {
 
     <Route path='/usuario/crear-incidencia' exact>
              <CreateIncidencia />
-       
-    
     </Route>
+    <Route path='/usuario/ver-incidencia' exact>
+             <VerIncidencia />
+    </Route>
+    <Route path='/incidencia-actualizar/:id_incidencia' exact>
+             <UpdateIncidencia />
+    </Route>
+    <Route path='/incidencia-borrar/:id_incidencia' exact>
+             <BorrarIncidencia />
+    </Route>
+
     <Route path='/usuario/crear-valoracion' exact>
              <CreateRating />
-       
-    
+    </Route>
+    <Route path='/usuario/ver-valoracion' exact>
+             <VerValoracion />
+    </Route>
+    <Route path='/rating-actualizar/:id_rating' exact>
+             <UpdateValoracion />
+    </Route>
+    <Route path='/rating-borrar/:id_rating' exact>
+             <BorrarValoracion />
     </Route>
 
   
