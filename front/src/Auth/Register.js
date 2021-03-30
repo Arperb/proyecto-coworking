@@ -98,7 +98,7 @@ function Registro() {
           onChange={(e) => setUsuario({ ...usuario, foto: e.target.value })}
         />
         <br></br>
-        <button>Quiero coronarme</button>
+        <button className="crownbutton">Quiero coronarme</button>
 
         {error && <div>Ya existe este usuario</div>}
       </form>

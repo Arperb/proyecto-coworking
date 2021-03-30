@@ -1,14 +1,9 @@
-.registerpage {
+.loginpage {
   background-color: rgb(215, 187, 81);
-  height: 80vh;
+  height: 60vh;
 }
 
-h2.tituloregistro {
-  margin-top: 2rem;
-  margin-left: 2rem;
-}
-
-.register.form {
+.loginform {
   padding: 1rem;
   margin: 1rem;
   border-radius: 20px;
@@ -21,7 +16,7 @@ h2.tituloregistro {
   margin: 0 auto;
 }
 
-input.idatos {
+input.icorreo {
   font-size: larger;
   border-radius: 6px;
   padding: 0.2rem;
@@ -30,7 +25,7 @@ input.idatos {
   border-color: white;
 }
 
-input.iotros {
+input.ipassword {
   font-size: larger;
   border-radius: 6px;
   padding: 0.2rem;
@@ -39,16 +34,7 @@ input.iotros {
   border-color: white;
 }
 
-input.ifoto {
-  font-size: larger;
-  border-radius: 6px;
-  padding: 0.2rem;
-  margin-top: 2rem;
-  margin-left: 2rem;
-  border-color: white;
-}
-
-.crownbutton {
+.loginbutton {
   border-radius: 20px;
   border: 1px solid rgb(215, 187, 81);
   font-size: large;
@@ -59,8 +45,13 @@ input.ifoto {
   margin-top: 2rem;
 }
 
-.crownbutton:hover {
+.loginbutton:hover {
   background-color: rgb(215, 187, 81, 0.3);
   filter: drop-shadow(2px 2px 5px gold);
   color: black;
+}
+
+.forgottext {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }

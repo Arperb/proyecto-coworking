@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import "./Login.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -29,38 +30,41 @@ function Login() {
   if (login) return <Redirect to="/" />;
 
   return (
-    <form className="pageLogin" onSubmit={handleSubmit}>
-      <h3>Iniciar sesión</h3>
-      <fieldset>
+    <div className="loginpage">
+      <h2 className="logintitle">Iniciar sesión</h2>
+      <form className="loginform" onSubmit={handleSubmit}>
         <label>
           email:
           <input
+            className="icorreo"
             value={email}
             required
             type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
-      </fieldset>
-      <fieldset>
+        <br></br>
         <label>
           Contraseña:
           <input
+            className="ipassword"
             value={contrasena}
             required
             type="password"
             onChange={(e) => setContrasena(e.target.value)}
           />
         </label>
-      </fieldset>
-      <button>Entrar</button>
-      {error && <div>Usuario o contraseña incorrecto</div>}
-      <div>
-        <Link to="/usuario/recover-contrasena">
-          ¿Has olvidado la contraseña?
-        </Link>
-      </div>
-    </form>
+        <br></br>
+        <button className="loginbutton">Entrar</button>
+
+        {error && <div>Usuario o contraseña incorrecto</div>}
+        <div>
+          <Link className="forgotpass" to="/usuario/recover-contrasena">
+            <p className="forgottext">¿Has olvidado la contraseña?</p>
+          </Link>
+        </div>
+      </form>
+    </div>
   );
 }
 
