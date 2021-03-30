@@ -1,11 +1,11 @@
 .registerpage {
   background-color: rgb(215, 187, 81);
-  height: 80vh;
+  height: 82vh;
 }
 
 h2.tituloregistro {
-  margin-top: 2rem;
   margin-left: 2rem;
+  padding-top: 2rem;
 }
 
 .register.form {

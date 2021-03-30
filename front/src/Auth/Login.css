@@ -1,8 +1,13 @@
 .loginpage {
   background-color: rgb(215, 187, 81);
-  height: 60vh;
+  height: 82vh;
 }
 
+.logintitle {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+}
 .loginform {
   padding: 1rem;
   margin: 1rem;

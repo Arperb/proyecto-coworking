@@ -34,7 +34,7 @@ function Login() {
       <h2 className="logintitle">Iniciar sesión</h2>
       <form className="loginform" onSubmit={handleSubmit}>
         <label>
-          email:
+          E-mail
           <input
             className="icorreo"
             value={email}
@@ -45,7 +45,7 @@ function Login() {
         </label>
         <br></br>
         <label>
-          Contraseña:
+          Contraseña
           <input
             className="ipassword"
             value={contrasena}
