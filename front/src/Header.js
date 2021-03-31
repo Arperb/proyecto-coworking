@@ -32,7 +32,7 @@ function Header() {
           </Link>
         )}
       </div>
-      <div>
+      <div className="avatarymenu">
         {login && (
           <div className="userMenu">
             <div

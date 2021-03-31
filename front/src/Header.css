@@ -191,13 +191,13 @@ width: 70%;
 } */
 
 header {
-  box-shadow: 5px 0 8px rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 3px 15px;
   height: 70px;
-  width: 100%;
+  width: 1700px;
+  box-sizing: border-box;
 }
 
 header .logo {
@@ -206,11 +206,11 @@ header .logo {
   cursor: pointer;
 }
 
-header .usuario {
+/* header .usuario {
   cursor: pointer;
   display: flex;
   align-items: center;
-}
+} */
 
 header .avatar {
   background-color: #ddd;
@@ -222,4 +222,9 @@ header .avatar {
   margin-right: 8px;
   margin-top: 20px;
   width: 32px;
+}
+
+div.userMenu {
+  display: flex;
+  box-sizing: border-box;
 }
