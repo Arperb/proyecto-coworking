@@ -5,9 +5,9 @@ import './UpdateUsuario.css'
 import PerfilFoto from './PerfilFoto'
 
 function UpdateUsuario() {
-    const login = useSelector((s) => s.login);
-    let id_usuario = login.usuario.id_usuario
-   
+  const login = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario
+
   //const setMe = useSetUser()
 
   // Tomamos los datos del usuario actual como estado inicial
@@ -26,7 +26,7 @@ function UpdateUsuario() {
 
   const handleSubmit = e => {
     e.preventDefault()
-   
+
     const res = fetch(`http://localhost:9999/usuario/${id_usuario}`, {
       method: 'PUT',
       headers: {
@@ -34,42 +34,38 @@ function UpdateUsuario() {
         Authorization: login.token,
       },
       body: JSON.stringify({
-          nif_cif,
-          email,
-          telefono,
-          bio,
-          nombre,
-          rol,
-          contrasena,
+        nif_cif,
+        email,
+        telefono,
+        bio,
+        nombre,
+        rol,
+        contrasena,
       }),
     })
     if (res.ok) {
-        history.push(`/usuario/${id_usuario}`)
+      history.push(`/usuario/${id_usuario}`)
     } else {
-        setError(true)
-        console.log('Ha habido un error')
+      setError(true)
+      console.log('Ha habido un error')
     }
-}
+  }
 
 
 
- 
+
 
   return (
     <div className="section profile">
-     
+
+      <PerfilFoto />
       <form onSubmit={handleSubmit}>
-     
-         
-          <PerfilFoto />
-        
-      
         <label>
           <span>Nif_cif:</span>
           <input
             name="nif_cif"
             value={nif_cif}
-            onChange={e => setNif_cif(e.target.value )}
+            onChange={e => setNif_cif(e.target.value)}
           />
         </label>
         <label>

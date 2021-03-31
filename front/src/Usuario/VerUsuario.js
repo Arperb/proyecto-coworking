@@ -9,59 +9,65 @@ import BorrarUsuario from './BorrarUsuario';
 
 function VerUsuario() {
 
- const [usuario, setUsuario] = useState({})
- const login = useSelector(s => s.login)
- //const { usuario, token} = useSelector((s) => s.login);
- let id_usuario = login.usuario.id_usuario
- console.log(id_usuario)
+  const [usuario, setUsuario] = useState({})
+  const login = useSelector(s => s.login)
+  //const { usuario, token} = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario
+  console.log(id_usuario)
 
- async function getUsuario(id_usuario) {
- const res = await fetch (`http://localhost:9999/usuario/${id_usuario}`, {
-        headers:{"Content-Type":"application/json",
-                 Authorization:login.token}
- })
- const data = await res.json();    
- return data
- }
+  async function getUsuario(id_usuario) {
+    const res = await fetch(`http://localhost:9999/usuario/${id_usuario}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: login.token
+      }
+    })
+    const data = await res.json();
+    console.log(data)
+    return data
+  }
 
- useEffect(() => {
-   getUsuario(id_usuario).then(response =>{
-       setUsuario(response)
-       
-   }) 
-   
-  
- },[])
- console.log(usuario)
-return(
+  useEffect(() => {
+    getUsuario(id_usuario).then(response => {
+      setUsuario(response)
+
+    })
+
+
+
+  }, [])
+  console.log(usuario)
+  return (
     <div className="section users">
-       <h2>Usuarios</h2>
-       {!usuario && 'cargando' }
-       
-       
-       
-       
- <div key={usuario.id_usuario}>
-                
-                  <div>{usuario.email}</div>
-                   <div>{usuario.nombre}</div>
-                   <div>{usuario.telefono}</div>
-                   <div>{usuario.bio}</div>
-                   <div>{usuario.nif_cif}</div>
-                   <div>{usuario.rol}</div>
-                
-                   </div>
-                   {login && login.usuario.id_usuario &&
-                            <BorrarUsuario id={id_usuario} />
-                        }
-       
-       
-       
-       </div>
-     
+      <h2>Usuarios</h2>
+      {!usuario && 'cargando'}
 
 
-)}
+
+
+      <div key={usuario.id_usuario}>
+
+        <div>{usuario.email}</div>
+        <div>{usuario.nombre}</div>
+        <div>{usuario.telefono}</div>
+        <div>{usuario.bio}</div>
+        <div>{usuario.nif_cif}</div>
+        <div>{usuario.rol}</div>
+        {usuario.foto ? <img src={`http://localhost:9999/images/profile/${usuario.foto}.jpg`} /> : null}
+
+      </div>
+      {login && login.usuario.id_usuario &&
+        <BorrarUsuario id={id_usuario} />
+      }
+
+
+
+    </div>
+
+
+
+  )
+}
 
 
 

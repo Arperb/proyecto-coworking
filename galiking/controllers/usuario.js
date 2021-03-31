@@ -26,11 +26,11 @@ const createUsuario = async (req, res) => {
         const validationCode = randomstring.generate(40);
 
         await db.createUsuario(nif_cif, email, telefono, bio, foto, nombre, rol, contrasenaBcrypt, validationCode)
-     
+
         sendConfirmationMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/validate/${validationCode}`)
 
     } catch (e) {
-    
+
         res.status(400).send("error de registro")
         return
     }
@@ -46,19 +46,22 @@ const uploadFotoUsuario = async (req, res) => {
     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/profile`, { recursive: true })
 
     try {
-        
+        console.log(req.files)
         //les damos un identificador único
         const fileID = uuid.v4()
         // los guardamos en la carpeta que nos interesa
         const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.jpg`
-        
-        //const image = sharp(req.files.foto.data)
-        // const imageInfo = await image.metadata()
-        // if (imageInfo.width>1000) {
-        //     image.resize(720, 796)
-        // }
+
+        const image = sharp(req.files.foto.data)
+        const imageInfo = await image.metadata()
+        if (imageInfo.width > 1000) {
+            image.resize(720)
+        }
+
+        await image.toFile(outputFileName);
+
         // console.log(image.width)
-        await fsPromises.writeFile(outputFileName, req.files.foto.data)
+        //await fsPromises.writeFile(outputFileName, req.files.foto.data)
 
         //         //guardar una referencia a este uuid en la base de datos
         //         //para que luego el front llame al get para que le de el uuid
@@ -72,7 +75,9 @@ const uploadFotoUsuario = async (req, res) => {
             return
         }
 
-        res.send()
+        const usuario = await db.getUsuarioId(id_usuario)
+
+        res.send(usuario);
 
     } catch (e) {
         console.log('Error: ', e)
@@ -82,24 +87,24 @@ const uploadFotoUsuario = async (req, res) => {
 
 const getFotoUsuario = async (req, res) => {
 
-     const { foto } = req.params
+    const { foto } = req.params
 
-     //comprobar si la imagen existe
-     //const path = `/home/hack21/proyecto-coworking/galiking/images/profile/${foto}.png`
-     const path = `${__dirname}/process.env.TARGET_FOLDER/profile/${foto}.jpg`
-     console.log(path)
-   
-     try {
-         await fsPromises.stat(path)
-         //aquí devolvemos el fichero
-         res.sendFile(path)
-     } catch (e) {
+    //comprobar si la imagen existe
+    //const path = `/home/hack21/proyecto-coworking/galiking/images/profile/${foto}.png`
+    const path = `${__dirname}/process.env.TARGET_FOLDER/profile/${foto}.jpg`
+    console.log(path)
 
-         console.log(e)
-         res.status(404).send('el fichero no existe')
-     }
+    try {
+        await fsPromises.stat(path)
+        //aquí devolvemos el fichero
+        res.sendFile(path)
+    } catch (e) {
 
- }
+        console.log(e)
+        res.status(404).send('el fichero no existe')
+    }
+
+}
 
 const validate = async (req, res) => {
 
@@ -108,8 +113,8 @@ const validate = async (req, res) => {
     try {
         db.checkValidationCode(code)
         res.send('Validado correctamente')
-        
-    } catch(e) {
+
+    } catch (e) {
         res.status(401).send('Usuario no validado')
     }
 
@@ -120,91 +125,91 @@ const login = async (req, res) => {
     const { email, contrasena } = req.body
 
     //comprobar que el usuario está en la base de datos
-    
-        const usuario = await db.getUsuarioEmail(email)
 
-        if (!usuario) {
-            res.status(401).send('este usuario no existe')
-            return
-            
-        }
+    const usuario = await db.getUsuarioEmail(email)
 
-        const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+    if (!usuario) {
+        res.status(401).send('este usuario no existe')
+        return
 
-        if (!validContrasena) {
-            res.status(401).send('la contraseña no es valida')
-            return
-        }
+    }
 
-        const tokenPayload = {
-            isAdmin: usuario.rol === 'administrador' ,
-            rol: usuario.rol ,
-            email: usuario.email,
-            id_usuario: usuario.id_usuario,
-        };
-       
+    const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
 
-        const token = jwt.sign(tokenPayload, process.env.SECRET, {
-            expiresIn: '1d'
-        });
+    if (!validContrasena) {
+        res.status(401).send('la contraseña no es valida')
+        return
+    }
+
+    const tokenPayload = {
+        isAdmin: usuario.rol === 'administrador',
+        rol: usuario.rol,
+        email: usuario.email,
+        id_usuario: usuario.id_usuario,
+    };
 
 
-        res.json({
-                token,
-                usuario,
-            })
-            console.log(token)
-        };
+    const token = jwt.sign(tokenPayload, process.env.SECRET, {
+        expiresIn: '1d'
+    });
 
-     
 
-    
+    res.json({
+        token,
+        usuario,
+    })
+    console.log(token)
+};
+
+
+
+
 
 const updateContrasena = async (req, res) => {
 
-   
-     const { contrasena, newContrasena, newContrasenaRepeat } = req.body
-     const decodedToken = req.auth
 
-   
-     if (newContrasena !== newContrasenaRepeat) {
-         res.status(400).send('Los datos introducidos son incorrectos')
-         return
-       
-     }
+    const { contrasena, newContrasena, newContrasenaRepeat } = req.body
+    const decodedToken = req.auth
 
-      try {
-          await passValidator.validateAsync(req.body)
-               
-      } catch(e) {
-      
-          res.status(400).send('Validacion erronea')
-        
-          return
-      }
-    
-     const usuario = await db.getUsuarioEmail(decodedToken.email)
-     const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
 
-  
-     if (!validContrasena) {
-         res.status(401).send()
-         return
-     }
+    if (newContrasena !== newContrasenaRepeat) {
+        res.status(400).send('Los datos introducidos son incorrectos')
+        return
 
-     const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
+    }
 
-     await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
+    try {
+        await passValidator.validateAsync(req.body)
 
-     res.send()
- }
+    } catch (e) {
+
+        res.status(400).send('Validacion erronea')
+
+        return
+    }
+
+    const usuario = await db.getUsuarioEmail(decodedToken.email)
+    const validContrasena = await bcrypt.compare(contrasena, usuario.contrasena);
+
+
+    if (!validContrasena) {
+        res.status(401).send()
+        return
+    }
+
+    const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
+
+    await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
+
+    res.send()
+}
 
 const recoverContrasena = async (req, res) => {
 
     //comprobamos la sintaxis del email
 
     const { email } = req.body
-    
+
 
     try {
         await emailValidator.validateAsync(req.body)
@@ -233,7 +238,7 @@ const recoverContrasena = async (req, res) => {
 const contrasenaUpdateCode = async (req, res) => {
 
     const { code } = req.params;
-   
+
     try {
         const usuario = await db.checkValidationCode(code)
 
@@ -252,23 +257,23 @@ const resetContrasena = async (req, res) => {
 
     const { code } = req.params
     const { newContrasena, newContrasenaRepeat } = req.body
-  
+
     try {
         await newPassValidator.validateAsync(req.body)
     } catch (e) {
         res.status(400).send('Los datos introducidos son incorrectos')
         return
     }
-   
+
     const usuario = await db.getUsuarioByCode(code)
- 
+
     // Ciframos la nueva password
     const contrasenaBcrypt = await bcrypt.hash(newContrasena, 10);
- 
+
     // Actualizar vieja password con la nueva cifrada
- 
+
     await db.updateContrasena(usuario.id_usuario, contrasenaBcrypt)
- 
+
     res.send('Contraseña actualizada correctamente')
 }
 
@@ -282,10 +287,10 @@ const getUsuarioId = async (req, res) => {
 
         if (!usuario) {
             res.status(404).send()
-            
+
         } else {
             res.send(usuario)
-         
+
         }
     } catch (e) {
         res.status(500).send()
@@ -296,15 +301,15 @@ const getUsuarioId = async (req, res) => {
 
 //      const { email } = req.params
 //      console.log(req.params)
-   
+
 
 //      try {
-         
+
 //          const usuario = await db.getUsuarioEmail(email)
-       
+
 //          if (!usuario) {
 //              res.status(404).send()
-            
+
 //          } else {
 //              res.send()
 //          }
@@ -315,7 +320,7 @@ const getUsuarioId = async (req, res) => {
 
 
 const getListOfUsuario = async (req, res) => {
- 
+
     const { nombre, telefono } = req.query;
     try {
         let usuario = await db.listUsuario(nombre, telefono)
@@ -388,31 +393,31 @@ const deleteUsuario = async (req, res) => {
 }
 
 const logout = async (req, res, next) => {
-        
-     try {
-         const decodedToken = {}
 
-         req.auth = decodedToken;
+    try {
+        const decodedToken = {}
+
+        req.auth = decodedToken;
     } catch (e) {
-         res.status(401).send()
-         return
-     }
+        res.status(401).send()
+        return
+    }
 
-     res.send('sesión finalizada correctamente')
- }
+    res.send('sesión finalizada correctamente')
+}
 
- const getUsuarioReserva = async (req, res) => {
+const getUsuarioReserva = async (req, res) => {
 
     const { id_usuario } = req.params
 
 
     try {
         const usuarioReserva = await db.getUsuarioReserva(id_usuario)
-       
-       
+
+
         if (!usuarioReserva) {
             res.status(404).send()
-            
+
         } else {
             res.send(usuarioReserva)
         }
@@ -428,10 +433,10 @@ const getUsuarioIncidencia = async (req, res) => {
 
     try {
         const usuarioIncidencia = await db.getUsuarioIncidencia(id_usuario)
-       
+
         if (!usuarioIncidencia) {
             res.status(404).send()
-            
+
         } else {
             res.send(usuarioIncidencia)
         }
@@ -447,10 +452,10 @@ const getUsuarioRating = async (req, res) => {
 
     try {
         const usuarioRating = await db.getUsuarioRating(id_usuario)
-       
+
         if (!usuarioRating) {
             res.status(404).send()
-            
+
         } else {
             res.send(usuarioRating)
         }
@@ -467,11 +472,11 @@ const getUsuarioCoworking = async (req, res) => {
 
     try {
         const usuarioCoworking = await db.getUsuarioCoworking(id_usuario)
-       
-       
+
+
         if (!usuarioCoworking) {
             res.status(404).send()
-            
+
         } else {
             res.send(usuarioCoworking)
         }
@@ -500,4 +505,4 @@ module.exports = {
     getUsuarioIncidencia,
     getUsuarioRating,
     getUsuarioCoworking
-} 
+}

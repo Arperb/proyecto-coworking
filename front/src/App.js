@@ -51,6 +51,7 @@ import Contacto from './Contacto/Contacto'
 
 import Footer from './Footer';
 import VerReservasCoworking from './Coworking/VerReservasCoworking';
+import PerfilFoto from './Usuario/PerfilFoto';
 
 
 
@@ -163,8 +164,9 @@ function App() {
     </Route>
     <Route path='/actualizar-usuario' exact>
              <UpdateUsuario />
-       
-    
+    </Route>
+    <Route path='/usuario/:id_usuario/profile' exact>
+             <PerfilFoto />
     </Route>
 
     <Route path='/usuario/crear-incidencia' exact>
