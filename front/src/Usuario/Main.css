@@ -1,64 +1,77 @@
+.sesionUsuario {
+  margin-left: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 5px;
+  width: 80px;
+  height: 30px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
 
+.sesionUsuario:hover {
+  background: #f5c634;
+}
 
-  .sesionUsuario {
-  
-    margin-left: 5px;
-    font-size: 15px;
-    font-weight: bold;
-    border-radius: 5px;
-    width: 80px;
-    height: 30px;
-    transition: all 0.3s;
-    cursor: pointer;
-    
-  }
-  
+.sesionUsuario:active {
+  background: whitesmoke;
+  transform: scale(0.99);
+}
 
-  .sesionUsuario:hover {
-    background: #f5c634;
-  }
-  
-  .sesionUsuario:active {
-    background: whitesmoke;
-    transform: scale(0.99);
-  }
-  
-  .userLinks {
-    width: 15vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    background-color: whitesmoke;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid black;
-    box-shadow: 1px 2px 3px 2px rgba(150, 150, 150, 0.75);
-    right: 16vw;
-    top: 8vh;
-    z-index: 100;
-  
-  }
+.userLinks {
+  width: 15vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: 1px 2px 3px 2px rgba(150, 150, 150, 0.75);
+  right: 5vw;
+  top: 8vh;
+  z-index: 100;
+}
 
-  .userLinks a {
-    padding: 3px;
-  }
-  
-  .userLinks a:hover {
-    color: #d8ad2e;
-  }
-  
-  .logout {
-    width: 100px;
-    height: 25px;
-    border-radius: 5px;
-  }
-  
-  .logout:hover {
-    background: #f5c634;
-  }
-  
-  .logout:active {
-    background: whitesmoke;
-    transform: scale(0.99);
-  }
+.userLinks li {
+  list-style: none;
+  padding: 0.5em;
+}
+
+.userLinks a {
+  padding: 3px;
+  text-decoration: none;
+  color: black;
+}
+
+.userLinks a:visited {
+  color: red;
+}
+
+.userLinks a:hover {
+  color: #d8ad2e;
+}
+
+.logout {
+  width: 160px;
+  height: 35px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-top: 1em;
+  box-sizing: border-box;
+  border-radius: 10px;
+}
+
+.logout:hover {
+  background: rgba(245, 198, 52, 0.5);
+}
+
+.logout:active {
+  background: whitesmoke;
+  transform: scale(0.99);
+}
+
+.logouttext {
+}
