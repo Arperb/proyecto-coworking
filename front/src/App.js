@@ -53,6 +53,11 @@ import Footer from './Footer';
 import VerReservasCoworking from './Coworking/VerReservasCoworking';
 import PerfilFoto from './Usuario/PerfilFoto';
 
+//import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
+
+
+import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
+
 
 
 
@@ -65,12 +70,12 @@ function App() {
       <Header />
       <Switch>
         <Route path='/' exact>
-          <Home /> 
-          <Map/>
-          <Contacto/>      
+          <Home />
+          <Map />
+          <Contacto />
         </Route>
         <Route path='/Contacto'>
-          <Contacto/>
+          <Contacto />
         </Route>
         <Route path='/Login' exact>
           <Login />
@@ -90,112 +95,115 @@ function App() {
           </div>
         </Route>
         <Route path='/crear-coworking' exact>
-        
-            <CreateCoworking />
-        
+
+          <CreateCoworking />
+
         </Route>
-     
+
         <Route path='/coworking/:id_coworking/CreateSala' exact>
-        
-            <CreateSala />
-        
+
+          <CreateSala />
+
         </Route>
 
         <Route path='/coworking/:id_coworking' exact>
-             <VerCoworking />
+          <VerCoworking />
         </Route>
         <Route path='/coworking/:id_coworking/reservas' exact>
-             <VerReservasCoworking />
+          <VerReservasCoworking />
         </Route>
-    <Route path='/coworking/:id_coworking/salas' exact>
-             <VerSalas />
-     
-    
-    </Route>
-    <Route path='/reserva/:id_sala' exact>
-             <Reservar />
-     
-    
-    </Route>
-    <Route path='/reserva-actualizar/:id_reserva' exact>
-             <UpdateReserva />
-     
-    
-    </Route>
-    <Route path='/reserva-borrar/:id_reserva' exact>
-             <BorrarReserva />
-     
-    
-    </Route>
-  
+        <Route path='/ver-foto-coworking/:id_coworking' exact>
+          <VerCoworkingFoto />
+        </Route>
 
-    <Route path='/usuario/reservas' exact>
-             <VerReservas />
-       
-    
-    </Route>
 
-    <Route path='/usuario/coworking' exact>
-             <VerUsuarioCoworking />
-       
-    
-    </Route>
-    <Route path='/coworking-actualizar/:id_coworking' exact>
-             <UpdateCoworking />
-       
-    
-    </Route>
-    <Route path='/foto-coworking/:id_coworking' exact>
-             <CoworkingFoto />
-       
-    
-    </Route>
 
-    <Route path='/coworking-borrar/:id_coworking' exact>
-             <BorrarCoworking />
-       
-    
-    </Route>
+        <Route path='/coworking/:id_coworking/salas' exact>
+          <VerSalas />
+        </Route>
+        <Route path='/reserva/:id_sala' exact>
+          <Reservar />
 
-    <Route path='/usuario' exact>
-             <VerUsuario />
-       
-    
-    </Route>
-    <Route path='/actualizar-usuario' exact>
-             <UpdateUsuario />
-    </Route>
-    <Route path='/usuario/:id_usuario/profile' exact>
-             <PerfilFoto />
-    </Route>
 
-    <Route path='/usuario/crear-incidencia' exact>
-             <CreateIncidencia />
-    </Route>
-    <Route path='/usuario/ver-incidencia' exact>
-             <VerIncidencia />
-    </Route>
-    <Route path='/incidencia-actualizar/:id_incidencia' exact>
-             <UpdateIncidencia />
-    </Route>
-    <Route path='/incidencia-borrar/:id_incidencia' exact>
-             <BorrarIncidencia />
-    </Route>
+        </Route>
+        <Route path='/reserva-actualizar/:id_reserva' exact>
+          <UpdateReserva />
 
-    <Route path='/usuario/crear-valoracion' exact>
-             <CreateRating />
-    </Route>
-    <Route path='/usuario/ver-valoracion' exact>
-             <VerValoracion />
-    </Route>
-    <Route path='/rating-actualizar/:id_rating' exact>
-             <UpdateValoracion />
-    </Route>
-    <Route path='/rating-borrar/:id_rating' exact>
-             <BorrarValoracion />
-    </Route>
 
-  
+        </Route>
+        <Route path='/reserva-borrar/:id_reserva' exact>
+          <BorrarReserva />
+
+
+        </Route>
+
+
+        <Route path='/usuario/reservas' exact>
+          <VerReservas />
+
+
+        </Route>
+
+        <Route path='/usuario/coworking' exact>
+          <VerUsuarioCoworking />
+
+
+        </Route>
+        <Route path='/coworking-actualizar/:id_coworking' exact>
+          <UpdateCoworking />
+
+
+        </Route>
+        <Route path='/foto-coworking/:id_coworking' exact>
+          <CoworkingFoto />
+        </Route>
+
+
+        <Route path='/coworking-borrar/:id_coworking' exact>
+          <BorrarCoworking />
+
+
+        </Route>
+
+        <Route path='/usuario' exact>
+          <VerUsuario />
+
+
+        </Route>
+        <Route path='/actualizar-usuario' exact>
+          <UpdateUsuario />
+        </Route>
+        <Route path='/usuario/:id_usuario/profile' exact>
+          <PerfilFoto />
+        </Route>
+
+        <Route path='/usuario/crear-incidencia' exact>
+          <CreateIncidencia />
+        </Route>
+        <Route path='/usuario/ver-incidencia' exact>
+          <VerIncidencia />
+        </Route>
+        <Route path='/incidencia-actualizar/:id_incidencia' exact>
+          <UpdateIncidencia />
+        </Route>
+        <Route path='/incidencia-borrar/:id_incidencia' exact>
+          <BorrarIncidencia />
+        </Route>
+
+        <Route path='/usuario/crear-valoracion' exact>
+          <CreateRating />
+        </Route>
+        <Route path='/usuario/ver-valoracion' exact>
+          <VerValoracion />
+        </Route>
+        <Route path='/rating-actualizar/:id_rating' exact>
+          <UpdateValoracion />
+        </Route>
+        <Route path='/rating-borrar/:id_rating' exact>
+          <BorrarValoracion />
+        </Route>
+
+
         <Route path='/'>Vaya, página no encontrada </Route>
       </Switch>
       <Footer />

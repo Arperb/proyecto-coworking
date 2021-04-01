@@ -2,16 +2,17 @@ import { useState } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
 import './UpdateCoworking.css'
+import CoworkingFoto from './CoworkingFoto'
 
 
 function UpdateCoworking() {
-    const login = useSelector((s) => s.login);
-    let id_usuario = login.usuario.id_usuario
-   
-    const { id_coworking } = useParams();
-   
+  const login = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario
 
- 
+  const { id_coworking } = useParams();
+
+
+
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
   const [direccion, setDireccion] = useState("");
@@ -30,7 +31,7 @@ function UpdateCoworking() {
 
   const handleSubmit = e => {
     e.preventDefault()
-   
+
     const res = fetch(`http://localhost:9999/coworking-actualizar/${id_coworking}`, {
       method: 'PUT',
       headers: {
@@ -38,38 +39,38 @@ function UpdateCoworking() {
         Authorization: login.token,
       },
       body: JSON.stringify({
-       
-         nombre,
-         telefono,
-         direccion,
-         ciudad,
-         provincia,
-         descripcion,
-         wifi,
-         limpieza,
-         parking,
-         web,
+
+        nombre,
+        telefono,
+        direccion,
+        ciudad,
+        provincia,
+        descripcion,
+        wifi,
+        limpieza,
+        parking,
+        web,
 
       }),
     })
     if (res.ok) {
-        history.push(`/coworking-actualizar/${id_coworking}`)
+      history.push(`/coworking-actualizar/${id_coworking}`)
     } else {
-        setError(true)
-        console.log('Ha habido un error')
+      setError(true)
+      console.log('Ha habido un error')
     }
-}
+  }
 
 
 
- 
+
 
   return (
     <div className="section coworking">
-     
+      <CoworkingFoto />
       <form onSubmit={handleSubmit}>
-     
-      
+
+
         <label>
           <span>Nombre:</span>
           <input
@@ -150,7 +151,7 @@ function UpdateCoworking() {
             onChange={e => setWeb(e.target.value)}
           />
         </label>
-        
+
         <button>Actualizar</button>
       </form>
     </div>

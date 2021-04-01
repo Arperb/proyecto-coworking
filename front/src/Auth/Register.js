@@ -90,14 +90,7 @@ function Registro() {
           onChange={(e) => setUsuario({ ...usuario, rol: e.target.value })}
         />
         <br></br>
-        <input
-          className="ifoto"
-          name="foto"
-          value={usuario.foto || ""}
-          type="file"
-          onChange={(e) => setUsuario({ ...usuario, foto: e.target.value })}
-        />
-        <br></br>
+
         <button className="crownbutton">Quiero coronarme</button>
 
         {error && <div>Ya existe este usuario</div>}

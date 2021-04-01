@@ -12,28 +12,26 @@ import useFetch from "../useFetch"
 
 function VerCoworking() {
     const { id_coworking } = useParams()
-console.log(id_coworking)
+    console.log(id_coworking)
     const login = useSelector(s => s.login)
     const [error, setError] = useState();
-   const [data, setData] = useState([])
+    const [data, setData] = useState([])
     async function getCoworking(id_coworking) {
-        const res = await fetch (`http://localhost:9999/coworking/${id_coworking}`)
-        const coworking = await res.json();    
-        
+        const res = await fetch(`http://localhost:9999/coworking/${id_coworking}`)
+        const coworking = await res.json();
+
         return coworking
-        }
-       
-        useEffect(() => {
-          getCoworking(id_coworking).then(response =>{
-              setData(response[0])
-              console.log(response)
-          }) 
-        
-       
-         
-        },[])
-    
-     
+    }
+
+    useEffect(() => {
+        getCoworking(id_coworking).then(response => {
+            setData(response[0])
+            console.log(response)
+        })
+
+
+
+    }, [])
 
 
 
@@ -43,7 +41,9 @@ console.log(id_coworking)
 
 
 
-  //const data = useFetch(`http://localhost:9999/coworking/${id_coworking}`)
+
+
+    //const data = useFetch(`http://localhost:9999/coworking/${id_coworking}`)
 
 
     return (
@@ -55,7 +55,7 @@ console.log(id_coworking)
                         <h1 id='verNombre'>{c.nombre}</h1>
                         <div className='verCoworkingContenido'>
                             <div className='verDatosCoworking'>
-                                <div className='coworkingFoto' style={data[0].imagen && { backgroundImage: `url(http://localhost:9999/images/${data[0].imagen}.jpg)` }} />
+
                                 <ul >
                                     <li>Ciudad: <b>{c.ciudad}</b></li>
                                     <li>Provincia: <b>{c.provincia}</b></li>
@@ -66,11 +66,11 @@ console.log(id_coworking)
                                     <li>Wifi: <b>{c.wifi}</b></li>
                                     <li>Limpieza: <b>{c.limpieza}</b></li>
                                     <li>Parking: <b>{c.parking}</b></li>
-                                    
+                                    {id_coworking ? <img src={`http://localhost:9999/images/cwk/${id_coworking}.jpg`} /> : null}
                                 </ul>
                             </div>
-                       
-                          
+
+
                             {/* {!(login) &&
                                 <VerSalas />
                             }
@@ -78,9 +78,9 @@ console.log(id_coworking)
                                 <Reservar />
                             } */}
 
-                            <NavLink to = {`/coworking/${id_coworking}/salas`}>Ver salas</NavLink>
+                            <NavLink to={`/coworking/${id_coworking}/salas`}>Ver salas</NavLink>
 
-                            <NavLink to = {`/buscador`}>Volver</NavLink>
+                            <NavLink to={`/buscador`}>Volver</NavLink>
                         </div>
                     </div>
                 </div>
