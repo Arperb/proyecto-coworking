@@ -46,7 +46,7 @@ const uploadFotoUsuario = async (req, res) => {
     await fsPromises.mkdir(`${process.env.TARGET_FOLDER}/profile`, { recursive: true })
 
     try {
-        console.log(req.files)
+
         //les damos un identificador único
         const fileID = uuid.v4()
         // los guardamos en la carpeta que nos interesa

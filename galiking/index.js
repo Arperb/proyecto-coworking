@@ -23,37 +23,37 @@ const currentPort = process.env.PORT || DEFAULT_PORT
 
 //CONTROLADORES USUARIO
 
-    const { createUsuario,
-            getUsuarioId,
-            getListOfUsuario,
-            updateUsuario,
-            deleteUsuario,
-            validate,
-            login, 
-            updateContrasena,
-            resetContrasena,
-            contrasenaUpdateCode,
-            recoverContrasena,
-            logout,
-            uploadFotoUsuario,
-            getFotoUsuario,
-            getUsuarioReserva,
-            getUsuarioIncidencia,
-            getUsuarioRating,
-            getUsuarioCoworking } = require('./controllers/usuario');
+const { createUsuario,
+        getUsuarioId,
+        getListOfUsuario,
+        updateUsuario,
+        deleteUsuario,
+        validate,
+        login,
+        updateContrasena,
+        resetContrasena,
+        contrasenaUpdateCode,
+        recoverContrasena,
+        logout,
+        uploadFotoUsuario,
+        getFotoUsuario,
+        getUsuarioReserva,
+        getUsuarioIncidencia,
+        getUsuarioRating,
+        getUsuarioCoworking } = require('./controllers/usuario');
 
 //CONTROLADORES COWORKING
 
- const { createCoworking, 
-         getCoworking, 
-         getListCoworking,
-         updateCoworking, 
-         deleteCoworking,
-         getCoworkingReserva,
-         getCoworkingRating,
-         getCoworkingIncidencia,
-         getCoworkingSalas,
-         getCoworkingAvgRating } = require('./controllers/espacioCoworking');
+const { createCoworking,
+        getCoworking,
+        getListCoworking,
+        updateCoworking,
+        deleteCoworking,
+        getCoworkingReserva,
+        getCoworkingRating,
+        getCoworkingIncidencia,
+        getCoworkingSalas,
+        getCoworkingAvgRating } = require('./controllers/espacioCoworking');
 
 const { createFotoCoworking,
         getFotoCoworking,
@@ -61,20 +61,20 @@ const { createFotoCoworking,
 
 //CONTROLADORES SALA      
 
-const { createSala, 
-        getSala, 
-        getListSala, 
-        updateSala, 
+const { createSala,
+        getSala,
+        getListSala,
+        updateSala,
         deleteSala,
         getSalaAvgRating } = require('./controllers/sala');
 
 //CONTROLADORES RESERVA
 
- const { createReserva, 
-         updateReserva, 
-         deleteReserva, 
-         getReserva, 
-         getListReserva } = require('./controllers/reserva');
+const { createReserva,
+        updateReserva,
+        deleteReserva,
+        getReserva,
+        getListReserva } = require('./controllers/reserva');
 
 //CONTROLADORES INCIDENCIA
 
@@ -96,7 +96,7 @@ const { buscador } = require('./controllers/buscador')
 
 //MIDDLEWARES
 
-const { 
+const {
         usuarioIsAdmin,
         usuarioIsOwner,
         usuarioIsUser,
@@ -106,7 +106,7 @@ const {
         isReserva,
         checkIncidencia,
         checkCoworking
-        } = require('./middlewares/auth');
+} = require('./middlewares/auth');
 
 
 //LIBRERIAS SOBRE EXPRESS-APP
@@ -122,7 +122,7 @@ app.use(fileUpload());
 //servicio para ficheros estáticos que están en disco(los background de la web, logo...)
 //solo funciona para obtener imágenes
 
-app.use('/images', express.static(__dirname +'/images'));
+app.use('/images', express.static(__dirname + '/images'));
 
 //COMPROBACIÓN DE QUE EL SERVIDOR FUNCIONA
 app.get("/", (req, res) => res.send("llega"));
@@ -226,7 +226,7 @@ app.post('/foto-coworking/:id_coworking', isAuthenticated, coworkingOwner, creat
 
 //Ver foto coworking
 
-app.get('/foto-coworking/:id_coworking', isAuthenticated, coworkingOwner, getFotoCoworking)
+app.get('/ver-foto-coworking/:id_coworking', getFotoCoworking)
 
 //borrar foto
 
@@ -314,7 +314,7 @@ app.get('/rating/:id_rating', isAuthenticated, usuarioIsUser, getRating)
 //////////////////         BUSCADOR                      /////////////
 /////////////////////////////////////////////////////////////////////
 
-app.get('/buscador', buscador )
+app.get('/buscador', buscador)
 
 ///////////////////////////////////////////////////////////////////////
 //////////////////          CONSULTA DE DATOS            /////////////
