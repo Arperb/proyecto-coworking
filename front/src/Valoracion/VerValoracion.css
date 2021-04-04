@@ -11,6 +11,8 @@
  background-repeat: repeat;
  background-size: cover;
  background-attachment: fixed;
+ width: 1400px;
+ padding-bottom: 5%;
 }
 
 .datos-valoracion h2 {

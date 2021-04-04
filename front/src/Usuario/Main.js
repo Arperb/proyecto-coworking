@@ -11,6 +11,7 @@ function Main({ children }) {
   const [open, setOpen] = useState(false);
 
   const login = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario
   const dispatch = useDispatch();
 
   const handleOpen = (e) => {
@@ -46,22 +47,22 @@ function Main({ children }) {
           )}
           {isUser && (
             <li>
-              <Link to="/usuario/crear-valoracion">Crear valoración</Link>
+              <Link to="/rating">Crear valoración</Link>
             </li>
           )}
           {isUser && (
             <li>
-              <Link to="/usuario/ver-valoracion">Ver valoración</Link>
+              <Link to="/usuario/:id_usuario/rating">Ver valoración</Link>
             </li>
           )}
           {isUser && (
             <li>
-              <Link to="/usuario/crear-incidencia">Crear incidencia</Link>
+              <Link to="/incidencia">Crear incidencia</Link>
             </li>
           )}
           {isUser && (
             <li>
-              <Link to="/usuario/ver-incidencia">Ver incidencias</Link>
+              <Link to="/usuario/:id_usuario/incidencias">Ver incidencias</Link>
             </li>
           )}
           {isOwner && (

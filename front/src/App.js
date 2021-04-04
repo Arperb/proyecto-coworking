@@ -52,6 +52,8 @@ import Contacto from './Contacto/Contacto'
 
 import Footer from './Footer';
 import VerReservasCoworking from './Coworking/VerReservasCoworking';
+import VerIncidenciasCoworking from './Coworking/VerIncidenciasCoworking';
+import VerValoracionCoworking from './Coworking/VerValoracionCoworking';
 import PerfilFoto from './Usuario/PerfilFoto';
 
 import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
@@ -77,6 +79,7 @@ function App() {
           <Home />
           <Map />
           <Contacto />
+
         </Route>
         <Route path='/Contacto'>
           <Contacto />
@@ -116,10 +119,16 @@ function App() {
         <Route path='/coworking/:id_coworking/reservas' exact>
           <VerReservasCoworking />
         </Route>
+        <Route path='/coworking/:id_coworking/incidencias' exact>
+          <VerIncidenciasCoworking />
+        </Route>
+        <Route path='/coworking/:id_coworking/rating' exact>
+          <VerValoracionCoworking />
+        </Route>
         <Route path='/ver-foto-coworking/:id_coworking' exact>
-          <ErrorBoundary>
-            <VerCoworkingFoto />
-          </ErrorBoundary>
+
+          <VerCoworkingFoto />
+
         </Route>
 
 
@@ -184,10 +193,10 @@ function App() {
           <PerfilFoto />
         </Route>
 
-        <Route path='/usuario/crear-incidencia' exact>
+        <Route path='/incidencia' exact>
           <CreateIncidencia />
         </Route>
-        <Route path='/usuario/ver-incidencia' exact>
+        <Route path='/usuario/:id_usuario/incidencias' exact>
           <VerIncidencia />
         </Route>
         <Route path='/incidencia-actualizar/:id_incidencia' exact>
@@ -197,10 +206,10 @@ function App() {
           <BorrarIncidencia />
         </Route>
 
-        <Route path='/usuario/crear-valoracion' exact>
+        <Route path='/rating' exact>
           <CreateRating />
         </Route>
-        <Route path='/usuario/ver-valoracion' exact>
+        <Route path='/usuario/:id_usuario/rating' exact>
           <VerValoracion />
         </Route>
         <Route path='/rating-actualizar/:id_rating' exact>
