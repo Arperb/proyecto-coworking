@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import "./Footer.css";
-import logo from "./images/logo.png";
+import blanco from "./images/blanco.png";
 import twitter from "./images/twitter.png";
 import facebook from "./images/facebook.png";
 import instagram from "./images/instagram.png";
@@ -12,7 +12,7 @@ function Footer() {
       <div className="container1">
         <div className="logo">
           <Link to="/">
-            <img className="end logo" src={logo} alt="Galiking" />
+            <img className="end logo" src={blanco} alt="Galiking" />
           </Link>
         </div>
       </div>

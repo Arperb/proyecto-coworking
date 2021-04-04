@@ -37,10 +37,7 @@ function Main({ children }) {
       {open && (
         <div className="userLinks">
           <li>
-            <Link to="/usuario">Ver/Borrar usuario</Link>
-          </li>
-          <li>
-            <Link to="/actualizar-usuario">Actualizar usuario</Link>
+            <Link to="/usuario">Ver usuario</Link>
           </li>
           {isUser && (
             <li>

@@ -15,6 +15,7 @@ import Buscador from './Buscador/Buscador';
 import VerCoworking from './Coworking/VerCoworking'
 import VerUsuario from './Usuario/VerUsuario'
 import UpdateUsuario from './Usuario/UpdateUsuario'
+import BorrarUsuario from './Usuario/BorrarUsuario'
 import VerReservas from './Usuario/VerReservas'
 import VerUsuarioCoworking from './Usuario/VerUsuarioCoworking'
 import UpdateCoworking from './Coworking/UpdateCoworking'
@@ -53,11 +54,14 @@ import Footer from './Footer';
 import VerReservasCoworking from './Coworking/VerReservasCoworking';
 import PerfilFoto from './Usuario/PerfilFoto';
 
-//import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
-
-
 import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
 
+
+
+import SliderSlick from './Coworking/SliderSlick';
+
+import ErrorBoundary from './ErrorBoundary';
+import CarouselCwk from './Coworking/CarouselCwk';
 
 
 
@@ -113,7 +117,9 @@ function App() {
           <VerReservasCoworking />
         </Route>
         <Route path='/ver-foto-coworking/:id_coworking' exact>
-          <VerCoworkingFoto />
+          <ErrorBoundary>
+            <VerCoworkingFoto />
+          </ErrorBoundary>
         </Route>
 
 
@@ -167,11 +173,12 @@ function App() {
 
         <Route path='/usuario' exact>
           <VerUsuario />
-
-
         </Route>
         <Route path='/actualizar-usuario' exact>
           <UpdateUsuario />
+        </Route>
+        <Route path='/usuario/:id_usuario' exact>
+          <BorrarUsuario />
         </Route>
         <Route path='/usuario/:id_usuario/profile' exact>
           <PerfilFoto />

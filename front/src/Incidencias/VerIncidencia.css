@@ -1,0 +1,48 @@
+.incidencias {
+  
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.datos-incidencias {
+ padding-top: 3%;
+ background-image: url(../images/fondocoronas.png);
+ background-repeat: repeat;
+ background-size: cover;
+ background-attachment: fixed;
+ width: 1400px;
+ padding-bottom: 5%;
+}
+
+.datos-incidencias h2 {
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-size:24px
+}
+
+.datos-incidencias span {
+    margin-left: 5%;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+.botones-ver {
+    width: 500px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: space-between;
+    align-items: flex-start;
+    background-color: #D7BC52;
+
+    padding-left: 5%;
+    font-size: 20px;
+
+}
+
+.botones-ver a {
+    color:black;
+}

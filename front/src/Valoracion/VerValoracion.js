@@ -2,7 +2,7 @@ import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
+import './VerValoracion.css'
 
 
 function VerValoracion() {
@@ -34,19 +34,22 @@ function VerValoracion() {
 
   return (
     <div className="section valoracion">
-      <h2>Valoraciones</h2>
+      
       {!rating && 'Cargando...'}
+
+      <div className="datos-valoracion">
       
          <div key={rating.id_rating}>
-                
+         <h2>Tus valoraciones:</h2>
          <div>
            <span>id_reserva:</span>
            {rating.id_reserva}</div>
           <div>
           <span>Valoración:</span>
             {rating.valoracion}</div>
-        
           </div>
+          </div>
+          <div className="botones-ver">
           <NavLink to={`/rating-actualizar/${rating.id_rating}`}>
                  Actualizar valoración
                
@@ -54,7 +57,7 @@ function VerValoracion() {
               <NavLink to={`/rating-borrar/${rating.id_rating}`}>
                 Borrar valoración
               </NavLink>
-
+              </div>
 
 </div>
 

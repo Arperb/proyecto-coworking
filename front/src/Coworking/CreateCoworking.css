@@ -1,10 +1,10 @@
-.coworking {
+.coworking-crear {
   padding: 1rem;
   background-image: url(../images/CreateCoworking.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
-.section.section.coworking:before {
+.section.section.coworking-crear:before {
   position: absolute;
   content: "";
   top: 0;
@@ -15,18 +15,18 @@
   margin-top: 4.7rem;
   height: 81.25rem;
 }
-.h3.section.section.coworking {
+.h3.section.section.coworking-crear {
   margin-bottom: 2rem;
   z-index: 1;
   position: relative;
   color: white;
 }
-.section.section.coworking form {
+.section.section.coworking-crear form {
   width: 20rem;
   position: relative;
 }
 
-.section.section.coworking fieldset {
+.section.section.coworking-crear fieldset {
   margin-bottom: 1rem;
   border: 1px solid black;
   border-radius: 1rem;
@@ -36,7 +36,7 @@
   z-index: 1;
 }
 
-.section.section.coworking form label {
+.section.section.coworking-crear form label {
   display: block;
   font-size: 0.85rem;
   margin: 0.5rem 0;
@@ -44,15 +44,15 @@
   text-transform: uppercase;
 }
 
-.section.section.coworking form input,
-.section.section.coworking form select {
+.section.section.coworking-crear form input,
+.section.section.coworking-crear form select {
   width: 100%;
   padding: 0.25rem;
   margin-bottom: 0.25rem;
   border: white;
 }
 
-.section.section.coworking button {
+.section.section.coworking-crear button {
   background-color: rgb(215, 187, 81, 0.3);
   filter: drop-shadow(2px 2px 5px gold);
   color: black;

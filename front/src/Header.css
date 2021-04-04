@@ -58,9 +58,9 @@ header {
 }
 
 .links:hover {
-  color: rgb(215, 187, 81);
+  color: #D7BC52;
   transform: scale(1.2);
-  filter: drop-shadow(2px 2px 2px gold);
+  filter: drop-shadow(2px 2px 2px #D7BC52);
 }
 
 .logoprincipal {
@@ -69,126 +69,6 @@ header {
   transform-style: unset;
   z-index: 1;
 }
-
-/* header {
-  display: flex;
-  border-bottom: 1px solid #ccc;
-  align-items: center;
-  max-width: 100%;
-  padding: 0;
-  box-sizing: border-box;
-  text-align: center;
-  z-index: 1;
-}
-
-
-header div {
-display: flex;
-flex: auto 1 1;
-justify-content: space-around;
-padding: 5px;
-z-index: 1;
-}
-
-.btn-2 {
-  letter-spacing: 0;
-}
-
-.btn-2:hover,
-.btn-2:active {
-letter-spacing: 5px;
-}
-
-.btn-2:after,
-.btn-2:before {
-backface-visibility: hidden;
-border: 1px solid rgba(#fff, 0);
-bottom: 0px;
-content: " ";
-display: block;
-margin: 0 auto;
-position: relative;
-transition: all 280ms ease-in-out;
-width: 0;
-}
-
-.btn-2:hover:after,
-.btn-2:hover:before {
-backface-visibility: hidden;
-border-color: #fff;
-transition: width 350ms ease-in-out;
-width: 70%;
-}
-
-.btn-2:hover:before {
-bottom: auto;
-top: 0;
-width: 70%;
-}
-.links {
-  color: black;
-  text-decoration: none;
-}
-
-.links:hover {
-  color: rgb(215, 187, 81);
-  transform: scale(1.2);
-  filter: drop-shadow(2px 2px 2px gold);
-  
-  }
-  
-  .logo {
-    max-width: 10vw;
-    box-sizing: border-box;
-    transform-style: unset;
-    z-index: 1;
-  }
-  header .avatar {
-    background-color: #ddd;
-    background-position: center center;
-    background-size: cover;
-    border: 1px solid #aaa;
-    border-radius: 50%;
-    max-width: 6vw;
-    margin-right: 8px;
-   
-  } */
-
-/* .links {
-letter-spacing: 0;
-}
-
-.links:hover,
-.links:active {
-letter-spacing: 5px;
-}
-
-.links:after,
-.links:before {
-backface-visibility: hidden;
-border: 1px solid rgba(215, 187, 81, 0);
-bottom: 0px;
-content: " ";
-display: block;
-margin: 0 auto;
-position: relative;
-transition: all 280ms ease-in-out;
-width: 0;
-}
-
-.links:hover:after,
-.links:hover:before {
-backface-visibility: hidden;
-border-color:rgba(215, 187, 81, 0);
-transition: width 350ms ease-in-out;
-width: 70%;
-}
-
-.links:hover:before {
-bottom: auto;
-top: 0;
-width: 70%;
-} */
 
 header {
   display: flex;

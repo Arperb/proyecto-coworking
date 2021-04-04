@@ -66,7 +66,6 @@ function VerCoworking() {
                                     <li>Wifi: <b>{c.wifi}</b></li>
                                     <li>Limpieza: <b>{c.limpieza}</b></li>
                                     <li>Parking: <b>{c.parking}</b></li>
-                                    {id_coworking ? <img src={`http://localhost:9999/images/cwk/${id_coworking}.jpg`} /> : null}
                                 </ul>
                             </div>
 

@@ -2,7 +2,7 @@ import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-
+import "./VerIncidencia.css";
 
 
 function VerIncidencia() {
@@ -33,12 +33,14 @@ function VerIncidencia() {
     },[])
 
   return (
-    <div className="section reservas">
-      <h2>Incidencias</h2>
+    <div className="section incidencias">
+      
       {!incidencia && 'Cargando...'}
+
+      <div className="datos-incidencias">
       
          <div key={incidencia.id_incidencia}>
-                
+         <h2>Incidencias</h2>
          <div>
            <span>id_sala:</span>
            {incidencia.id_sala}</div>
@@ -51,9 +53,9 @@ function VerIncidencia() {
           <div>
           <span>Descripción:</span>
             {incidencia.descripcion}</div>
-         
-       
+            </div>
           </div>
+          <div className="botones-ver">
           <NavLink to={`/incidencia-actualizar/${incidencia.id_incidencia}`}>
                  Actualizar reserva
                
@@ -61,7 +63,7 @@ function VerIncidencia() {
               <NavLink to={`/incidencia-borrar/${incidencia.id_incidencia}`}>
                 Borrar reserva
               </NavLink>
-
+              </div>
 
 </div>
 

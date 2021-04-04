@@ -73,7 +73,7 @@ div {
 }
 
 .section.elegir {
-  background-image: url(../images/coworkers4.jpg);
+  background-image: url(../images/ilustracioncwk.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -135,7 +135,7 @@ div {
 }
 
 .page.home .razones {
-  background-image: url(../images/concrete-wall.jpg);
+  background-image: url(../images/coworkers4.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   height: 100vh;

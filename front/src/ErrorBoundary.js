@@ -1,5 +1,12 @@
 import React from 'react';
 
+class Pure extends React.PureComponent {
+    render() {
+        console.log('render PureComponent');
+        return <p>{this.props.nice}</p>;
+    }
+}
+
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);

@@ -1,6 +1,7 @@
 import useFetch from "../useFetch";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import BorrarUsuario from "./BorrarUsuario";
 import "./VerUsuario.css";
 
@@ -31,78 +32,48 @@ function VerUsuario() {
   console.log(usuario);
   return (
     <div className="section users">
-      <h2>Usuarios</h2>
+
       {!usuario && "cargando"}
 
-      <div key={usuario.id_usuario}>
-        <div>{usuario.email}</div>
-        <div>{usuario.nombre}</div>
-        <div>{usuario.telefono}</div>
-        <div>{usuario.bio}</div>
-        <div>{usuario.nif_cif}</div>
-        <div>{usuario.rol}</div>
-        {usuario.foto ? (
-          <img
-            src={`http://localhost:9999/images/profile/${usuario.foto}.jpg`}
-          />
-        ) : null}
+      <div className="datos-usuario">
+
+        <div key={usuario.id_usuario}>
+          <h2>Tus datos:</h2>
+          {usuario.foto ? (
+            <img
+              src={`http://localhost:9999/images/profile/${usuario.foto}.jpg`}
+            />
+          ) : null}
+          <div><span>Email:</span>
+            {usuario.email}</div>
+          <div><span>Nombre:</span>
+            {usuario.nombre}</div>
+          <div><span>Teléfono</span>
+            {usuario.telefono}</div>
+          <div><span>Descripción:</span>
+            {usuario.bio}</div>
+          <div><span>NIF/CIF:</span>
+            {usuario.nif_cif}</div>
+          <div><span>Rol:</span>
+            {usuario.rol}</div>
+
+        </div>
       </div>
-      {login && login.usuario.id_usuario && <BorrarUsuario id={id_usuario} />}
+      <div className="botones-ver">
+        <NavLink to={`/actualizar-usuario`}>
+          ACTUALIZAR DATOS
+              </NavLink>
+        <NavLink to={`/usuario/${usuario.id_usuario}`}>
+          BORRAR USUARIO
+              </NavLink>
+
+      </div>
     </div>
+
+
   );
 }
 
-// import './VerUsuario.css'
 
-// import useFetch from '../useFetch'
-
-// import { useSelector } from 'react-redux'
-
-// function Usuarios() {
-
-//     const login = useSelector(s => s.login)
-//     const { usuario, token} = useSelector((s) => s.login);
-//     let id_usuario = usuario.id_usuario
-//   const usuarios = useFetch(`http://localhost:9999/usuario/${id_usuario}`, {
-//     headers:{"Content-Type":"application/json",
-//               Authorization:login.token}
-
-// })
-
-// console.log(usuarios)
-//   return (
-//     <div className="section users">
-//       <h2>Usuarios</h2>
-//       {!usuarios && 'Cargando...'}
-//       {usuarios &&
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>Img</th>
-//               <th>Usuario</th>
-//               <th>Nombre completo</th>
-//               <th>Email</th>
-//               <th>Ciudad</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {usuarios.map((u) => {
-//               const avatarStyle = u.foto && { backgroundImage: 'url(' + u.foto + ')' }
-//               return (
-//                 <tr key={u.id_usuario}>
-//                   <td><div className="avatar" style={avatarStyle} /></td>
-//                   <td>{u.email}</td>
-//                   <td>{u.nombre}</td>
-//                   <td>{u.telefono}</td>
-//                   <td>{u.descripcion}</td>
-//                 </tr>
-//               )
-//             })}
-//           </tbody>
-//         </table>
-//       }
-//     </div>
-//   );
-// }
 
 export default VerUsuario;

@@ -2,7 +2,10 @@ import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import CarouselCwk from '../Coworking/CarouselCwk';
 //import BorrarUsuario from './BorrarUsuario';
+import './VerUsuarioCoworking.css'
+
 
 
 
@@ -36,51 +39,57 @@ function VerUsuarioCoworking() {
     }, [])
     console.log(coworking)
     return (
-        <div className="section coworking">
-            <h2>Coworking</h2>
+        <div className="section coworking-ver">
+
             {!coworking && 'cargando'}
 
 
+            <div className="datos-coworking">
 
-
-            <div key={coworking.id_coworking}>
-
-                <div>Nombre:
-                      {coworking.nombre}</div>
-                <div>Teléfono:
-                       {coworking.telefono}</div>
-                <div>Dirección:
-                       {coworking.direccion}</div>
-                <div>Ciudad:
-                       {coworking.ciudad}</div>
-                <div>Provincia:
-                       {coworking.provincia}</div>
-                <div>Descripción:
-                       {coworking.descripcion}</div>
-                <div>WIfi:
-                       {coworking.wifi}</div>
-                <div>Limpieza:
-                       {coworking.limpieza}</div>
-                <div>Parking:
-                       {coworking.parking}</div>
-                <div>Web:
-                       {coworking.web}</div>
-
+                <div key={coworking.id_coworking}>
+                    <h2>Los datos de tu coworking:</h2>
+                    <div><span>Nombre:</span>
+                        {coworking.nombre}</div>
+                    <div><span>Teléfono:</span>
+                        {coworking.telefono}</div>
+                    <div><span>Dirección:</span>
+                        {coworking.direccion}</div>
+                    <div><span>Ciudad:</span>
+                        {coworking.ciudad}</div>
+                    <div><span>Provincia:</span>
+                        {coworking.provincia}</div>
+                    <div><span>Descripción:</span>
+                        {coworking.descripcion}</div>
+                    <div><span>Wifi:</span>
+                        {coworking.wifi}</div>
+                    <div><span>Limpieza:</span>
+                        {coworking.limpieza}</div>
+                    <div><span>Parking:</span>
+                        {coworking.parking}</div>
+                    <div><span>Web:</span>
+                        {coworking.web}</div>
+                </div>
+                < div className="carousel">
+                    <CarouselCwk />
+                </div>
             </div>
-            <NavLink to={`/coworking/${coworking.id_coworking}/salas`}>
-                Ver salas
+            <div className="botones-ver">
+                <NavLink to={`/coworking/${coworking.id_coworking}/salas`}>
+                    VER SALAS
               </NavLink>
-            <NavLink to={`/coworking-actualizar/${coworking.id_coworking}`}>
-                Actualizar datos coworking
+                <NavLink to={`/coworking-actualizar/${coworking.id_coworking}`}>
+                    ACTUALIZAR DATOS
               </NavLink>
-            <NavLink to={`/coworking-borrar/${coworking.id_coworking}`}>
-                Borrar coworking
+                <NavLink to={`/coworking-borrar/${coworking.id_coworking}`}>
+                    BORRAR
               </NavLink>
-            <NavLink to={`/coworking/${coworking.id_coworking}/reservas`}>
-                Ver reservas coworking
+                <NavLink to={`/coworking/${coworking.id_coworking}/reservas`}>
+                    VER RESERVAS
               </NavLink>
-
-
+                <NavLink to={`/ver-foto-coworking/${coworking.id_coworking}`}>
+                    Ver fotos
+              </NavLink>
+            </div>
         </div>
 
 

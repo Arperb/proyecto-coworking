@@ -2,6 +2,7 @@ import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import './VerReservas.css'
 
 
 
@@ -34,31 +35,34 @@ function VerReservas() {
 
   return (
     <div className="section reservas">
-      <h2>Reservas</h2>
+     
       {!reserva && 'Cargando...'}
+
+      <div className="datos-reservas">
       
          <div key={reserva.id_reserva}>
-                
+         <h2>Reservas</h2>
          <div>
            <span>id_reserva:</span>
            {reserva.id_reserva}</div>
           <div>
-            id_sala:
+          <span>id_sala:</span>
             {reserva.id_sala}</div>
           <div>
-            Estado:
+          <span> Estado:</span>
             {reserva.estado}</div>
           <div>
-            Pago:
+          <span>Pago:</span>
             {reserva.pago}</div>
-          <div>Fecha inicio:
+          <div> <span>Fecha inicio:</span>
             {reserva.fecha_inicio}</div>
-          <div>Fecha fin:
+          <div> <span>Fecha fin:</span>
             {reserva.fecha_fin}</div>
-          <div>Nombre:
+          <div> <span>Nombre:</span>
             {reserva.nombre}</div>
-       
           </div>
+          </div>
+          <div className="botones-ver">
           <NavLink to={`/reserva-actualizar/${reserva.id_reserva}`}>
                  Actualizar reserva
                
@@ -67,7 +71,7 @@ function VerReservas() {
                 Borrar reserva
               </NavLink>
 
-
+              </div>
 </div>
 
 
