@@ -74,7 +74,7 @@ function VerUsuarioCoworking() {
                 </div>
             </div>
             <div className="botones-ver">
-                <NavLink to={`/coworking/${coworking.id_coworking}/salas`}>
+                <NavLink to={`/coworking/${coworking.id_coworking}/sala`}>
                     VER SALAS
               </NavLink>
                 <NavLink to={`/coworking-actualizar/${coworking.id_coworking}`}>
@@ -95,6 +95,7 @@ function VerUsuarioCoworking() {
                 <NavLink to={`/ver-foto-coworking/${coworking.id_coworking}`}>
                     Ver fotos
               </NavLink>
+
             </div>
         </div>
 

@@ -2,6 +2,8 @@ import useFetch from '../useFetch'
 import { useSelector } from 'react-redux'
 import { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
+import VerValoracionMediaCoworking from './VerValoracionMediaCoworking';
+
 
 
 
@@ -51,6 +53,7 @@ function VerValoracionCoworking() {
                                     <td>{rating.id_reserva}</td>
                                     <td>{rating.valoracion}</td>
                                     <td>{rating.fecha_creacion}</td>
+
                                 </tr>
                             )
                         })}
@@ -58,8 +61,7 @@ function VerValoracionCoworking() {
                 </table>
 
             }
-
-
+            <VerValoracionMediaCoworking />
         </div>
     );
 }

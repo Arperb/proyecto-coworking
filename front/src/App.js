@@ -64,6 +64,12 @@ import SliderSlick from './Coworking/SliderSlick';
 
 import ErrorBoundary from './ErrorBoundary';
 import CarouselCwk from './Coworking/CarouselCwk';
+import VerValoracionMediaCoworking from './Coworking/VerValoracionMediaCoworking';
+import VerSalasCoworking from './Sala/VerSalasCoworking';
+import UpdateSala from './Sala/UpdateSala';
+import BorrarSala from './Sala/BorrarSala';
+import VerValoracionMediaSala from './Sala/VerValoracionMediaSala';
+import Update from './Auth/Update';
 
 
 
@@ -96,6 +102,10 @@ function App() {
         <Route path='/reset/:code' exact>
           <Reset />
         </Route>
+        <Route path='/usuario/:id_usuario/update-contrasena' exact>
+          <Update />
+        </Route>
+
         <Route path='/buscador' exact>
           <div className='buscador'>
             <Buscador />
@@ -176,8 +186,18 @@ function App() {
 
         <Route path='/coworking-borrar/:id_coworking' exact>
           <BorrarCoworking />
-
-
+        </Route>
+        <Route path='/coworking/:id_coworking/sala' exact>
+          <VerSalasCoworking />
+        </Route>
+        <Route path='/actualizar-sala/:id_sala' exact>
+          <UpdateSala />
+        </Route>
+        <Route path='/borrar-sala/:id_sala' exact>
+          <BorrarSala />
+        </Route>
+        <Route path='/sala/:id_sala/avgRating' exact>
+          <VerValoracionMediaSala />
         </Route>
 
         <Route path='/usuario' exact>
@@ -217,6 +237,12 @@ function App() {
         </Route>
         <Route path='/rating-borrar/:id_rating' exact>
           <BorrarValoracion />
+        </Route>
+
+
+
+        <Route path='/coworking/:id_coworking/AvgRating' exact>
+          <VerValoracionMediaCoworking />
         </Route>
 
 

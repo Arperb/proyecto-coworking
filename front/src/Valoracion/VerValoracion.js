@@ -51,11 +51,11 @@ function VerValoracion() {
           </div>
           <div className="botones-ver">
           <NavLink to={`/rating-actualizar/${rating.id_rating}`}>
-                 Actualizar valoración
+                 ACTUALIZAR VALORACIÓN
                
               </NavLink>
               <NavLink to={`/rating-borrar/${rating.id_rating}`}>
-                Borrar valoración
+                BORRAR VALORACIÓN
               </NavLink>
               </div>
 
