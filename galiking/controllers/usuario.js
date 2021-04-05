@@ -226,7 +226,7 @@ const recoverContrasena = async (req, res) => {
     if (usuario && usuario.validado) {
         const validationCode = randomstring.generate(40);
         await db.updateValidationCode(email, validationCode)
-        forgotPasswordMail(email, `http://${process.env.PUBLIC_DOMAIN}/usuario/contrasena/reset/${validationCode}`)
+        forgotPasswordMail(email, `http://localhost:3000/usuario/update-reset-contrasena/${validationCode}`)
     } else {
         res.status(400).send('Email no existe')
         return

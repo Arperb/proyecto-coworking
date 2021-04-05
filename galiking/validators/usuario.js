@@ -21,7 +21,7 @@ const usuarioValidator = Joi.object({
     telefono: Joi.string()
         .min(9)
         .max(13)
-        .required()        
+        .required()
         .error(
             new Error('telefono should be a string between 9 and 13 characters')
         ),
@@ -46,12 +46,12 @@ const usuarioValidator = Joi.object({
             new Error('nombre should be a string between 3 and 100 characters')
         ),
 
-     rol: Joi.string()
-         .valid('cliente', 'propietario', 'administrador')
-         .required()
-         .error(
-             new Error('rol should be a string between 1 and 13 characters')
-         ),
+    rol: Joi.string()
+        .valid('cliente', 'propietario', 'administrador')
+        .required()
+        .error(
+            new Error('rol should be a string between 1 and 13 characters')
+        ),
 
     contrasena: Joi.string()
         .required()
@@ -62,18 +62,17 @@ const usuarioValidator = Joi.object({
 
 const passValidator = Joi.object({
 
-    email: Joi.string()
-    .required(),
+
 
     contrasena: Joi.string()
         .required(),
-        
+
     newContrasena: Joi.string()
         .required(),
 
     newContrasenaRepeat: Joi.ref('newContrasena')
-        
-    
+
+
 })
 
 const newPassValidator = Joi.object({
@@ -82,13 +81,13 @@ const newPassValidator = Joi.object({
         .required(),
 
     newContrasenaRepeat: Joi.ref('newContrasena')
-   
+
 })
 
 const emailValidator = Joi.object({
 
     email: Joi.string()
-    .required(),
+        .required(),
 
 })
 

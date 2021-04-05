@@ -35,8 +35,8 @@ const createFotoCoworking = async (req, res) => {
 
         const image = sharp(req.files.foto.data)
         const imageInfo = await image.metadata()
-        if (imageInfo.width > 1024) {
-            image.resize(1024)
+        if (imageInfo.height > 500) {
+            image.resize(450)
         }
 
         await image.toFile(outputFileName);

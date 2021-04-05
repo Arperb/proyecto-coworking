@@ -188,7 +188,7 @@ app.get('/usuario/contrasena/reset/:code', contrasenaUpdateCode)
 
 //actualizar la contraseña(recuperación de contraseña)
 
-app.put('/update-reset-contrasena/:code', resetContrasena)
+app.put('/usuario/update-reset-contrasena/:code', resetContrasena)
 
 //Desautenticar usuario
 
