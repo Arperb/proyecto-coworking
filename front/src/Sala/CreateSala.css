@@ -1,10 +1,11 @@
-.sala {
+.sala-crear {
   padding: 1rem;
   background-image: url(../images/CreateCoworking.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
-.section.section.sala:before {
+
+.sala-crear:before {
   position: absolute;
   content: "";
   top: 0;
@@ -15,18 +16,20 @@
   margin-top: 4.7rem;
   height: 81.25rem;
 }
-.h3.section.section.sala {
+
+.sala-crear h1 {
   margin-bottom: 2rem;
   z-index: 1;
   position: relative;
   color: white;
 }
-.section.section.sala form {
+
+.sala-crear form {
   width: 20rem;
   position: relative;
 }
 
-.section.section.sala fieldset {
+.sala-crear form fieldset {
   margin-bottom: 1rem;
   border: 1px solid black;
   border-radius: 1rem;
@@ -36,7 +39,7 @@
   z-index: 1;
 }
 
-.section.section.sala form label {
+.sala-crear form label {
   display: block;
   font-size: 0.85rem;
   margin: 0.5rem 0;
@@ -44,23 +47,14 @@
   text-transform: uppercase;
 }
 
-.section.section.sala form input,
-.section.section.sala form select {
+.sala-crear form input,
+.sala-crear form select {
   width: 100%;
   padding: 0.25rem;
   margin-bottom: 0.25rem;
   border: white;
 }
-
-.section.section.sala button {
-  background-color: rgb(215, 187, 81, 0.3);
-  filter: drop-shadow(2px 2px 5px gold);
-  color: black;
-  font-weight: bolder;
-}
-.navLink {
-  background-color: rgb(215, 187, 81, 0.3);
-  filter: drop-shadow(2px 2px 5px gold);
-  color: black;
-  font-weight: bolder;
+.sala-crear li {
+  list-style: none;
+  padding: 0.5em;
 }

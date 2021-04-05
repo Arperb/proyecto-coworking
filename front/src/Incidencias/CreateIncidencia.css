@@ -1,31 +1,57 @@
-.section.incidencia-crear {
-  height: 80vh;
-  background-image: url(../images/fondocoronas.png);
+.createIncidencia {
+  padding: 1rem;
+  background-image: url(../images/CreateCoworking.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  height: 83vh;
 }
 
-.tituloincidencia {
-  margin-top: 2rem;
-  margin-left: 2rem;
+.createIncidencia:before {
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 15, 15, 0.288);
+  margin-top: 4.7rem;
+  height: 81.25rem;
 }
 
-.formincidencia {
-  margin-left: 2rem;
+.createIncidencia h1 {
+  margin-bottom: 2rem;
+  z-index: 1;
+  position: relative;
+  color: white;
 }
 
-.textincidencia {
+.createIncidencia form {
+  width: 20rem;
+  position: relative;
+}
+
+.createIncidencia form fieldset {
   margin-bottom: 1rem;
-  margin-top: 1rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
+  background-color: rgba(255, 255, 255, 0.6);
+  border: 2px solid white;
+  z-index: 1;
+}
+
+.createIncidencia form label {
+  display: block;
+  font-size: 0.85rem;
+  margin: 0.5rem 0;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
-.isala {
-  width: 10vw;
-}
-
-.idescripcion {
-}
-
-.buttontocreate {
+.createIncidencia form input,
+.createIncidencia:before form select {
+  width: 100%;
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  border: white;
 }

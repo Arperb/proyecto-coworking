@@ -56,9 +56,9 @@ function CreateSala() {
   };
 
   return (
-    <div className="section sala">
+    <div className="section sala-crear">
+      <h1>Registra las salas de tu coworking</h1>
       <form onSubmit={handleSubmit}>
-        <h3>Registra las salas de tu coworking</h3>
         <fieldset>
           <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             <option value="" hidden>
@@ -151,8 +151,9 @@ function CreateSala() {
         </fieldset>
 
         <button>Registrar sala</button>
-
-        <NavLink to={`/`}>He terminado</NavLink>
+        <li>
+          <NavLink to={`/`}>He terminado</NavLink>
+        </li>
       </form>
     </div>
   );

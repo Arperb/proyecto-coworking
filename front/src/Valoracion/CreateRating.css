@@ -1,11 +1,12 @@
-.coworking-crear {
+.createRating {
   padding: 1rem;
   background-image: url(../images/CreateCoworking.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  height: 83vh;
 }
 
-.coworking-crear:before {
+.createRating:before {
   position: absolute;
   content: "";
   top: 0;
@@ -17,19 +18,19 @@
   height: 81.25rem;
 }
 
-.coworking-crear h1 {
+.createRating h1 {
   margin-bottom: 2rem;
   z-index: 1;
   position: relative;
   color: white;
 }
 
-.coworking-crear form {
+.createRating form {
   width: 20rem;
   position: relative;
 }
 
-.coworking-crear form fieldset {
+.createRating form fieldset {
   margin-bottom: 1rem;
   border: 1px solid black;
   border-radius: 1rem;
@@ -39,7 +40,7 @@
   z-index: 1;
 }
 
-.coworking-crear form label {
+.createRating form label {
   display: block;
   font-size: 0.85rem;
   margin: 0.5rem 0;
@@ -47,12 +48,10 @@
   text-transform: uppercase;
 }
 
-.coworking-crear form input,
-.coworking-crear form select {
+.createRating form input,
+.createRating form select {
   width: 100%;
   padding: 0.25rem;
   margin-bottom: 0.25rem;
   border: white;
-}
-.terminar {
 }
