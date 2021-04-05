@@ -56,7 +56,7 @@ function CreateValoracion() {
           />
         </fieldset>
 
-        <button>Crear valoración</button>
+        <button className="darrating">Crear valoración</button>
       </form>
     </div>
   );

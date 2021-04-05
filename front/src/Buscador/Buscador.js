@@ -65,7 +65,7 @@ function Buscador() {
             >
               <option value="" hidden>
                 Provincia...
-            </option>
+              </option>
               <option value="A Coruña">A Coruña</option>
               <option value="Lugo">Lugo</option>
               <option value="Ourense">Ourense</option>
@@ -85,7 +85,7 @@ function Buscador() {
             >
               <option value="" hidden>
                 Min
-            </option>
+              </option>
               <option value={100}>100</option>
               <option value={200}>500</option>
               <option value={300}>1000</option>
@@ -95,7 +95,7 @@ function Buscador() {
             <select value={tarifa} onChange={(e) => setTarifa(e.target.value)}>
               <option value="" hidden>
                 Max
-            </option>
+              </option>
               <option value={500}>500</option>
               <option value={1000}>1000</option>
               <option value={2000}>2000</option>
@@ -128,7 +128,7 @@ function Buscador() {
             >
               <option value="" hidden>
                 Cantidad de coworkers...
-            </option>
+              </option>
               <option value={1}>1</option>
               <option value={2}>2-4</option>
               <option value={5}>5-8</option>
@@ -141,7 +141,7 @@ function Buscador() {
             <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
               <option value="" hidden>
                 Tipo de espacio...
-            </option>
+              </option>
               <option value="despacho">despacho</option>
               <option value="compartida">compartida</option>
               <option value="sala de reuniones">sala de reuniones</option>
@@ -158,16 +158,19 @@ function Buscador() {
             >
               <option value="" hidden>
                 Selecciona una opción...
-            </option>
+              </option>
               <option value="si">sí</option>
               <option value="no">no</option>
             </select>
 
             <label>parking</label>
-            <select value={parking} onChange={(e) => setParking(e.target.value)}>
+            <select
+              value={parking}
+              onChange={(e) => setParking(e.target.value)}
+            >
               <option value="" hidden>
                 Selecciona una opción...
-            </option>
+              </option>
               <option value="si">sí</option>
               <option value="no">no</option>
             </select>
@@ -176,7 +179,7 @@ function Buscador() {
             <select value={wifi} onChange={(e) => setWifi(e.target.value)}>
               <option value="" hidden>
                 Selecciona una opción...
-            </option>
+              </option>
               <option value="si">sí</option>
               <option value="no">no</option>
             </select>
@@ -188,7 +191,7 @@ function Buscador() {
             >
               <option value="" hidden>
                 Selecciona una opción...
-            </option>
+              </option>
               <option value="si">sí</option>
               <option value="no">no</option>
             </select>
@@ -200,13 +203,13 @@ function Buscador() {
             >
               <option value="" hidden>
                 Selecciona una opción...
-            </option>
+              </option>
               <option value="si">sí</option>
               <option value="no">no</option>
             </select>
           </fieldset>
 
-          <button>Buscar coworking</button>
+          <button className="cwkfinder">Buscar coworking</button>
         </form>
 
         {results && (
@@ -228,7 +231,7 @@ function Buscador() {
                 {r.tipo}
                 <NavLink to={`/coworking/${r.id_coworking}`}>
                   Ver coworking
-              </NavLink>
+                </NavLink>
               </div>
             ))}
             {/*results.length &&

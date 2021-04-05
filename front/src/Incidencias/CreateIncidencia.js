@@ -38,8 +38,9 @@ function CreateIncidencia() {
     <div className="section createIncidencia">
       <h1>¿Has tenido alguna incidencia?</h1>
       <form onSubmit={handleSubmit}>
-        <fieldset>
-          Referencia de la sala:
+        <fieldset className="campoinci">
+          <p className="textoinci">Referencia de la sala</p>
+          <br></br>
           <input
             name="id_sala"
             required
@@ -48,8 +49,9 @@ function CreateIncidencia() {
             onChange={(e) => setId_sala(e.target.value)}
           />
         </fieldset>
-        <fieldset>
-          Estado:
+        <fieldset className="campoinci">
+          <p className="textoinci">Estado</p>
+          <br></br>
           <select value={estado} onChange={(e) => setEstado(e.target.value)}>
             <option value="" hidden>
               estado...
@@ -58,8 +60,9 @@ function CreateIncidencia() {
             <option value="desactivado">desactivado</option>
           </select>
         </fieldset>
-        <fieldset>
-          Categoría:
+        <fieldset className="campoinci">
+          <p className="textoinci">Categoría</p>
+          <br></br>
           <select
             value={categoria}
             onChange={(e) => setCategoria(e.target.value)}
@@ -74,17 +77,19 @@ function CreateIncidencia() {
           </select>
         </fieldset>
         <fieldset>
-          Descripción:
+          <p className="textoinci">Descripción</p>
+          <br></br>
           <input
+            className="ideincidencia"
             name="descripcion"
             required
-            placeholder="descripcion..."
+            placeholder="descripción..."
             value={descripcion}
             onChange={(e) => setDescripcion(e.target.value)}
           />
         </fieldset>
 
-        <button>Crear incidencia</button>
+        <button className="creainci">Crear incidencia</button>
       </form>
     </div>
   );
