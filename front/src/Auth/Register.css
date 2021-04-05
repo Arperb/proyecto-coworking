@@ -64,3 +64,13 @@ input.ifoto {
   filter: drop-shadow(2px 2px 5px gold);
   color: black;
 }
+
+input.ipropono {
+  width: 40rem;
+  font-size: larger;
+  border-radius: 6px;
+  padding: 0.2rem;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  border-color: white;
+}

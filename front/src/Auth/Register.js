@@ -82,10 +82,10 @@ function Registro() {
         />
         <br></br>
         <input
-          className="idatos"
+          className="ipropono"
           name="rol"
-          placeholder="Si quieres reservar un coworking. Pon: Cliente.
-                            Si quieres registrar un coworking. Ponr: Propietario"
+          placeholder="Para reservar, pon 'Cliente'.
+                            Para registrar un coworking, pon 'Propietario'."
           value={usuario.rol || ""}
           onChange={(e) => setUsuario({ ...usuario, rol: e.target.value })}
         />
