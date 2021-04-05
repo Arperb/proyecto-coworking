@@ -242,7 +242,7 @@ app.post('/coworking/:id_coworking/CreateSala', isAuthenticated, usuarioIsOwner,
 
 //obtener todos los datos de una sala a través del ID
 
-app.get('/coworking/:id_coworking/sala/:id_sala', isAuthenticated, usuarioIsOwner, getSala)
+app.get('/coworking/:id_coworking/sala', isAuthenticated, usuarioIsOwner, getSala)
 
 //Crear una lista de espacios coworking a partir de unos parámetros dados
 
@@ -250,11 +250,11 @@ app.get('/sala', isAuthenticated, usuarioIsOwner, getListSala)
 
 //modificar datos de una sala
 
-app.put('/sala/:id_sala', isAuthenticated, usuarioIsOwner, updateSala)
+app.put('/actualizar-sala/:id_sala', isAuthenticated, usuarioIsOwner, updateSala)
 
 //borrar una sala
 
-app.delete('/sala/:id_sala', isAuthenticated, usuarioIsOwner, deleteSala)
+app.delete('/borrar-sala/:id_sala', isAuthenticated, usuarioIsOwner, deleteSala)
 
 
 ///////////////////////////////////////////////////////////////////////

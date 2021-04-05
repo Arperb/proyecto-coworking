@@ -176,9 +176,9 @@ const checkValidationCode = async (code) => {
     try {
         const query = `select * from usuario where validationCode = ?`
         const params = [code]
-       
+
         const result = await performQuery(query, params)
-        
+
         // si existe un usuario con ese código de validación
         // lo marcamos como activo
         if (result) {
@@ -289,7 +289,7 @@ const createCoworking = async (id_usuario, nombre, telefono, direccion, ciudad, 
         `,
             [id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web])
 
-         return SQL
+        return SQL
 
     } catch (e) {
         console.log(e)
@@ -593,7 +593,7 @@ const createSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, ta
         `,
             [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora])
 
-        
+
 
     } catch (e) {
         console.log(e)
@@ -631,17 +631,17 @@ const checkSala = async (id_coworking) => {
     }
 };
 
-const updateSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala) => {
+const updateSala = async (tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala) => {
     let connection;
 
     try {
         connection = await getConnection();
 
         let SQL = await connection.query(`
-            update sala SET id_coworking=?, tipo=?, descripcion=?, capacidad=?, tarifa=?, tarifa_tipo=?, disponibilidad=?, proyector=?, impresora=?
+            update sala SET tipo=?, descripcion=?, capacidad=?, tarifa=?, tarifa_tipo=?, disponibilidad=?, proyector=?, impresora=?
             where id_sala=?
         `,
-            [id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala])
+            [tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala])
 
     } catch (e) {
         console.log(e)
@@ -655,7 +655,7 @@ const updateSala = async (id_coworking, tipo, descripcion, capacidad, tarifa, ta
     }
 }
 
-const getSala = async (id_sala) => {
+const getSala = async (id_coworking) => {
     let connection;
 
     try {
@@ -663,9 +663,9 @@ const getSala = async (id_sala) => {
 
         // me quedo con el primer elemento (array destructuring)
         const [result] = await connection.query(`
-            select * from sala where id_sala = ?
+            select * from sala where id_coworking = ?
         `,
-            [id_sala])
+            [id_coworking])
 
         return result  // potential bug because connection is not released
     } catch (e) {
@@ -767,7 +767,7 @@ const createReserva = async (
     id_usuario,
     fecha_inicio,
     fecha_fin
-    
+
 ) => {
     let connection;
     try {
@@ -859,7 +859,7 @@ const getReserva = async (id_reserva) => {
     }
 };
 const updateReserva = async (
-   
+
     fecha_inicio,
     fecha_fin,
     id_reserva
@@ -875,7 +875,7 @@ const updateReserva = async (
             where id_reserva=? 
         `,
             [
-               
+
                 fecha_inicio,
                 fecha_fin,
                 id_reserva,
@@ -1147,7 +1147,7 @@ const deleteRating = async (id_rating) => {
 ////////////////////////////////////////////////////////////////////
 
 const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, wifi, limpieza, parking, proyector,
-         impresora, tipo, tarifa, order, direction) => {
+    impresora, tipo, tarifa, order, direction) => {
     let connection;
 
 
@@ -1155,40 +1155,40 @@ const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, w
 
         connection = await getConnection();
 
-            //nombramos la query base
-             query = `
+        //nombramos la query base
+        query = `
             SELECT * FROM sala
             LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
             LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala`;
 
-            //establecer criterio de sentido de la búsqueda
+        //establecer criterio de sentido de la búsqueda
 
-            const orderDirection = (direction && direction.toLowerCase()) === "asc" ? "ASC" : "DESC";
+        const orderDirection = (direction && direction.toLowerCase()) === "asc" ? "ASC" : "DESC";
 
-            //establecer criterio de orden de búsqueda
+        //establecer criterio de orden de búsqueda
 
-            let orderBy;
-            switch (order) {
-                case "tarifa":
-                    orderBy = "tarifa";
-                    break;
-                case "fechaCreacion":
-                    orderBy = "sala.fecha_creacion";
-                    break;
-                default:
-                    orderBy = "sala.fecha_creacion";
-                }
-        
-            //establecemos los parámetros de búsqueda
+        let orderBy;
+        switch (order) {
+            case "tarifa":
+                orderBy = "tarifa";
+                break;
+            case "fechaCreacion":
+                orderBy = "sala.fecha_creacion";
+                break;
+            default:
+                orderBy = "sala.fecha_creacion";
+        }
+
+        //establecemos los parámetros de búsqueda
         const params = [];
 
         //establecemos condiciones para la query
         const conditions = [];
 
-         //construimos query multibúsqueda
-         if (provincia || ciudad || (fecha_inicio && fecha_fin) || capacidad || wifi || limpieza || parking || proyector ||
+        //construimos query multibúsqueda
+        if (provincia || ciudad || (fecha_inicio && fecha_fin) || capacidad || wifi || limpieza || parking || proyector ||
             impresora || tipo || tarifa) {
-            
+
             if (provincia) {
                 conditions.push(`provincia LIKE ?`);
                 params.push(`${provincia}`);
@@ -1240,29 +1240,29 @@ const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, w
                 conditions.push(`tipo=?`);
                 params.push(`${tipo}`);
             }
-           
-             if (tarifa) {
-                 if (tarifa) {
-                 conditions.push(`tarifa <=?`);
-                 params.push(`${tarifa}`);
-                } 
-             }
-        }
-        
-         //finalizamos la construcción de la query
 
-         query = `${query} WHERE ${conditions.join(
-                            ` AND `
-             )} ORDER BY ${orderBy} ${orderDirection}`;
+            if (tarifa) {
+                if (tarifa) {
+                    conditions.push(`tarifa <=?`);
+                    params.push(`${tarifa}`);
+                }
+            }
+        }
+
+        //finalizamos la construcción de la query
+
+        query = `${query} WHERE ${conditions.join(
+            ` AND `
+        )} ORDER BY ${orderBy} ${orderDirection}`;
 
         console.log(query, params);
-     
+
         //ejecutamos la query
         const [result] = await connection.query(query, params);
 
         //mandamos respuesta
         return result
-        
+
     } catch (e) {
         console.warn(e)
         throw new Error('database-error')
