@@ -1,0 +1,41 @@
+.page.recovery {
+  height: 82vh;
+  padding-top: 2em;
+  padding-left: 2em;
+  background-image: url(../images/fondocoronas.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+button.passagain {
+  width: 20vw;
+  height: 8vh;
+  border-radius: 30px;
+  margin-top: 2vw;
+  margin-left: 0vw;
+  border: 1px solid black;
+  outline: none;
+  text-decoration: none;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: black;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 1.3rem;
+}
+
+button.passagain:hover {
+  background-color: rgb(215, 187, 81, 0.3);
+  filter: drop-shadow(2px 2px 5px gold);
+  color: black;
+  font-weight: bolder;
+}
+
+.textrecovery {
+  margin-bottom: 1em;
+}
+
+input.mailreco {
+  width: 20rem;
+  height: 2rem;
+  border-radius: 5px;
+}
