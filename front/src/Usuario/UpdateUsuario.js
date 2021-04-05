@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
 import './UpdateUsuario.css'
 import PerfilFoto from './PerfilFoto'
+import Update from '../Auth/Update';
 
 function UpdateUsuario() {
   const login = useSelector((s) => s.login);
@@ -109,16 +110,10 @@ function UpdateUsuario() {
             onChange={e => setRol(e.target.value)}
           />
         </label>
-        <label>
-          <span>Contraseña:</span>
-          <input
-            name="contrasena"
-            value={contrasena}
-            onChange={e => setContrasena(e.target.value)}
-          />
-        </label>
+
         <button>Guardar</button>
       </form>
+      <Update />
     </div>
   );
 }

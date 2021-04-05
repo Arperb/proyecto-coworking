@@ -70,7 +70,7 @@ function VerUsuarioCoworking() {
                         {coworking.web}</div>
                 </div>
                 < div className="carousel">
-                    <CarouselCwk />
+                    <CarouselCwk id={coworking.id_coworking} />
                 </div>
             </div>
             <div className="botones-ver">
@@ -92,9 +92,7 @@ function VerUsuarioCoworking() {
                 <NavLink to={`/coworking/${coworking.id_coworking}/rating`}>
                     VER VALORACIONES
               </NavLink>
-                <NavLink to={`/ver-foto-coworking/${coworking.id_coworking}`}>
-                    Ver fotos
-              </NavLink>
+
 
             </div>
         </div>

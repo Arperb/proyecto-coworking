@@ -1,3 +1,4 @@
+import useFetch from '../useFetch'
 import { useState } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
@@ -5,7 +6,7 @@ import './UpdateCoworking.css'
 import CoworkingFoto from './CoworkingFoto'
 
 
-function UpdateCoworking() {
+function UpdateCoworking({ coworking }) {
   const login = useSelector((s) => s.login);
   let id_usuario = login.usuario.id_usuario
 
@@ -13,16 +14,16 @@ function UpdateCoworking() {
 
 
 
-  const [nombre, setNombre] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [direccion, setDireccion] = useState("");
-  const [ciudad, setCiudad] = useState("");
-  const [provincia, setProvincia] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [wifi, setWifi] = useState("");
-  const [limpieza, setLimpieza] = useState("");
-  const [parking, setParking] = useState("");
-  const [web, setWeb] = useState("");
+  const [nombre, setNombre] = useState(coworking.nombre || "");
+  const [telefono, setTelefono] = useState(coworking.telefono || "");
+  const [direccion, setDireccion] = useState(coworking.direccion || "");
+  const [ciudad, setCiudad] = useState(coworking.ciudad || "");
+  const [provincia, setProvincia] = useState(coworking.provincia || "");
+  const [descripcion, setDescripcion] = useState(coworking.descripcion || "");
+  const [wifi, setWifi] = useState(coworking.wifi || "");
+  const [limpieza, setLimpieza] = useState(coworking.limpieza || "");
+  const [parking, setParking] = useState(coworking.parking || "");
+  const [web, setWeb] = useState(coworking.web || "");
 
 
   const [error, setError] = useState(false)
@@ -158,4 +159,12 @@ function UpdateCoworking() {
   );
 }
 
-export default UpdateCoworking;
+function UpdateCoworkingWrapper() {
+  const login = useSelector(s => s.login)
+  let id_usuario = login.usuario.id_usuario
+  const coworking = useFetch(`http://localhost:9999/usuario/${id_usuario}/coworking`)
+  if (!coworking) return "Loading..."
+  return <UpdateCoworking coworking={coworking} />
+}
+
+export default UpdateCoworkingWrapper;

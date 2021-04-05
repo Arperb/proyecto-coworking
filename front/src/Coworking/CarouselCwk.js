@@ -6,17 +6,20 @@ import { NavLink, useParams } from "react-router-dom";
 import useFetch from '../useFetch'
 
 
-const CarouselCwk = ({ }) => {
+const CarouselCwk = ({ id }) => {
 
-    const id_coworking = useParams();
-    const fotos = useFetch(`http://localhost:9999/ver-foto-coworking/${id_coworking}`) || []
+    const params = useParams()
+    const id_coworking = id || params.id_coworking;
+    console.log('ID:', id_coworking, id, params)
+    const fotos = useFetch(`http://localhost:9999/ver-foto-coworking/${id_coworking}`) || { fotos: [] }
 
-    console.log(fotos)
+    console.log('Fotos:', fotos)
 
-    const images = [fotos.fotos].map((foto) => ({
+    const images = fotos.fotos.map((foto) => ({
         src: `http://localhost:9999/images/cwk/${foto}.jpg`
     }));
-    console.log(images)
+
+    if (!images.length) return false;
 
     return (
         <Carousel images={images} />

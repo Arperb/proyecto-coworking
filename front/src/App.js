@@ -56,7 +56,7 @@ import VerIncidenciasCoworking from './Coworking/VerIncidenciasCoworking';
 import VerValoracionCoworking from './Coworking/VerValoracionCoworking';
 import PerfilFoto from './Usuario/PerfilFoto';
 
-import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
+
 
 
 
@@ -85,7 +85,6 @@ function App() {
           <Home />
           <Map />
           <Contacto />
-
         </Route>
         <Route path='/Contacto'>
           <Contacto />
@@ -96,10 +95,10 @@ function App() {
         <Route path='/Register' exact>
           <Register />
         </Route>
-        <Route path='/recovery' exact>
+        <Route path='/usuario/recover-contrasena' exact>
           <Recovery />
         </Route>
-        <Route path='/reset/:code' exact>
+        <Route path='/usuario/update-reset-contrasena/:code' exact>
           <Reset />
         </Route>
         <Route path='/usuario/:id_usuario/update-contrasena' exact>
@@ -111,16 +110,12 @@ function App() {
             <Buscador />
           </div>
         </Route>
+
         <Route path='/crear-coworking' exact>
-
           <CreateCoworking />
-
         </Route>
-
         <Route path='/coworking/:id_coworking/CreateSala' exact>
-
           <CreateSala />
-
         </Route>
 
         <Route path='/coworking/:id_coworking' exact>
@@ -135,58 +130,39 @@ function App() {
         <Route path='/coworking/:id_coworking/rating' exact>
           <VerValoracionCoworking />
         </Route>
-        <Route path='/ver-foto-coworking/:id_coworking' exact>
-
-          <VerCoworkingFoto />
-
-        </Route>
-
-
 
         <Route path='/coworking/:id_coworking/salas' exact>
           <VerSalas />
         </Route>
         <Route path='/reserva/:id_sala' exact>
           <Reservar />
-
-
         </Route>
         <Route path='/reserva-actualizar/:id_reserva' exact>
           <UpdateReserva />
-
-
         </Route>
         <Route path='/reserva-borrar/:id_reserva' exact>
           <BorrarReserva />
-
-
         </Route>
-
-
         <Route path='/usuario/reservas' exact>
           <VerReservas />
-
-
         </Route>
 
         <Route path='/usuario/coworking' exact>
           <VerUsuarioCoworking />
-
-
         </Route>
         <Route path='/coworking-actualizar/:id_coworking' exact>
           <UpdateCoworking />
-
-
         </Route>
         <Route path='/foto-coworking/:id_coworking' exact>
           <CoworkingFoto />
         </Route>
-
-
         <Route path='/coworking-borrar/:id_coworking' exact>
           <BorrarCoworking />
         </Route>
+        <Route path='/coworking/:id_coworking/AvgRating' exact>
+          <VerValoracionMediaCoworking />
+        </Route>
+
         <Route path='/coworking/:id_coworking/sala' exact>
           <VerSalasCoworking />
         </Route>
@@ -238,13 +214,6 @@ function App() {
         <Route path='/rating-borrar/:id_rating' exact>
           <BorrarValoracion />
         </Route>
-
-
-
-        <Route path='/coworking/:id_coworking/AvgRating' exact>
-          <VerValoracionMediaCoworking />
-        </Route>
-
 
         <Route path='/'>Vaya, página no encontrada </Route>
       </Switch>

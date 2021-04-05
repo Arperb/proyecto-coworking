@@ -1,21 +1,22 @@
+import useFetch from '../useFetch'
 import { useState } from 'react'
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom"
 import './UpdateIncidencia.css'
 
 
-function UpdateIncidencia() {
-    const login = useSelector((s) => s.login);
-    let id_usuario = login.usuario.id_usuario
-   
-    const { id_incidencia } = useParams();
-   
+function UpdateIncidencia({ incidencia }) {
+  const login = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario
 
- 
-  const [id_sala, setId_sala] = useState("");
-  const [estado, setEstado] = useState("");
-  const [categoria, setCategoria] = useState("");
-  const [descripcion, setDescripcion] = useState("");
+  const { id_incidencia } = useParams();
+
+
+
+  const [id_sala, setId_sala] = useState(incidencia.id_sala || "");
+  const [estado, setEstado] = useState(incidencia.estado || "");
+  const [categoria, setCategoria] = useState(incidencia.categoria || "");
+  const [descripcion, setDescripcion] = useState(incidencia.descripcion || "");
 
   const [error, setError] = useState(false)
 
@@ -23,7 +24,7 @@ function UpdateIncidencia() {
 
   const handleSubmit = e => {
     e.preventDefault()
-   
+
     const res = fetch(`http://localhost:9999/incidencia-actualizar/${id_incidencia}`, {
       method: 'PUT',
       headers: {
@@ -31,31 +32,31 @@ function UpdateIncidencia() {
         Authorization: login.token,
       },
       body: JSON.stringify({
-       
-         id_sala,
-         estado,
-         categoria,
-         descripcion,
+
+        id_sala,
+        estado,
+        categoria,
+        descripcion,
       }),
     })
     if (res.ok) {
-        history.push(`/incidencia-actualizar/${id_incidencia}`)
+      history.push(`/incidencia-actualizar/${id_incidencia}`)
     } else {
-        setError(true)
-        console.log('Ha habido un error')
+      setError(true)
+      console.log('Ha habido un error')
     }
-}
+  }
 
 
 
- 
+
 
   return (
     <div className="section incidencia">
-     
+
       <form onSubmit={handleSubmit}>
-     
-      
+
+
         <label>
           <span>Id_sala:</span>
           <input
@@ -88,11 +89,19 @@ function UpdateIncidencia() {
             onChange={e => setDescripcion(e.target.value)}
           />
         </label>
-        
+
         <button>Actualizar</button>
       </form>
     </div>
   );
 }
 
-export default UpdateIncidencia;
+function UpdateIncidenciaWrapper() {
+  const login = useSelector(s => s.login)
+  let id_usuario = login.usuario.id_usuario
+  const incidencia = useFetch(`http://localhost:9999/usuario/${id_usuario}/incidencias`)
+  if (!incidencia) return "Loading..."
+  return <UpdateIncidencia incidencia={incidencia} />
+}
+
+export default UpdateIncidenciaWrapper;

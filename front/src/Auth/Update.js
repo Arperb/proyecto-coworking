@@ -20,10 +20,10 @@ function Update() {
 
   const history = useHistory()
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault()
 
-    const res = fetch(`http://localhost:9999/usuario/${id_usuario}/update-contrasena`, {
+    const res = await fetch(`http://localhost:9999/usuario/${id_usuario}/update-contrasena`, {
       method: 'PUT',
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ function Update() {
       }),
     })
     if (res.ok) {
-      history.push(`/login`)
+      history.push(`/`)
     } else {
       setError(true)
       console.log('Ha habido un error')

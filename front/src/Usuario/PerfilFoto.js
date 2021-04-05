@@ -33,7 +33,8 @@ function PerfilFoto() {
     })
     if (res.ok) {
       // Falta reducer para actualizar foto de usuario
-
+      const data = await res.json()
+      dispatch({ type: 'update-user', data });
       history.push(`/usuario`)
     } else {
       setError(true)
