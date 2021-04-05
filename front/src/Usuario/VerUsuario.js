@@ -32,11 +32,9 @@ function VerUsuario() {
   console.log(usuario);
   return (
     <div className="section users">
-
       {!usuario && "cargando"}
 
       <div className="datos-usuario">
-
         <div key={usuario.id_usuario}>
           <h2>Tus datos:</h2>
           {usuario.foto ? (
@@ -44,36 +42,42 @@ function VerUsuario() {
               src={`http://localhost:9999/images/profile/${usuario.foto}.jpg`}
             />
           ) : null}
-          <div><span>Email:</span>
-            {usuario.email}</div>
-          <div><span>Nombre:</span>
-            {usuario.nombre}</div>
-          <div><span>Teléfono</span>
-            {usuario.telefono}</div>
-          <div><span>Descripción:</span>
-            {usuario.bio}</div>
-          <div><span>NIF/CIF:</span>
-            {usuario.nif_cif}</div>
-          <div><span>Rol:</span>
-            {usuario.rol}</div>
-
+          <div>
+            <span>Email:</span>
+            {usuario.email}
+          </div>
+          <div>
+            <span>Nombre:</span>
+            {usuario.nombre}
+          </div>
+          <div>
+            <span>Teléfono</span>
+            {usuario.telefono}
+          </div>
+          <div>
+            <span>Descripción:</span>
+            {usuario.bio}
+          </div>
+          <div>
+            <span>NIF/CIF:</span>
+            {usuario.nif_cif}
+          </div>
+          <div>
+            <span>Rol:</span>
+            {usuario.rol}
+          </div>
         </div>
       </div>
       <div className="botones-ver">
-        <NavLink to={`/actualizar-usuario`}>
+        <NavLink className="navVerUser" to={`/actualizar-usuario`}>
           ACTUALIZAR DATOS
-              </NavLink>
-        <NavLink to={`/usuario/${usuario.id_usuario}`}>
+        </NavLink>
+        <NavLink className="navVerUser" to={`/usuario/${usuario.id_usuario}`}>
           BORRAR USUARIO
-              </NavLink>
-
+        </NavLink>
       </div>
     </div>
-
-
   );
 }
-
-
 
 export default VerUsuario;

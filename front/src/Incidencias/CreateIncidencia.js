@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
+import "./CreateIncidencia.css";
 
 function CreateIncidencia() {
   const [error, setError] = useState();
@@ -13,69 +14,73 @@ function CreateIncidencia() {
   const login = useSelector((s) => s.login);
   const history = useHistory();
 
-  const handleSubmit = async e => {
-    e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const res = await fetch(`http://localhost:9999/incidencia`, {
       headers: {
         "Content-Type": "application/json",
-        Authorization: login.token
+        Authorization: login.token,
       },
       body: JSON.stringify({ id_sala, estado, categoria, descripcion }),
-      method: 'POST'
-
-    })
+      method: "POST",
+    });
 
     if (res.ok) {
       const { id_incidencia } = await res.json();
       // history.push(`/coworking/${id_coworking}/sala`)
     } else {
-      console.log('Error')
-      setError(true)
+      console.log("Error");
+      setError(true);
     }
-  }
-
+  };
 
   return (
     <div className="section incidencia-crear">
-      <form onSubmit={handleSubmit}>
-        <h3>¿Has tenido alguna incidencia?</h3>
-         Id_sala:
-      <input name="id_sala"
+      <h3 className="tituloincidencia">¿Has tenido alguna incidencia?</h3>
+      <form className="formincidencia" onSubmit={handleSubmit}>
+        <p className="textincidencia">Id_sala</p>
+        <input
+          className="isala"
+          name="id_sala"
           required
-          placeholder="¿en que sala?"
+          placeholder="¿en qué sala?"
           value={id_sala}
-          onChange={e => setId_sala(e.target.value)}
+          onChange={(e) => setId_sala(e.target.value)}
         />
-         Estado
-      <input name="estado"
+        <br></br>
+        <p className="textincidencia">Estado</p>
+        <input
+          className="isala"
+          name="estado"
           required
           placeholder="estado..."
           value={estado}
-          onChange={e => setEstado(e.target.value)}
+          onChange={(e) => setEstado(e.target.value)}
         />
-         Categoría:
-      <input name="categoria"
+        <br></br>
+        <p className="textincidencia">Categoría</p>
+        <input
+          className="isala"
+          name="categoria"
           required
-          placeholder="categoria..."
+          placeholder="categoría..."
           value={categoria}
-          onChange={e => setCategoria(e.target.value)}
+          onChange={(e) => setCategoria(e.target.value)}
         />
-         Descripción:
-      <input name="descripcion"
+        <br></br>
+        <p className="textincidencia">Descripción</p>
+        <input
+          className="idescripcion"
+          name="descripcion"
           required
-          placeholder="descripcion..."
+          placeholder="descripción..."
           value={descripcion}
-          onChange={e => setDescripcion(e.target.value)}
+          onChange={(e) => setDescripcion(e.target.value)}
         />
-
-
-        <button>Crear incidencia</button>
-
-
-
+        <button className="buttontocreate">Crear incidencia</button>
       </form>
     </div>
-  )
+  );
 }
 
 export default CreateIncidencia;

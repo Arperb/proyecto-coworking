@@ -1,0 +1,31 @@
+.section.incidencia-crear {
+  height: 80vh;
+  background-image: url(../images/fondocoronas.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.tituloincidencia {
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+
+.formincidencia {
+  margin-left: 2rem;
+}
+
+.textincidencia {
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.isala {
+  width: 10vw;
+}
+
+.idescripcion {
+}
+
+.buttontocreate {
+}
