@@ -48,6 +48,12 @@ div {
   font-weight: 300;
   color: black;
 }
+
+.page.home li {
+ 
+  color: white;
+}
+
 .button1 {
   display: inline-flex;
   width: 510px;
@@ -163,3 +169,5 @@ div {
 .page.home .dir {
   flex-direction: column;
 }
+
+

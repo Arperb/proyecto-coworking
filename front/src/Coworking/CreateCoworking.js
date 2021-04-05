@@ -65,8 +65,8 @@ function CreateCoworking() {
 
   return (
     <div className="section coworking-crear">
+      <h1>Registra tu coworking</h1>
       <form onSubmit={handleSubmit}>
-        <h3>Registra tu coworking</h3>
         <fieldset>
           <input
             name="nombre"

@@ -35,49 +35,56 @@ function CreateIncidencia() {
   };
 
   return (
-    <div className="section incidencia-crear">
-      <h3 className="tituloincidencia">¿Has tenido alguna incidencia?</h3>
-      <form className="formincidencia" onSubmit={handleSubmit}>
-        <p className="textincidencia">Id_sala</p>
-        <input
-          className="isala"
-          name="id_sala"
-          required
-          placeholder="¿en qué sala?"
-          value={id_sala}
-          onChange={(e) => setId_sala(e.target.value)}
-        />
-        <br></br>
-        <p className="textincidencia">Estado</p>
-        <input
-          className="isala"
-          name="estado"
-          required
-          placeholder="estado..."
-          value={estado}
-          onChange={(e) => setEstado(e.target.value)}
-        />
-        <br></br>
-        <p className="textincidencia">Categoría</p>
-        <input
-          className="isala"
-          name="categoria"
-          required
-          placeholder="categoría..."
-          value={categoria}
-          onChange={(e) => setCategoria(e.target.value)}
-        />
-        <br></br>
-        <p className="textincidencia">Descripción</p>
-        <input
-          className="idescripcion"
-          name="descripcion"
-          required
-          placeholder="descripción..."
-          value={descripcion}
-          onChange={(e) => setDescripcion(e.target.value)}
-        />
-        <button className="buttontocreate">Crear incidencia</button>
+    <div className="section createIncidencia">
+      <h1>¿Has tenido alguna incidencia?</h1>
+      <form onSubmit={handleSubmit}>
+        <fieldset>
+          Referencia de la sala:
+          <input
+            name="id_sala"
+            required
+            placeholder="añade la referencia de la sala"
+            value={id_sala}
+            onChange={(e) => setId_sala(e.target.value)}
+          />
+        </fieldset>
+        <fieldset>
+          Estado:
+          <select value={estado} onChange={(e) => setEstado(e.target.value)}>
+            <option value="" hidden>
+              estado...
+            </option>
+            <option value="activado">activado</option>
+            <option value="desactivado">desactivado</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          Categoría:
+          <select
+            value={categoria}
+            onChange={(e) => setCategoria(e.target.value)}
+          >
+            <option value="" hidden>
+              categoría...
+            </option>
+            <option value="limpieza">limpieza</option>
+            <option value="servicios">servicios</option>
+            <option value="equipacion">equipación</option>
+            <option value="otros">otros</option>
+          </select>
+        </fieldset>
+        <fieldset>
+          Descripción:
+          <input
+            name="descripcion"
+            required
+            placeholder="descripcion..."
+            value={descripcion}
+            onChange={(e) => setDescripcion(e.target.value)}
+          />
+        </fieldset>
+
+        <button>Crear incidencia</button>
       </form>
     </div>
   );

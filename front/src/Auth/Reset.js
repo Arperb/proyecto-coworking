@@ -5,7 +5,7 @@ import { useParams, NavLink } from 'react-router-dom'
 
 function Reset() {
     const { code } = useParams()
-    const [contrasena, setContrasena] = useState('')
+    const [newContrasena, setNewContrasena] = useState('')
     const [newContrasenaRepeat, setNewContrasenaRepeat] = useState('')
     const [sent, setSent] = useState(false)
     const handleSubmit = async e => {
@@ -14,7 +14,7 @@ function Reset() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify
                 ({
-                    contrasena,
+                    newContrasena,
                     newContrasenaRepeat,
                 }),
             method: 'PUT'
@@ -40,9 +40,9 @@ function Reset() {
             Introduce tu nueva contraseña
             <div>
                 <input placeholder='Nueva contraseña...' type='password' required
-                    value={contrasena} onChange={e => setContrasena(e.target.value)} />
+                    value={newContrasena} onChange={e => setNewContrasena(e.target.value)} />
                 <br></br>
-                <input placeholder='Repite la contraseña...' type='password' required
+                <input placeholder='Repite la nueva contraseña...' type='password' required
                     value={newContrasenaRepeat} onChange={e => setNewContrasenaRepeat(e.target.value)} />
             </div>
             <button>Cambiar contraseña</button>

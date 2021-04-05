@@ -18,7 +18,7 @@ function Home() {
           <img className="mainlogo" src={logo} alt="mainlogo" />
           <h1 className="title">CORÓNATE EN LOS MEJORES COWORKINGS</h1>
           <Link className="home button1" to="/Reserva/Reservar">
-            <span>RESERVA AHORA</span>
+            <span>BUSCAR</span>
           </Link>
         </div>
       </div>
@@ -28,7 +28,7 @@ function Home() {
         <h2 className="homesubt">¿QUÉ QUIERES HACER?</h2>
 
         <div className="elegir botones">
-          <Link className="sub button" to="/CreateCoworking">
+          <Link className="sub button" to="/Register">
             <p className="sub style">Ofrecer un espacio</p>
           </Link>
           <Link className="sub button" to="/Buscador">
