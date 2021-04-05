@@ -4,21 +4,18 @@
 }
 
 .datos-coworking {
-<<<<<<< HEAD
   padding-top: 3%;
   background-image: url(../images/fondocoronas.png);
   background-repeat: repeat;
   background-size: cover;
   background-attachment: fixed;
-=======
- padding-top: 3%;
- background-image: url(../images/fondocoronas.png);
- background-repeat: repeat;
- background-size: cover;
- background-attachment: fixed;
- width: 1400px;
+  padding-top: 3%;
+  background-image: url(../images/fondocoronas.png);
+  background-repeat: repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  width: 1400px;
   padding-bottom: 5%;
->>>>>>> c256bbd37a763209a9bcc741da858b2e4f346b54
 }
 
 .datos-coworking h2 {
