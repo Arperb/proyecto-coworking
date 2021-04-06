@@ -66,7 +66,7 @@ const updateSala = async (req, res) => {
 
         await salaValidator.validateAsync(req.body)
 
-        await db.updateSala(id_coworking, tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala)
+        await db.updateSala(tipo, descripcion, capacidad, tarifa, tarifa_tipo, disponibilidad, proyector, impresora, id_sala)
 
     } catch (e) {
 

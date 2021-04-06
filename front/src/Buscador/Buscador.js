@@ -210,25 +210,39 @@ function Buscador() {
         </form>
 
         {results && (
-          <div>
+          <div className="resultados-buscador">
             <h2>Resultados:</h2>
             {results.map((r) => (
               <div key={r.id_coworking}>
-                {r.provincia}
-                {r.ciudad}
-                {r.tarifa}
-                {r.fecha_inicio}
-                {r.fecha_fin}
-                {r.capacidad}
-                {r.limpieza}
-                {r.parking}
-                {r.wifi}
-                {r.proyector}
-                {r.impresora}
-                {r.tipo}
-                <NavLink to={`/coworking/${r.id_coworking}`}>
-                  Ver coworking
+                <ul>
+                  <li> <span>Provincia:</span>{r.provincia}</li>
+
+                  <li> <span>Ciudad:</span>{r.ciudad}</li>
+
+                  <li> <span>Tarifa:</span> {r.tarifa}</li>
+
+                  <li>  <span>Fecha inicio:</span>{r.fecha_inicio}</li>
+
+                  <li>   <span>Fecha fin:</span>{r.fecha_fin}</li>
+
+                  <li> <span>Capacidad:</span>{r.capacidad}</li>
+
+                  <li>  <span>Limpieza:</span>{r.limpieza}</li>
+
+                  <li> <span>Parking:</span>{r.parking}</li>
+
+                  <li>  <span>Wifi:</span> {r.wifi}</li>
+
+                  <li>  <span>Proyector:</span>{r.proyector}</li>
+
+                  <li>  <span>Impresora:</span> {r.impresora}</li>
+
+                  <li>  <span>Tipo de sala:</span>   {r.tipo}</li>
+
+                  <NavLink to={`/coworking/${r.id_coworking}`}>
+                    Ver coworking
               </NavLink>
+                </ul>
               </div>
             ))}
             {/*results.length &&

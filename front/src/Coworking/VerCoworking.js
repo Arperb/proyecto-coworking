@@ -5,6 +5,7 @@ import Register from "../Auth/Register"
 import Reservar from "../Reserva/Reservar"
 
 import useFetch from "../useFetch"
+import CarouselCwk from "./CarouselCwk"
 
 
 
@@ -12,7 +13,7 @@ import useFetch from "../useFetch"
 
 function VerCoworking() {
     const { id_coworking } = useParams()
-    console.log(id_coworking)
+
     const login = useSelector(s => s.login)
     const [error, setError] = useState();
     const [data, setData] = useState([])
@@ -49,23 +50,27 @@ function VerCoworking() {
     return (
         <div >
             {!data && 'loading'}
-            {data.map(c =>
-                <div key={c.id_coworking} className='verCoworkingPage'>
+            {data.map(coworking =>
+                <div key={coworking.id_coworking} className='verCoworkingPage'>
+
+
                     <div className='verCoworkingContainer'>
-                        <h1 id='verNombre'>{c.nombre}</h1>
+                        <h1 id='verNombre'>{coworking.nombre}</h1>
+
                         <div className='verCoworkingContenido'>
                             <div className='verDatosCoworking'>
 
                                 <ul >
-                                    <li>Ciudad: <b>{c.ciudad}</b></li>
-                                    <li>Provincia: <b>{c.provincia}</b></li>
-                                    <li>Direccion: <b>{c.direccion}</b></li>
-                                    <li>Descripción: <b>{c.descripcion}</b></li>
-                                    <li>Web: <b>{c.web}</b></li>
+                                    <li>Ciudad: <b>{coworking.ciudad}</b></li>
+                                    <li>Provincia: <b>{coworking.provincia}</b></li>
+                                    <li>Direccion: <b>{coworking.direccion}</b></li>
+                                    <li>Descripción: <b>{coworking.descripcion}</b></li>
+                                    <li>Web: <b>{coworking.web}</b></li>
                                     Servicios:
-                                    <li>Wifi: <b>{c.wifi}</b></li>
-                                    <li>Limpieza: <b>{c.limpieza}</b></li>
-                                    <li>Parking: <b>{c.parking}</b></li>
+                                    <li>Wifi: <b>{coworking.wifi}</b></li>
+                                    <li>Limpieza: <b>{coworking.limpieza}</b></li>
+                                    <li>Parking: <b>{coworking.parking}</b></li>
+
                                 </ul>
                             </div>
 
@@ -80,6 +85,9 @@ function VerCoworking() {
                             <NavLink to={`/coworking/${id_coworking}/salas`}>Ver salas</NavLink>
 
                             <NavLink to={`/buscador`}>Volver</NavLink>
+
+                            <CarouselCwk id={coworking.id_coworking} />
+
                         </div>
                     </div>
                 </div>

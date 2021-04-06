@@ -12,7 +12,7 @@ const { getConnection } = require('../db/db');
 //creamos espacio coworking
 const createCoworking = async (req, res) => {
     const { id_usuario } = req.auth;
-    
+
     try {
         await coworkingValidator.validateAsync(req.body);
         const {
@@ -59,7 +59,7 @@ const createCoworking = async (req, res) => {
             status: "ok",
             id_coworking,
             message: "enhorabuena,su espacio coworking ha sido registrado con éxito",
-            
+
         });
     } catch (e) {
         console.log(e);
@@ -89,7 +89,7 @@ const updateCoworking = async (req, res) => {
 
         await coworkingValidator.validateAsync(req.body)
 
-        await db.updateCoworking(id_usuario, nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking)
+        await db.updateCoworking(nombre, telefono, direccion, ciudad, provincia, descripcion, wifi, limpieza, parking, web, id_coworking)
 
     } catch (e) {
 
@@ -148,7 +148,7 @@ const deleteCoworking = async (req, res) => {
 
 const getCoworking = async (req, res) => {
     const { id_coworking } = req.params
-console.log(id_coworking)
+    console.log(id_coworking)
     try {
         const coworking = await db.getCoworking(id_coworking)
 
@@ -157,7 +157,7 @@ console.log(id_coworking)
             res.status(404).send()
         } else {
             res.send(coworking)
-          
+
         }
     } catch (e) {
         res.status(500).send()

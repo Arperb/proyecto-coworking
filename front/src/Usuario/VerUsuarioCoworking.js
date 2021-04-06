@@ -68,6 +68,7 @@ function VerUsuarioCoworking() {
                         {coworking.parking}</div>
                     <div><span>Web:</span>
                         {coworking.web}</div>
+
                 </div>
                 < div className="carousel">
                     <CarouselCwk id={coworking.id_coworking} />

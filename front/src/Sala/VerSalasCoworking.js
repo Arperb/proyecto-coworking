@@ -3,6 +3,7 @@ import useFetch from '../useFetch'
 import { useParams, NavLink } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import './VerSalasCoworking.css'
+import VerValoracionMediaSala from './VerValoracionMediaSala'
 
 
 function VerSalasCoworking() {

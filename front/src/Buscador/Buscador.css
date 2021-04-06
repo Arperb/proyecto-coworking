@@ -57,4 +57,13 @@
 
 .buscador .form-wrap {
   display: flex;
+ 
+}
+
+.buscador .resultados-buscador {
+  display: flex;
+  flex-direction: column;
+  background-color: aqua;
+  width: 600px;
+  z-index: 1000;
 }

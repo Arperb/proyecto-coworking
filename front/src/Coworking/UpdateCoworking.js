@@ -55,7 +55,7 @@ function UpdateCoworking({ coworking }) {
       }),
     })
     if (res.ok) {
-      history.push(`/coworking-actualizar/${id_coworking}`)
+      history.push(`/usuario/coworking`)
     } else {
       setError(true)
       console.log('Ha habido un error')
