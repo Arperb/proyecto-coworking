@@ -11,7 +11,7 @@ function Main({ children }) {
   const [open, setOpen] = useState(false);
 
   const login = useSelector((s) => s.login);
-  let id_usuario = login.usuario.id_usuario
+  let id_usuario = login.usuario.id_usuario;
   const dispatch = useDispatch();
 
   const handleOpen = (e) => {
@@ -33,7 +33,9 @@ function Main({ children }) {
 
   return (
     <div onClick={handleOpen}>
-      <button className="sesionUsuario">{children}</button>
+      <button className="sesionUsuario" style={{ marginTop: 0 }}>
+        {children}
+      </button>
 
       {open && (
         <div className="userLinks">

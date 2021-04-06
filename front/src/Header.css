@@ -58,9 +58,9 @@ header {
 }
 
 .links:hover {
-  color: #D7BC52;
+  color: #d7bc52;
   transform: scale(1.2);
-  filter: drop-shadow(2px 2px 2px #D7BC52);
+  filter: drop-shadow(2px 2px 2px #d7bc52);
 }
 
 .logoprincipal {
@@ -99,12 +99,10 @@ header .avatar {
   border: 1px solid #aaa;
   border-radius: 50%;
   height: 32px;
-  margin-right: 8px;
-  margin-top: 20px;
   width: 32px;
 }
 
 div.userMenu {
   display: flex;
-  box-sizing: border-box;
+  align-items: center;
 }

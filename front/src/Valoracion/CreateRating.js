@@ -47,13 +47,18 @@ function CreateValoracion() {
         </fieldset>
         <fieldset>
           Valoración
-          <input
+          <select
             name="valoracion"
             required
-            placeholder="1-5..."
             value={valoracion}
             onChange={(e) => setValoracion(e.target.value)}
-          />
+          >
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
         </fieldset>
 
         <button className="darrating">Crear valoración</button>
