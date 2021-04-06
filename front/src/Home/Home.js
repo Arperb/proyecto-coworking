@@ -17,7 +17,7 @@ function Home() {
         <div className="home welcome">
           <img className="mainlogo" src={logo} alt="mainlogo" />
           <h1 className="title">CORÓNATE EN LOS MEJORES COWORKINGS</h1>
-          <Link className="home button1" to="/Reserva/Reservar">
+          <Link className="home button1" to="/Buscador">
             <span>BUSCAR</span>
           </Link>
         </div>

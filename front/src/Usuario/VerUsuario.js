@@ -43,27 +43,27 @@ function VerUsuario() {
             />
           ) : null}
           <div>
-            <span>Email:</span>
+            <span>Email: </span>
             {usuario.email}
           </div>
           <div>
-            <span>Nombre:</span>
+            <span>Nombre: </span>
             {usuario.nombre}
           </div>
           <div>
-            <span>Teléfono</span>
+            <span>Teléfono: </span>
             {usuario.telefono}
           </div>
           <div>
-            <span>Descripción:</span>
+            <span>Descripción: </span>
             {usuario.bio}
           </div>
           <div>
-            <span>NIF/CIF:</span>
+            <span>NIF/CIF: </span>
             {usuario.nif_cif}
           </div>
           <div>
-            <span>Rol:</span>
+            <span>Rol: </span>
             {usuario.rol}
           </div>
         </div>

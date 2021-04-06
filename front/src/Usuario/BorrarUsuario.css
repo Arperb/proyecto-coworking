@@ -1,0 +1,13 @@
+.byebye {
+  height: 82vh;
+  background-image: url(../images/fondocoronas.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.deleteUsuarioButton {
+  padding-top: 2rem;
+  padding-left: 2rem;
+  font-size: large;
+  font-weight: bolder;
+}

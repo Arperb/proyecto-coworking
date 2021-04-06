@@ -50,7 +50,6 @@ div {
 }
 
 .page.home li {
- 
   color: white;
 }
 
@@ -169,5 +168,3 @@ div {
 .page.home .dir {
   flex-direction: column;
 }
-
-
