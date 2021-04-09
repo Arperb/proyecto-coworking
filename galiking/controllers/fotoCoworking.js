@@ -9,11 +9,12 @@ const sharp = require('sharp');
 
 const getFotoCoworking = async (req, res) => {
 
-    const { id_coworking } = req.params
-
+    const id_coworking = req.params
+    console.log(id_coworking)
     try {
         const foto_coworking = await db.getFotoCoworking(id_coworking)
         res.send(foto_coworking)
+
     } catch (e) {
         res.status(500).send()
     }

@@ -452,7 +452,8 @@ const getFotoCoworking = async (id_coworking) => {
     const query = `select id_coworking, JSON_ARRAYAGG(foto) AS fotos
                     FROM foto_coworking GROUP BY id_coworking`
     const params = [id_coworking]
-    const [result] = await performQuery(query, params)
+    const result = await performQuery(query, params)
+    console.log(result)
     return result
 }
 
