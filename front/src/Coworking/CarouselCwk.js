@@ -1,9 +1,10 @@
 import React from 'react';
 import Carousel from 'react-gallery-carousel';
 import 'react-gallery-carousel/dist/index.css';
-import { useState, useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
+
+import { useParams } from "react-router-dom";
 import useFetch from '../useFetch'
+
 
 
 const CarouselCwk = ({ id }) => {
@@ -16,6 +17,7 @@ const CarouselCwk = ({ id }) => {
     console.log('Fotos:', fotos)
 
     const images = fotos.fotos.map((foto) => ({
+
         src: `http://localhost:9999/images/cwk/${foto}.jpg`
     }));
 
@@ -24,6 +26,10 @@ const CarouselCwk = ({ id }) => {
     return (
         <Carousel images={images} />
     );
+
 };
+
+
+
 
 export default CarouselCwk;

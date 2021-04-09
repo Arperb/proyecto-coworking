@@ -70,6 +70,7 @@ import UpdateSala from './Sala/UpdateSala';
 import BorrarSala from './Sala/BorrarSala';
 import VerValoracionMediaSala from './Sala/VerValoracionMediaSala';
 import Update from './Auth/Update';
+import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
 
 
 
@@ -130,6 +131,10 @@ function App() {
         <Route path='/coworking/:id_coworking/rating' exact>
           <VerValoracionCoworking />
         </Route>
+
+
+
+
 
         <Route path='/coworking/:id_coworking/salas' exact>
           <VerSalas />

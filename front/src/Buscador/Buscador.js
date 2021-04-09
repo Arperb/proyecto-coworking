@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Buscador.css";
+import BuscadorCard from './BuscadorCard'
 
 function Buscador() {
   const [provincia, setProvincia] = useState("");
@@ -216,24 +217,16 @@ function Buscador() {
           <div className="resultados-buscador">
             <h2>Resultados:</h2>
             {results.map((r) => (
-              <div key={r.id_coworking}>
-                {r.provincia}
-                {r.ciudad}
-                {r.tarifa}
-                {r.fecha_inicio}
-                {r.fecha_fin}
-                {r.capacidad}
-                {r.limpieza}
-                {r.parking}
-                {r.wifi}
-                {r.proyector}
-                {r.impresora}
-                {r.tipo}
-                <NavLink to={`/coworking/${r.id_coworking}`}>
-                  Ver coworking
-                </NavLink>
+              <div>
+                < BuscadorCard r={r} key={r.id_coworking} />
+
               </div>
             ))}
+
+            {/* {results.map(r =>
+              <BuscadorCard key={r.id_coworking} provincia={r.provincia} />
+
+            )} */}
             {/*results.length &&
             <div className="pagination">
               <span onClick={() => handleUrl(results.info.prev)}>&lt; Anterior</span>
