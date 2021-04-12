@@ -1,35 +1,48 @@
 .section.coworking .form-main {
-    display: flex;
-  }
-  
- 
-  
-  .section.section.coworking label {
-    display: flex;
-    margin-bottom: 15px;
-  }
-  
-  .section.coworking label > span {
-    flex: 0 0 150px;
-    font-size: 90%;
-    height: 33px;
-    line-height: 33px;
-  }
-  
-  .section.section.coworking input:not([type="file"]) {
-    border: 1px solid #ccc;
-    display: block;
-    margin-bottom: 12px;
-    outline: 0;
-    padding: 8px 15px;
-    width: 250px;
-  }
-  
-  .section.section.coworking input:focus {
-    border-color: #5f4fde;
-  }
-  
-  
-  .section.section.coworking button {
-    margin-top: 20px;
-  }
+  display: flex;
+  padding: 4em;
+}
+
+.section.section.coworking label {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.section.coworking label > span {
+  flex: 0 0 150px;
+  font-size: 90%;
+  height: 33px;
+  line-height: 33px;
+}
+
+.section.section.coworking input:not([type="file"]) {
+  border: 1px solid #ccc;
+  display: block;
+  margin-bottom: 12px;
+  outline: 0;
+  padding: 8px 15px;
+  width: 250px;
+  border-radius: 8px;
+}
+
+.section.section.coworking input:focus {
+  border-color: #5f4fde;
+}
+
+.section.section.coworking button {
+  margin-top: 20px;
+}
+
+.applychanges {
+  padding-top: 2rem;
+  padding-left: 2rem;
+  font-size: large;
+  font-weight: bolder;
+  background-color: #d7bc52;
+  font-size: 1.3em;
+  padding: 1%;
+  border-radius: 20px;
+  color: white;
+  width: 10em;
+  height: 3em;
+}

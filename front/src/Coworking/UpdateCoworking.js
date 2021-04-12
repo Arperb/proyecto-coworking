@@ -1,18 +1,15 @@
-import useFetch from '../useFetch'
-import { useState } from 'react'
+import useFetch from "../useFetch";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom"
-import './UpdateCoworking.css'
-import CoworkingFoto from './CoworkingFoto'
-
+import { useHistory, useParams } from "react-router-dom";
+import "./UpdateCoworking.css";
+import CoworkingFoto from "./CoworkingFoto";
 
 function UpdateCoworking({ coworking }) {
   const login = useSelector((s) => s.login);
-  let id_usuario = login.usuario.id_usuario
+  let id_usuario = login.usuario.id_usuario;
 
   const { id_coworking } = useParams();
-
-
 
   const [nombre, setNombre] = useState(coworking.nombre || "");
   const [telefono, setTelefono] = useState(coworking.telefono || "");
@@ -25,59 +22,53 @@ function UpdateCoworking({ coworking }) {
   const [parking, setParking] = useState(coworking.parking || "");
   const [web, setWeb] = useState(coworking.web || "");
 
+  const [error, setError] = useState(false);
 
-  const [error, setError] = useState(false)
+  const history = useHistory();
 
-  const history = useHistory()
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleSubmit = e => {
-    e.preventDefault()
-
-    const res = fetch(`http://localhost:9999/coworking-actualizar/${id_coworking}`, {
-      method: 'PUT',
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: login.token,
-      },
-      body: JSON.stringify({
-
-        nombre,
-        telefono,
-        direccion,
-        ciudad,
-        provincia,
-        descripcion,
-        wifi,
-        limpieza,
-        parking,
-        web,
-
-      }),
-    })
+    const res = fetch(
+      `http://localhost:9999/coworking-actualizar/${id_coworking}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: login.token,
+        },
+        body: JSON.stringify({
+          nombre,
+          telefono,
+          direccion,
+          ciudad,
+          provincia,
+          descripcion,
+          wifi,
+          limpieza,
+          parking,
+          web,
+        }),
+      }
+    );
     if (res.ok) {
-      history.push(`/usuario/coworking`)
+      history.push(`/usuario/coworking`);
     } else {
-      setError(true)
-      console.log('Ha habido un error')
+      setError(true);
+      console.log("Ha habido un error");
     }
-  }
-
-
-
-
+  };
 
   return (
     <div className="section coworking">
       <CoworkingFoto />
       <form onSubmit={handleSubmit}>
-
-
         <label>
           <span>Nombre:</span>
           <input
             name="nombre"
             value={nombre}
-            onChange={e => setNombre(e.target.value)}
+            onChange={(e) => setNombre(e.target.value)}
           />
         </label>
         <label>
@@ -85,7 +76,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="telefono"
             value={telefono}
-            onChange={e => setTelefono(e.target.value)}
+            onChange={(e) => setTelefono(e.target.value)}
           />
         </label>
         <label>
@@ -93,7 +84,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="direccion"
             value={direccion}
-            onChange={e => setDireccion(e.target.value)}
+            onChange={(e) => setDireccion(e.target.value)}
           />
         </label>
         <label>
@@ -101,7 +92,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="ciudad"
             value={ciudad}
-            onChange={e => setCiudad(e.target.value)}
+            onChange={(e) => setCiudad(e.target.value)}
           />
         </label>
         <label>
@@ -109,7 +100,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="provincia"
             value={provincia}
-            onChange={e => setProvincia(e.target.value)}
+            onChange={(e) => setProvincia(e.target.value)}
           />
         </label>
         <label>
@@ -117,7 +108,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="descripcion"
             value={descripcion}
-            onChange={e => setDescripcion(e.target.value)}
+            onChange={(e) => setDescripcion(e.target.value)}
           />
         </label>
         <label>
@@ -125,7 +116,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="wifi"
             value={wifi}
-            onChange={e => setWifi(e.target.value)}
+            onChange={(e) => setWifi(e.target.value)}
           />
         </label>
         <label>
@@ -133,7 +124,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="limpieza"
             value={limpieza}
-            onChange={e => setLimpieza(e.target.value)}
+            onChange={(e) => setLimpieza(e.target.value)}
           />
         </label>
         <label>
@@ -141,7 +132,7 @@ function UpdateCoworking({ coworking }) {
           <input
             name="parking"
             value={parking}
-            onChange={e => setParking(e.target.value)}
+            onChange={(e) => setParking(e.target.value)}
           />
         </label>
         <label>
@@ -149,22 +140,24 @@ function UpdateCoworking({ coworking }) {
           <input
             name="web"
             value={web}
-            onChange={e => setWeb(e.target.value)}
+            onChange={(e) => setWeb(e.target.value)}
           />
         </label>
 
-        <button>Actualizar</button>
+        <button className="applychanges">Actualizar</button>
       </form>
     </div>
   );
 }
 
 function UpdateCoworkingWrapper() {
-  const login = useSelector(s => s.login)
-  let id_usuario = login.usuario.id_usuario
-  const coworking = useFetch(`http://localhost:9999/usuario/${id_usuario}/coworking`)
-  if (!coworking) return "Loading..."
-  return <UpdateCoworking coworking={coworking} />
+  const login = useSelector((s) => s.login);
+  let id_usuario = login.usuario.id_usuario;
+  const coworking = useFetch(
+    `http://localhost:9999/usuario/${id_usuario}/coworking`
+  );
+  if (!coworking) return "Loading...";
+  return <UpdateCoworking coworking={coworking} />;
 }
 
 export default UpdateCoworkingWrapper;

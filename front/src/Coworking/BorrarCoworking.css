@@ -1,11 +1,11 @@
-.byebye {
+.byeCoworking {
   height: 82vh;
   background-image: url(../images/fondocoronas.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.deleteUsuarioButton {
+.deleteBorrarCoworking {
   padding-top: 2rem;
   padding-left: 2rem;
   font-size: large;

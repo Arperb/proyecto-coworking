@@ -32,13 +32,12 @@ function BorrarUsuario({}) {
   return (
     <div className="byebye">
       <div
-        className="deleteUsuarioButton"
         onClick={(e) => {
           if (window.confirm("¿Seguro que lo quieres eliminar?"))
             handleDelete(e);
         }}
       >
-        Borrar
+        <button className="deleteUsuarioButton">Borrar Usuario</button>
       </div>
     </div>
   );

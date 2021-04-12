@@ -1,33 +1,24 @@
-import useFetch from '../useFetch'
-import { useSelector } from 'react-redux'
+import useFetch from "../useFetch";
+import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
-
-
+import "./VerReservasCoworking.css";
 
 function VerReservasCoworking() {
-
-
-  const login = useSelector(s => s.login)
+  const login = useSelector((s) => s.login);
   const { id_coworking } = useParams();
   //const { usuario, token} = useSelector((s) => s.login);
-  let id_usuario = login.usuario.id_usuario
-  console.log(id_usuario)
+  let id_usuario = login.usuario.id_usuario;
+  console.log(id_usuario);
 
-
-  const reservas = useFetch(`http://localhost:9999/coworking/${id_coworking}/reservas`) || []
-
-
-
+  const reservas =
+    useFetch(`http://localhost:9999/coworking/${id_coworking}/reservas`) || [];
 
   return (
-
-    <div className="section reservas coworking">
-
-
+    <div className="section reservasCoworking">
       <h2>Reservas</h2>
-      {!reservas && 'Cargando...'}
-      { reservas &&
+      {!reservas && "Cargando..."}
+      {reservas && (
         <table>
           <thead>
             <tr>
@@ -42,11 +33,9 @@ function VerReservasCoworking() {
             </tr>
           </thead>
           <tbody>
-            {reservas.map(reserva => {
-
+            {reservas.map((reserva) => {
               return (
                 <tr key={reserva.id_coworking}>
-
                   <td>{reserva.id_sala}</td>
                   <td>{reserva.tipo}</td>
                   <td>{reserva.id_reserva}</td>
@@ -56,14 +45,11 @@ function VerReservasCoworking() {
                   <td>{reserva.fecha_inicio}</td>
                   <td>{reserva.fecha_fin}</td>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
-
-      }
-
-
+      )}
     </div>
   );
 }

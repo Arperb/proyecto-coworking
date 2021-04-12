@@ -16,14 +16,14 @@ function VerSalas() {
       {salas && (
         <table>
           <thead>
-            <tr>
-              <th>Tipo</th>
-              <th>Descripción</th>
-              <th>Tarifa (€/mes)</th>
-              <th>Capacidad</th>
-              <th>Disponibilidad</th>
-              <th>Proyector</th>
-              <th>Impresora</th>
+            <tr className="latablada">
+              <th className="campos">Tipo</th>
+              <th className="campos">Descripción</th>
+              <th className="campos">Tarifa (€/mes)</th>
+              <th className="campos">Capacidad</th>
+              <th className="campos">Disponibilidad</th>
+              <th className="campos">Proyector</th>
+              <th className="campos">Impresora</th>
             </tr>
           </thead>
           <tbody>
@@ -38,8 +38,13 @@ function VerSalas() {
                   <td>{sala.proyector}</td>
                   <td>{sala.impresora}</td>
 
-                  <div className="buttonReservarSala">
-                    <NavLink to={`/reserva/${sala.id_sala}`}>Reservar</NavLink>
+                  <div>
+                    <NavLink
+                      className="buttonReservarSala"
+                      to={`/reserva/${sala.id_sala}`}
+                    >
+                      Reservar
+                    </NavLink>
                   </div>
                 </tr>
               );

@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import "./BorrarCoworking.css";
 
 function BorrarCoworking({}) {
   const login = useSelector((s) => s.login);
@@ -34,13 +35,13 @@ function BorrarCoworking({}) {
   return (
     <div>
       <div
-        className="deleteCoworkingButton"
+        className="byeCoworking"
         onClick={(e) => {
           if (window.confirm("¿Seguro que quieres eliminar este coworking?"))
             handleDelete(e);
         }}
       >
-        Borrar
+        <button className="deleteBorrarCoworking">Borrar</button>
       </div>
     </div>
   );

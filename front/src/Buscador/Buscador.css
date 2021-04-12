@@ -83,6 +83,13 @@ button.cwkfinder {
   font-size: 1.3rem;
 }
 
+button.cwkfinder:hover {
+  background-color: rgb(215, 187, 81, 0.3);
+  filter: drop-shadow(2px 2px 5px #d7bc52);
+  color: black;
+  font-weight: bolder;
+}
+
 .buscador form {
   width: 20rem;
   position: relative;

@@ -1,11 +1,14 @@
-.byebye {
-  height: 82vh;
+.section.coworking {
+  padding: 2em;
   background-image: url(../images/fondocoronas.png);
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
-.deleteUsuarioButton {
+.introfotos {
+  font-weight: bold;
+  font-size: 1.3em;
+}
+
+.applyphoto {
   padding-top: 2rem;
   padding-left: 2rem;
   font-size: large;
@@ -16,4 +19,5 @@
   border-radius: 20px;
   color: white;
   width: 10em;
+  height: 3em;
 }
