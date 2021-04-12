@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import "./BorrarIncidencia.css";
+import Swal from "sweetalert2";
 
 function BorrarIncidencia({}) {
   const login = useSelector((s) => s.login);
   const { id_incidencia } = useParams();
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -17,10 +19,17 @@ function BorrarIncidencia({}) {
       }
     );
     if (res.ok) {
-      history.push(`/incidencia-borrar/${id_incidencia}`);
+      history.push(`/`);
     } else {
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Incidencia borrada con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

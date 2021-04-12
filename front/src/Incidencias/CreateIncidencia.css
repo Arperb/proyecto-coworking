@@ -79,7 +79,7 @@ button.creainci {
 }
 
 button.creainci:hover {
-  ackground-color: rgb(215, 187, 81, 0.3);
+  background-color: rgb(215, 187, 81, 0.3);
   filter: drop-shadow(2px 2px 5px gold);
   color: black;
   font-weight: bolder;

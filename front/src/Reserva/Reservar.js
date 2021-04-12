@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
+import "./Reservar.css";
+import Swal from "sweetalert2";
 
 function Reservar() {
   const { id_sala } = useParams();
@@ -12,6 +14,7 @@ function Reservar() {
 
   const login = useSelector((s) => s.login);
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,34 +35,45 @@ function Reservar() {
       console.log("Error");
       setError(true);
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Reserva creada con éxito, revisa tu email",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Haz tu reserva</h3>
-      <fieldset>
-        <input
-          name="fecha inicio"
-          type="date"
-          required
-          placeholder="fecha inicio..."
-          value={fecha_inicio}
-          onChange={(e) => setFecha_inicio(e.target.value)}
-        />
-      </fieldset>
-      <fieldset>
-        <input
-          name="fecha fin"
-          type="date"
-          required
-          placeholder="fecha fin..."
-          value={fecha_fin}
-          onChange={(e) => setFecha_fin(e.target.value)}
-        />
-      </fieldset>
+    <div className="section Reservar">
+      <div className="reservaContainer">
+        <form onSubmit={handleSubmit}>
+          <h2>Haz tu reserva</h2>
 
-      <button>Reservar</button>
-    </form>
+          <label className="reservarLabel">
+            <input
+              name="fecha inicio"
+              type="date"
+              required
+              placeholder="fecha inicio..."
+              value={fecha_inicio}
+              onChange={(e) => setFecha_inicio(e.target.value)}
+            />
+
+            <input
+              name="fecha fin"
+              type="date"
+              required
+              placeholder="fecha fin..."
+              value={fecha_fin}
+              onChange={(e) => setFecha_fin(e.target.value)}
+            />
+          </label>
+
+          <button className="buttonReservar">Reservar</button>
+        </form>
+      </div>
+    </div>
   );
 }
 

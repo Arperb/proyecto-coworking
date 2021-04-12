@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import "./UpdateSala.css";
+import Swal from "sweetalert2";
 
 function UpdateSala() {
   const login = useSelector((s) => s.login);
@@ -21,6 +22,7 @@ function UpdateSala() {
   const [error, setError] = useState(false);
 
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +50,13 @@ function UpdateSala() {
       setError(true);
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Sala modificada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
