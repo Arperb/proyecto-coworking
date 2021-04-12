@@ -54,3 +54,27 @@ button {
 .acordeon .expand ol li {
   margin: 0.5rem 0;
 }
+
+@media screen and (max-width: 414px) {
+  .acordeon .expand ol {
+    list-style: none;
+    font-size: larger;
+    text-align: left;
+    margin-left: 5rem;
+    list-style-image: url("../images/estrella2chica.png");
+    list-style-type: square;
+    background-repeat: no-repeat;
+    color: black;
+    font-size: 1em;
+    /* text-shadow: 2px 3px white; */
+  }
+
+  .acordeon .expand ol li {
+    margin: 0.1rem 0;
+  }
+  .buttons.style {
+    background-color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    font-size: 0.8em;
+  }
+}

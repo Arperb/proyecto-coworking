@@ -56,6 +56,12 @@ footer {
   font-weight: lighter;
 }
 
+.logof {
+  text-decoration: none;
+  max-width: 8vw;
+  cursor: pointer;
+}
+
 /* footer {
     background-color: #000000;
     color: white;
@@ -106,3 +112,23 @@ footer {
     justify-content: space-evenly;
 }
   */
+
+@media screen and (max-width: 414px) {
+  footer {
+    font-size: 8px;
+  }
+  .container2 {
+    display: none;
+  }
+  .redes.sociales {
+    width: 70%;
+    display: flex;
+    align-items: center;
+  }
+  .end.logo {
+    display: none;
+  }
+  .container3 {
+    margin-left: 2em;
+  }
+}

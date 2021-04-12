@@ -50,3 +50,17 @@
 .navReserva {
   text-decoration: none;
 }
+
+@media screen and (max-width: 414px) {
+  .botones-ver {
+    width: 31.25em;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    align-content: space-evenly;
+    align-items: flex-start;
+    background-color: #d7bc52;
+    font-size: 0.5em;
+    bottom: auto;
+  }
+}

@@ -1,4 +1,4 @@
-header {
+/* .headerContainer {
   display: flex;
   border-bottom: 1px solid #ccc;
   align-items: center;
@@ -7,6 +7,16 @@ header {
   box-sizing: border-box;
   text-align: center;
   z-index: 1;
+} */
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.1875em 0.9375em;
+  height: 4.375em;
+  width: 106.25em;
+  box-sizing: border-box;
 }
 
 .linksContainer {
@@ -14,7 +24,7 @@ header {
   flex: auto 1 1;
   justify-content: space-around;
   align-items: center;
-  padding: 5px;
+  padding: 0.3125em;
 }
 
 .btn-2 {
@@ -23,7 +33,7 @@ header {
 
 .btn-2:hover,
 .btn-2:active {
-  letter-spacing: 5px;
+  letter-spacing: 0.3125em;
 }
 
 .btn-2:after,
@@ -70,16 +80,6 @@ header {
   z-index: 1;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 3px 15px;
-  height: 70px;
-  width: 1700px;
-  box-sizing: border-box;
-}
-
 header .logo {
   text-decoration: none;
   max-width: 8vw;
@@ -98,11 +98,26 @@ header .avatar {
   background-size: cover;
   border: 1px solid #aaa;
   border-radius: 50%;
-  height: 32px;
-  width: 32px;
+  height: 2em;
+  width: 2em;
 }
 
 div.userMenu {
   display: flex;
   align-items: center;
+}
+
+@media screen and (max-width: 414px) {
+  .headerContainer {
+    width: 100%;
+  }
+
+  .linksContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0.3125em;
+    width: 70%;
+    font-size: 10px;
+  }
 }

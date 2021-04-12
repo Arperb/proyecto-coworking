@@ -28,6 +28,7 @@ input.icorreo {
   margin-top: 2rem;
   margin-left: 2rem;
   border-color: white;
+  margin-bottom: 2em;
 }
 
 input.ipassword {
@@ -59,4 +60,46 @@ input.ipassword {
 .forgottext {
   margin-top: 2rem;
   margin-bottom: 1rem;
+}
+
+@media screen and (max-width: 414px) {
+  .loginform {
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 20px;
+    border: 1px solid rgb(215, 187, 81);
+    box-shadow: 2px 2px 5px rgb(215, 187, 81);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    width: 90vw;
+    text-align: center;
+    margin: 0 auto;
+  }
+  input.icorreo {
+    font-size: larger;
+    border-radius: 6px;
+    padding: 0.2rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    border-color: white;
+    margin-bottom: 2em;
+  }
+  input.ipassword {
+    font-size: larger;
+    border-radius: 6px;
+    padding: 0.2rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+    border-color: white;
+  }
+  .loginbutton {
+    border-radius: 20px;
+    border: 1px solid rgb(215, 187, 81);
+    font-size: large;
+    width: 17vw;
+    box-sizing: border-box;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2rem;
+  }
 }

@@ -1,7 +1,7 @@
 .users {
   display: flex;
   flex-direction: row;
-  height: 82vh;
+  height: 48.75em;
 }
 
 .datos-usuario {
@@ -9,7 +9,7 @@
   background-repeat: repeat;
   background-size: cover;
   background-attachment: fixed;
-  width: 1400px;
+  width: 87.5em;
   padding-bottom: 5%;
 }
 
@@ -33,8 +33,8 @@
   margin-bottom: 3%;
 }
 
-.botones-ver {
-  width: 500px;
+.botones-ver1 {
+  width: 31.25em;
   display: flex;
   flex-direction: column;
   align-content: space-evenly;
@@ -43,11 +43,11 @@
   font-size: 20px;
 }
 
-.botones-ver a {
+.botones-ver1 a {
   color: black;
 }
 
-.botones-ver a:hover {
+.botones-ver1 a:hover {
   color: white;
 }
 .navVerUser {

@@ -69,3 +69,51 @@ button.envioformulario {
   filter: drop-shadow(2px 2px 5px gold);
   color: black;
 }
+
+@media screen and (max-width: 414px) {
+  button.envioformulario {
+    width: 7em;
+    font-size: small;
+  }
+  .page.form fieldset {
+    max-width: 90%;
+  }
+  input.iguales {
+    width: 75%;
+  }
+  input.iduda {
+    width: 95%;
+  }
+  .page.form h1 {
+    padding: 0 1vw;
+    text-align: center;
+    font-weight: bolder;
+    color: white;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    font-size: 1.5em;
+  }
+  .page.form fieldset {
+    border-radius: 20px;
+    max-width: 90vw;
+    height: 65vh;
+    display: flex;
+    flex-direction: column;
+    padding: 2em;
+    border: 1px solid rgb(215, 187, 81);
+    box-shadow: 2px 2px 5px rgb(215, 187, 81);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .page.form {
+    height: 86vh;
+    background-color: white;
+    box-sizing: border-box;
+    /* background-image: url(../images/yellowback.jpg);
+    background-repeat: no-repeat;
+    background-size: cover; */
+    background-color: rgb(215, 187, 81);
+  }
+}

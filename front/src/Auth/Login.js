@@ -35,6 +35,7 @@ function Login() {
       <form className="loginform" onSubmit={handleSubmit}>
         <label>
           E-mail
+          <br></br>
           <input
             className="icorreo"
             value={email}
@@ -46,6 +47,7 @@ function Login() {
         <br></br>
         <label>
           Contraseña
+          <br></br>
           <input
             className="ipassword"
             value={contrasena}

@@ -55,8 +55,8 @@ div {
 
 .button1 {
   display: inline-flex;
-  width: 510px;
-  height: 80px;
+  width: 31.875em;
+  height: 5em;
   border-radius: 30px;
   margin-top: 2vw;
   margin-left: 4vw;
@@ -89,13 +89,13 @@ div {
   align-items: center;
 }
 
-.home .subt {
+/* .home .subt {
   color: white;
   font-size: 2em;
   font-weight: bolder;
   padding: 0;
   margin-top: 30vh;
-}
+} */
 
 .elegir.botones {
   flex-direction: row;
@@ -160,11 +160,97 @@ div {
   text-shadow: 2px 3px black;
 }
 
-/* .estoesflex {
-  display: flex;
-  flex-direction: row;
-  padding-top: 0;
-} */
 .page.home .dir {
   flex-direction: column;
+}
+
+@media screen and (max-width: 414px) {
+  .bienvenida {
+    background-image: url(../images/portada1-736.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: flex;
+    justify-content: column;
+    box-sizing: border-box;
+    display: flex;
+    max-height: 660px;
+    max-width: 414px;
+  }
+  .mainlogo {
+    width: 45vw;
+    margin: auto;
+  }
+  .page.home h1 {
+    font-size: 11px;
+    padding: 0;
+    margin-left: 2em;
+    padding-bottom: 1em;
+    align-items: center;
+  }
+  .button1 {
+    display: inline-flex;
+    width: 11em;
+    height: 3em;
+    border-radius: 30px;
+    margin-top: 2vw;
+    margin-left: 4vw;
+    border: 2px solid #fff;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+  }
+
+  .section.elegir {
+    background-image: url(../images/ilustracioncwk-736.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: flex;
+    justify-content: center;
+    max-height: 736;
+    background-attachment: unset;
+  }
+  .page.home .homesubt {
+    color: white;
+    font-size: 1.5em;
+    margin-top: 1em;
+    text-shadow: 2px 3px black;
+  }
+  .elegir.botones {
+    flex-direction: column;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  .sub.style {
+    padding: 15px;
+    font-size: 0.8rem;
+    font-weight: normal;
+  }
+  .sub.button:hover {
+    background-color: rgb(215, 187, 81, 0.3);
+    filter: drop-shadow(2px 2px 5px gold);
+    color: black;
+    font-weight: bolder;
+    z-index: 1;
+  }
+  .page.home .razones {
+    background-image: url(../images/coworkers4-736.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .page.home li {
+    color: black;
+  }
+  .why h2 {
+    font-size: 2em;
+  }
 }

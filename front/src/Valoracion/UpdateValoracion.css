@@ -57,3 +57,14 @@ button.actualizavaloracion:hover {
   color: black;
   font-weight: bolder;
 }
+
+@media screen and (max-width: 414px) {
+  .section.valoracion {
+    height: 82vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .botones-ver {
+    margin-top: 60.6vh;
+  }
+}

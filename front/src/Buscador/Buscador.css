@@ -57,7 +57,6 @@
 
 .buscador .form-wrap {
   display: flex;
- 
 }
 
 .buscador .resultados-buscador {
@@ -84,9 +83,34 @@ button.cwkfinder {
   font-size: 1.3rem;
 }
 
-button.cwkfinder:hover {
-  background-color: rgb(215, 187, 81, 0.3);
-  filter: drop-shadow(2px 2px 5px gold);
-  color: black;
-  font-weight: bolder;
+.buscador form {
+  width: 20rem;
+  position: relative;
+}
+
+@media screen and (max-width: 414px) {
+  button.cwkfinder {
+    width: 50vw;
+    height: 8vh;
+    border-radius: 30px;
+    margin-top: 2vw;
+    margin-left: 15vw;
+    border: 2px solid #fff;
+    outline: none;
+    text-decoration: none;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: black;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1rem;
+  }
+  .buscador form {
+    width: 20rem;
+    position: relative;
+  }
+  .buscador form {
+    width: 20rem;
+    position: relative;
+    margin: auto;
+  }
 }
