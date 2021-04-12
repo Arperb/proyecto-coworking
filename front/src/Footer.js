@@ -17,7 +17,7 @@ function Footer() {
         </div>
       </div>
       <div className="container2">
-        <Link className="finales" to="/">
+        <Link className="finales" to="/buscador">
           Coworking
         </Link>
         <Link className="finales" to="/">
@@ -26,7 +26,7 @@ function Footer() {
         <Link className="finales" to="/">
           ¿Por qué un coworking?
         </Link>
-        <Link className="finales" to="/Registro">
+        <Link className="finales" to="/Register">
           Crear Cuenta
         </Link>
         <Link className="finales" to="/Login">

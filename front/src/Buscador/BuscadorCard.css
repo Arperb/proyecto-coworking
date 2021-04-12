@@ -1,14 +1,36 @@
 .card{
-    width: 100%;
+    width: 150%;
+    height: 80%;
+    margin:5%;
+    padding:5%;
     border-radius: 10px;
-    background-color: peru;
-    display: inline-flex; 
-    margin: 10px;
+    background-color:white;
+    display: flex; 
+    justify-content: space-around;
+  
     box-shadow: rgba(0, 0, 0, 0.295) 0px 0px 10px ;
 }
-.card-logo{
-    padding: 10px;
-}
+
 .card-content{
-    color:white
+    color:black
 }
+
+.card-content span{
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.card-content h2{
+    font-weight: bold;
+    font-size: 30px;
+    padding-bottom: 6px;
+}
+
+.link-cwk-buscador a{
+     margin-right:4%;
+     color:black
+}
+
+.link-cwk-buscador a:hover{
+    color: #d8ad2e;
+   }

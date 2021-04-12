@@ -6,6 +6,8 @@ import Reservar from "../Reserva/Reservar"
 
 import useFetch from "../useFetch"
 import CarouselCwk from "./CarouselCwk"
+import CarouselInfinite from "./CarouselInfinite"
+import "./VerCoworking.css";
 
 
 
@@ -75,19 +77,17 @@ function VerCoworking() {
                             </div>
 
 
-                            {/* {!(login) &&
-                                <VerSalas />
-                            }
-                            {(login) &&
-                                <Reservar />
-                            } */}
+                            <div className="navLinks">
 
-                            <NavLink to={`/coworking/${id_coworking}/salas`}>Ver salas</NavLink>
+                                <NavLink className="versalas" to={`/coworking/${id_coworking}/salas`}>Ver salas</NavLink>
 
-                            <NavLink to={`/buscador`}>Volver</NavLink>
+                                <NavLink className="volverbuscador" to={`/buscador`}>Volver</NavLink>
 
-                            <CarouselCwk id={coworking.id_coworking} />
+                            </div>
+                            <div className="carousel-ver-coworking">
 
+                                <CarouselInfinite id_coworking={id_coworking} />
+                            </div>
                         </div>
                     </div>
                 </div>

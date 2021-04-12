@@ -27,7 +27,7 @@ function Reservar() {
     });
     if (res.ok) {
       const { id_reseva } = await res.json();
-      // history.push(`/coworking/${id_coworking}/sala`)
+      history.push(`/usuario/reservas`)
     } else {
       console.log("Error");
       setError(true);

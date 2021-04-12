@@ -37,17 +37,13 @@ function Buscador() {
       `&impresora=${impresora}` +
       `&tipo=${tipo}`;
     const res = await fetch(url);
-    console.log(res);
+
     const data = await res.json();
+    console.log(data);
     setResults(data);
   };
 
-  const handleUrl = async (url) => {
-    if (!url) return;
-    const res = await fetch(url);
-    const data = await res.json();
-    setResults(data);
-  };
+
 
   //const chunk = results && results.url.substr(43).split('&').find(t => t.startsWith('page='))
   //const page = chunk ? chunk.substr(5) : 1
@@ -215,10 +211,10 @@ function Buscador() {
 
         {results && (
           <div className="resultados-buscador">
-            <h2>Resultados:</h2>
+
             {results.map((r) => (
               <div>
-                < BuscadorCard r={r} key={r.id_coworking} />
+                < BuscadorCard r={r} key={r.SCoworking} />
 
               </div>
             ))}

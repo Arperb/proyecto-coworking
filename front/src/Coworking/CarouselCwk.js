@@ -16,9 +16,9 @@ const CarouselCwk = ({ id }) => {
 
     console.log('Fotos:', fotos)
 
-    const images = fotos.fotos.map((foto) => ({
+    const images = fotos.map((id_coworking) => ({
 
-        src: `http://localhost:9999/images/cwk/${foto}.jpg`
+        src: `http://localhost:9999/images/cwk/${id_coworking.foto}.jpg`
     }));
 
     if (!images.length) return false;
