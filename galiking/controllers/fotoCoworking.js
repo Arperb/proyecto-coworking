@@ -1,4 +1,4 @@
-const db = require('../db/mysql')
+const { db, performQuery } = require('../db/mysql')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const randomstring = require('randomstring');
@@ -9,15 +9,31 @@ const sharp = require('sharp');
 
 const getFotoCoworking = async (req, res) => {
 
-    const id_coworking = req.params
-    console.log(id_coworking)
-    try {
-        const foto_coworking = await db.getFotoCoworking(id_coworking)
-        res.send(foto_coworking)
+    //     const { id_coworking } = req.params
 
-    } catch (e) {
-        res.status(500).send()
-    }
+    //     try {
+    //         const foto_coworking = await db.getFotoCoworking(id_coworking)
+    //         res.send(foto_coworking)
+    //         console.log(foto_coworking)
+
+    //     } catch (e) {
+    //         console.log(e)
+    //         res.status(500).send()
+    //     }
+    // }
+    const { id_coworking } = req.params;
+    console.log(id_coworking)
+
+    const query = `select JSON_ARRAYAGG(foto) AS fotos
+            FROM foto_coworking WHERE id_coworking=${id_coworking} GROUP BY id_coworking`
+
+    const result = await performQuery(query)
+
+    console.log(result)
+
+    return res.status(200).send({
+        result: result[0].fotos
+    })
 }
 
 const createFotoCoworking = async (req, res) => {
@@ -99,5 +115,6 @@ const deleteFotoCoworking = async (req, res) => {
 module.exports = {
     createFotoCoworking,
     getFotoCoworking,
-    deleteFotoCoworking
+    deleteFotoCoworking,
+
 }

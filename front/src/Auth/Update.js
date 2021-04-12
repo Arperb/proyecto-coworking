@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import "./Update.css";
 import "../Usuario/UpdateUsuario.css";
+import Swal from "sweetalert2";
 
 function Update() {
   const login = useSelector((s) => s.login);
@@ -15,7 +16,7 @@ function Update() {
   const [error, setError] = useState(false);
 
   const history = useHistory();
-
+  const Swal = require("sweetalert2");
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,6 +41,13 @@ function Update() {
       setError(true);
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Contraseña actualizada correctamente",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

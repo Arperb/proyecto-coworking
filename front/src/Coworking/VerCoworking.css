@@ -1,0 +1,42 @@
+.verCoworkingPage {
+    background-image: url(../images/fondocoronas.png);
+    background-repeat: repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  
+    padding-bottom: 5%;
+   
+
+}
+
+.verCoworkingContainer {
+    padding-top: 5%;
+    margin-left: 5%;
+}
+
+.verCoworkingContainer h1 {
+    margin-bottom: 3%;
+    
+}
+
+.verDatosCoworking {
+    font-size: 20px;
+}
+
+
+.navLinks {
+   padding: 3%;
+  display: flex;
+  justify-content: space-around;
+
+}
+
+.volverbuscador,
+.versalas  {
+   background-color: #D7BC52;
+   font-size: 20px;
+   padding:1%;
+   border-radius: 10px;
+   color: white;
+ 
+ }

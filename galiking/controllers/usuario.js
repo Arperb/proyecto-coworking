@@ -8,9 +8,11 @@ const sharp = require('sharp');
 const { sendConfirmationMail, forgotPasswordMail } = require('../utils/utils')
 
 
+const watermark = `${process.env.TARGET_FOLDER}/profile/perfil-corona.png`
 
 const { usuarioValidator, passValidator, newPassValidator, emailValidator } = require('../validators/usuario');
 const { getConnection } = require('../db/db');
+
 
 
 
@@ -53,18 +55,27 @@ const uploadFotoUsuario = async (req, res) => {
         const outputFileName = `${process.env.TARGET_FOLDER}/profile/${fileID}.jpg`
 
         const image = sharp(req.files.foto.data)
-        const imageInfo = await image.metadata()
-        if (imageInfo.width > 1000) {
-            image.resize(720)
-        }
+
+        image.resize(720)
+        image.flatten({ background: '#ff6600' })
+        image.composite([{ input: `${watermark}`, gravity: 'southeast' }])
+        image.sharpen()
+        image.withMetadata()
+        image.webp({ quality: 90 })
+        image.toBuffer()
+            .then(function (outputFileName) {
+
+            });
 
         await image.toFile(outputFileName);
 
-        // console.log(image.width)
-        //await fsPromises.writeFile(outputFileName, req.files.foto.data)
+        // const image = sharp(req.files.foto.data)
+        // const imageInfo = await image.metadata()
+        // if (imageInfo.width > 1000) {
+        //     image.resize(720)
+        // }
+        //await image.toFile(outputFileName);
 
-        //         //guardar una referencia a este uuid en la base de datos
-        //         //para que luego el front llame al get para que le de el uuid
         try {
             await db.uploadFotoUsuario(fileID, id_usuario)
 

@@ -449,8 +449,8 @@ const createFotoCoworking = async (fileID, id_coworking) => {
 
 const getFotoCoworking = async (id_coworking) => {
 
-    const query = `select id_coworking, JSON_ARRAYAGG(foto) AS fotos
-                    FROM foto_coworking GROUP BY id_coworking`
+    const query = `  select id_coworking, JSON_ARRAYAGG(foto) AS fotos
+    FROM foto_coworking GROUP BY id_coworking`
     const params = [id_coworking]
     const result = await performQuery(query, params)
     console.log(result)
@@ -1158,7 +1158,7 @@ const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, w
 
         //nombramos la query base
         query = `
-            SELECT * FROM sala
+            SELECT * , sala.id_sala AS CSalas, coworking.id_coworking AS SCoworking FROM sala
             LEFT OUTER JOIN coworking ON coworking.id_coworking = sala.id_coworking
             LEFT OUTER JOIN reserva ON reserva.id_sala = sala.id_sala`;
 
@@ -1260,9 +1260,10 @@ const buscador = async (provincia, ciudad, fecha_inicio, fecha_fin, capacidad, w
 
         //ejecutamos la query
         const [result] = await connection.query(query, params);
-
+        console.log(result)
         //mandamos respuesta
         return result
+
 
     } catch (e) {
         console.warn(e)
@@ -1329,5 +1330,6 @@ module.exports = {
     getRating,
     updateRating,
     deleteRating,
-    buscador
+    buscador,
+    performQuery
 }

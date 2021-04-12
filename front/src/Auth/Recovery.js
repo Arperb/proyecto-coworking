@@ -1,10 +1,11 @@
 import { useState } from "react";
 import "./Recovery.css";
+import Swal from "sweetalert2";
 
 function Recover() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
-
+  const Swal = require("sweetalert2");
   const handleSubmit = async (e) => {
     e.preventDefault();
     await fetch("http://localhost:9999/usuario/recover-contrasena", {
@@ -13,6 +14,7 @@ function Recover() {
       method: "POST",
     });
     setSent(true);
+    Swal.fire("Revisa tu email para recuperar la contraseña");
   };
   if (sent)
     return (

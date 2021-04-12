@@ -1,0 +1,48 @@
+.VerSalas {
+  display: flex;
+  flex-direction: row;
+  height: 82vh;
+}
+
+.VerSalas {
+  padding-top: 3%;
+  background-image: url(../images/fondocoronas.png);
+  background-repeat: repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  padding: 5%;
+  display: inherit;
+  font-size: 20px;
+  margin: auto;
+ 
+
+  
+}
+
+.VerSalas h2 {
+  margin-left: 1%;
+  margin-bottom: 2%;
+  font-size: 24px;
+}
+
+.VerSalas span {
+  margin-left: 5%;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.buttonReservarSala {
+  background-color: #D7BC52;
+  font-size: 20px;
+  padding:1%;
+  border-radius: 10px;
+  color: white;
+}
+
+.buttonReservarSala:hover {
+  background-color: rgb(215, 187, 81, 0.3);
+  filter: drop-shadow(2px 2px 5px gold);
+  color: black;
+  font-weight: bolder;
+}

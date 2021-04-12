@@ -4,6 +4,7 @@ import { useHistory, useParams } from "react-router-dom";
 import "./UpdateUsuario.css";
 import PerfilFoto from "./PerfilFoto";
 import Update from "../Auth/Update";
+import Swal from "sweetalert2";
 
 function UpdateUsuario() {
   const login = useSelector((s) => s.login);
@@ -23,7 +24,7 @@ function UpdateUsuario() {
   const [error, setError] = useState(false);
 
   const history = useHistory();
-
+  const Swal = require("sweetalert2");
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -49,6 +50,13 @@ function UpdateUsuario() {
       setError(true);
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Datos modificados con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

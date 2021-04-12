@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import "./UpdateValoracion.css";
+import Swal from "sweetalert2";
 
 function UpdateValoracion({ rating }) {
   const login = useSelector((s) => s.login);
@@ -15,6 +16,7 @@ function UpdateValoracion({ rating }) {
   const [error, setError] = useState(false);
 
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,11 +33,18 @@ function UpdateValoracion({ rating }) {
       }),
     });
     if (res.ok) {
-      history.push(`/rating-actualizar/${id_rating}`);
+      history.push(`/`);
     } else {
       setError(true);
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "valoración actualizada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

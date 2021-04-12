@@ -39,16 +39,9 @@ import CreateRating from './Valoracion/CreateRating';
 import VerValoracion from './Valoracion/VerValoracion';
 import UpdateValoracion from './Valoracion/UpdateValoracion';
 import BorrarValoracion from './Valoracion/BorrarValoracion';
-import Main from './Usuario/Main'
-
-
-
-
-
 
 import Map from './Contacto/Map';
 import Contacto from './Contacto/Contacto'
-
 
 import Footer from './Footer';
 import VerReservasCoworking from './Coworking/VerReservasCoworking';
@@ -56,21 +49,13 @@ import VerIncidenciasCoworking from './Coworking/VerIncidenciasCoworking';
 import VerValoracionCoworking from './Coworking/VerValoracionCoworking';
 import PerfilFoto from './Usuario/PerfilFoto';
 
-
-
-
-
-import SliderSlick from './Coworking/SliderSlick';
-
-import ErrorBoundary from './ErrorBoundary';
-import CarouselCwk from './Coworking/CarouselCwk';
 import VerValoracionMediaCoworking from './Coworking/VerValoracionMediaCoworking';
 import VerSalasCoworking from './Sala/VerSalasCoworking';
 import UpdateSala from './Sala/UpdateSala';
 import BorrarSala from './Sala/BorrarSala';
 import VerValoracionMediaSala from './Sala/VerValoracionMediaSala';
 import Update from './Auth/Update';
-import VerCoworkingFoto from './Coworking/VerCoworkingFoto';
+
 
 
 

@@ -3,13 +3,13 @@ import { useState, useEffect } from "react";
 import { NavLink, useParams } from "react-router-dom";
 import useFetch from '../useFetch'
 
-import ImagesGallery from './ImagesGallery';
-//import './VerCoworkingFoto.css'
-import SliderSlick from './SliderSlick';
-import CarouselCwk from './CarouselCwk';
-import CoworkingFoto from './CoworkingFoto';
 
-function VerCoworkingFoto(id_coworking) {
+
+
+
+
+
+function VerCoworkingFoto({ id_coworking }) {
 
     // const params = useParams()
     // const id_coworking = id || params.id_coworking;
@@ -31,7 +31,7 @@ function VerCoworkingFoto(id_coworking) {
         <div className="section ver-coworking">
             {!fotos && 'Cargando...'}
 
-            <div key={fotos.foto}>
+            <div key={fotos}>
                 {/* <div>
                     <ul>
                         {fotos.fotos.map(fotos => <li key={`fotos_${fotos}`}>{fotos}</li>)}
@@ -41,7 +41,7 @@ function VerCoworkingFoto(id_coworking) {
                 <div>
                     <ul>
 
-                        {fotos.fotos.map(foto => <li key={foto.id}><img width="200"
+                        {fotos.result && fotos.result.map(foto => <li key={foto}><img width="200"
                             src={`http://localhost:9999/images/cwk/${foto}.jpg`}
                         />  </li>)}
 

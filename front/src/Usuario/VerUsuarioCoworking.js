@@ -5,6 +5,7 @@ import { NavLink } from "react-router-dom";
 import CarouselCwk from "../Coworking/CarouselCwk";
 //import BorrarUsuario from './BorrarUsuario';
 import "./VerUsuarioCoworking.css";
+import VerCoworkingFoto from "../Coworking/VerCoworkingFoto";
 
 function VerUsuarioCoworking() {
   const [coworking, setCoworking] = useState({});
@@ -82,7 +83,7 @@ function VerUsuarioCoworking() {
           </div>
         </div>
         <div className="carousel">
-          <CarouselCwk id={coworking.id_coworking} />
+          <VerCoworkingFoto id_coworking={coworking.id_coworking} />
         </div>
       </div>
       <div className="botones-ver">
