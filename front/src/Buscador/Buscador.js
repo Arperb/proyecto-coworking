@@ -214,12 +214,8 @@ function Buscador() {
 
             {results.map((r) => (
               <div>
-<<<<<<< HEAD
                 < BuscadorCard r={r} key={r.SCoworking} />
 
-=======
-                <BuscadorCard r={r} key={r.id_coworking} />
->>>>>>> 5510c20474aa53678785b63bfbe000a0bac05e32
               </div>
             ))}
 

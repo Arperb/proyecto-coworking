@@ -10,41 +10,34 @@
   background-repeat: repeat;
   background-size: cover;
   background-attachment: fixed;
-  width: 1400px;
-  padding-bottom: 5%;
+
+  padding: 5%;
   display: inherit;
-  font-size: 0.85rem;
-  margin: 0.5rem 0;
-  font-weight: bold;
-  text-transform: uppercase;
+  font-size: 20px;
+  margin: auto;
+ 
+
+  
 }
 
 .VerSalas h2 {
-  margin-left: 5%;
+  margin-left: 1%;
   margin-bottom: 2%;
   font-size: 24px;
 }
 
 .VerSalas span {
   margin-left: 5%;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
 }
 
 .buttonReservarSala {
-  width: 10vw;
-  height: 8vh;
-  border-radius: 20px;
-  margin-top: 2vw;
-  margin-left: 1vw;
-  border: 2px solid #fff;
-  outline: none;
-  text-decoration: none;
-  background-color: rgba(255, 255, 255, 0.5);
-  color: black;
-  box-sizing: border-box;
-  text-align: center;
-  font-size: 1.3rem;
+  background-color: #D7BC52;
+  font-size: 20px;
+  padding:1%;
+  border-radius: 10px;
+  color: white;
 }
 
 .buttonReservarSala:hover {
