@@ -15,9 +15,6 @@
   display: inherit;
   font-size: 20px;
   margin: auto;
- 
-
-  
 }
 
 .VerSalas h2 {
@@ -33,11 +30,12 @@
 }
 
 .buttonReservarSala {
-  background-color: #D7BC52;
+  background-color: #d7bc52;
   font-size: 20px;
-  padding:1%;
+  padding: 0.5em;
   border-radius: 10px;
   color: white;
+  text-decoration: none;
 }
 
 .buttonReservarSala:hover {
@@ -45,4 +43,14 @@
   filter: drop-shadow(2px 2px 5px gold);
   color: black;
   font-weight: bolder;
+}
+
+.latablada {
+  padding: 1em;
+  text-align: center;
+}
+
+.campos {
+  padding: 1em;
+  text-align: center;
 }
