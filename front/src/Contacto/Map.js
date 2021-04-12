@@ -1,18 +1,35 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { useState } from "react";
+import { latLngBounds } from 'leaflet';
+import { useEffect, useState } from "react";
 import useFetch from "../useFetch";
 import "./Map.css";
 
 function Map() {
-  const [page, setPage] = useState(1);
+  const [map, setMap] = useState(null);
   const [filter, setFilter] = useState("");
-  const data = useFetch("https://localhost:9999/coworking") || [];
+  const data = useFetch("http://localhost:9999/coordenadas-coworking") || [];
 
-  const filteredData = data.filter(
-    (e) => e.title.toLowerCase().indexOf(filter.toLowerCase()) !== -1
-  );
-  const paginatedData = filteredData.slice(5 * (page - 1), 5 * page);
-  const max = Math.ceil(filteredData.length / 5);
+  const filteredData = filter === "" ? data : data.filter(d => d.provincia === filter);
+
+  useEffect(() => {
+
+    if (map) {
+      const bounds = latLngBounds();
+
+      for (const p of filteredData) {
+        bounds.extend([p.lat, p.lng]);
+      }
+
+      map.fitBounds(bounds, { padding: [50, 50] })
+    }
+  }, [map, filteredData])
+
+  if (!data.length) return <p>Cargando...</p>;
+
+
+
+
+
 
   return (
     <div className="page map">
@@ -20,30 +37,30 @@ function Map() {
       <main>
         <MapContainer
           className="map style"
-          center={[43.37135, -8.396]}
-          zoom={14}
+          whenCreated={setMap}
         >
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {paginatedData.map((entry) => (
-            <Marker key={entry.id} position={entry.coords}>
-              <Popup>{entry.title}</Popup>
+
+          {filteredData.map(point => {
+            return <Marker key={point.id_coworking} position={[point.lat, point.lng]}>
+              <Popup>{point.nombre}</Popup>
             </Marker>
-          ))}
+          })}
+
         </MapContainer>
         <aside>
-          <input
-            placeholder="Filtrar por provincia..."
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          />
-          <div className="entries">
-            {paginatedData.map((entry) => (
-              <div key={entry.id}>{entry.title}</div>
-            ))}
-          </div>
+          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+            <option value="">Todas las provincias</option>
+            <option value="Pontevedra">Pontevedra</option>
+            <option value="A Coruña">A Coruña</option>
+            <option value="Ourense">Ourense</option>
+            <option value="Lugo">Lugo</option>
+          </select>
+
+
         </aside>
       </main>
     </div>

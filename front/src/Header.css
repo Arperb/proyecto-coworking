@@ -15,16 +15,23 @@
   justify-content: space-between;
   padding: 0.1875em 0.9375em;
   height: 4.375em;
-  width: 106.25em;
   box-sizing: border-box;
 }
 
 .linksContainer {
   display: flex;
-  flex: auto 1 1;
-  justify-content: space-around;
+  justify-content: flex-end;
+  flex-grow: 1;
   align-items: center;
   padding: 0.3125em;
+}
+
+.userMenu {
+  margin-left: 1rem;
+}
+
+.linksContainer a {
+  margin-left: 1rem;
 }
 
 .btn-2 {
@@ -82,8 +89,8 @@
 
 header .logo {
   text-decoration: none;
-  max-width: 8vw;
   cursor: pointer;
+  width: 10rem;
 }
 
 /* header .usuario {
@@ -110,14 +117,27 @@ div.userMenu {
 @media screen and (max-width: 414px) {
   .headerContainer {
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .linksContainer {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     align-items: center;
     padding: 0.3125em;
     width: 70%;
     font-size: 10px;
+  }
+
+
+
+  .headerContainer .logo {
+    width: 5rem;
+  }
+
+  .userMenu {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
   }
 }

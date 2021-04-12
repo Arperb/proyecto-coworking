@@ -34,6 +34,7 @@ export const CarouselInfinite = ({ id_coworking }) => {
     }, [])
 
 
+    if (!fotos.length) return <p>Cargando...</p>;
     return (
 
         <Slider {...settings}>

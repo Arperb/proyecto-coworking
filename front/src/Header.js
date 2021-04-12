@@ -32,21 +32,19 @@ function Header() {
           </Link>
         )}
       </div>
-      <div className="avatarymenu">
-        {login && (
-          <div className="userMenu">
-            <div
-              className="avatar"
-              style={
-                login.usuario.foto && {
-                  backgroundImage: `url(http://localhost:9999/images/profile/${login.usuario.foto}.jpg)`,
-                }
+      {login && (
+        <div className="userMenu">
+          <div
+            className="avatar"
+            style={
+              login.usuario.foto && {
+                backgroundImage: `url(http://localhost:9999/images/profile/${login.usuario.foto}.jpg)`,
               }
-            />
-            <Main>{login.usuario.email}</Main>
-          </div>
-        )}
-      </div>
+            }
+          />
+          <Main>{login.usuario.email}</Main>
+        </div>
+      )}
     </header>
   );
 }

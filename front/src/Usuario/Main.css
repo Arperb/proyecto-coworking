@@ -2,11 +2,13 @@
   margin-left: 5px;
   font-size: 15px;
   font-weight: bold;
-  border-radius: 5px;
-  width: 5em;
+  border-radius: 5px;  
   height: 1.875em;
   transition: all 0.3s;
   cursor: pointer;
+  width: auto;
+ padding: 2%;
+
 }
 
 .sesionUsuario:hover {
@@ -19,7 +21,6 @@
 }
 
 .userLinks {
-  width: 15vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,9 +30,10 @@
   border-radius: 10px;
   border: 1px solid black;
   box-shadow: 1px 2px 3px 2px rgba(150, 150, 150, 0.75);
-  right: 5vw;
-  top: 8vh;
+  right: 1rem;
+  top: 4rem;
   z-index: 100;
+  height: 350px;
 }
 
 .userLinks li {
@@ -58,10 +60,12 @@
   margin-top: 1em;
   box-sizing: border-box;
   border-radius: 10px;
+  height: 75px;
 }
 
 .logout:hover {
   background: rgba(245, 198, 52, 0.5);
+  height: 75px;
 }
 
 .logout:active {
@@ -71,7 +75,6 @@
 
 @media screen and (max-width: 414px) {
   .userLinks {
-    width: 50vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -81,8 +84,8 @@
     border-radius: 10px;
     border: 1px solid black;
     box-shadow: 1px 2px 3px 2px rgba(150, 150, 150, 0.75);
-    right: 25vw;
-    top: 8vh;
+    right: 1rem;
+    top: 5rem;
     z-index: 100;
   }
   .logout {
@@ -111,9 +114,9 @@
     font-size: 0.6em;
     font-weight: bold;
     border-radius: 5px;
-    width: 250px;
     height: 30px;
     transition: all 0.3s;
     cursor: pointer;
+  
   }
 }
