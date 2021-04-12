@@ -1,0 +1,30 @@
+.incidenciasCoworking {
+  display: flex;
+  flex-direction: row;
+  height: 82vh;
+}
+
+.incidenciasCoworking {
+  padding-top: 3%;
+  background-image: url(../images/fondocoronas.png);
+  background-repeat: repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  padding: 5%;
+  display: inherit;
+  font-size: 20px;
+  margin: auto;
+}
+
+.incidenciasCoworking h2 {
+  margin-left: 1%;
+  margin-bottom: 2%;
+  font-size: 24px;
+}
+
+.incidenciasCoworking span {
+  margin-left: 5%;
+  font-size: 25px;
+  font-weight: bold;
+}
