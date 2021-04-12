@@ -14,12 +14,25 @@ div {
   background-image: url(../images/portada1.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  flex-direction: column;
   height: calc(100vh - 80px);
+  display: grid;
+  place-content: center;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  justify-content: flex-end;
+  padding-top: 10%;
+  padding-right: 10%;
 }
+
+.bienvenida  .welcome {
+  text-align: right;
+  margin-left: 15%;
+}
+
+.bienvenida .welcome h1 {
+  margin: 1rem;
+
+}
+
 
 /* .bienvenida:before {
   position: absolute;
@@ -31,26 +44,24 @@ div {
   background-color: rgba(255, 255, 255, 0.3);
 } */
 
-.home.welcome {
-  width: 33vw;
-  z-index: 1;
-  margin-right: 15vw;
-}
 
 .mainlogo {
   width: 35vw;
-  padding: 0 2vw;
+  
 }
 
 .page.home h1 {
-  padding: 0 1vw;
   text-align: center;
+  align-content: center;
   font-weight: 300;
   color: black;
+  padding:2%;
+  margin:auto
 }
 
 .page.home li {
   color: white;
+ 
 }
 
 .button1 {
@@ -58,8 +69,6 @@ div {
   width: 31.875em;
   height: 5em;
   border-radius: 30px;
-  margin-top: 2vw;
-  margin-left: 4vw;
   border: 2px solid #fff;
   text-align: center;
   align-items: center;
@@ -68,6 +77,7 @@ div {
   text-decoration: none;
   background-color: rgba(255, 255, 255, 0.5);
   color: black;
+  margin-right: 9%;
 }
 
 .button1:hover {
@@ -114,8 +124,7 @@ div {
   border: 2px solid #fff;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 30px;
-  width: 30vw;
-  height: 8vh;
+  
   text-transform: uppercase;
   font-weight: bold;
 }
@@ -169,39 +178,29 @@ div {
 }
 
 @media screen and (max-width: 414px) {
-  .bienvenida {
-    background-image: url(../images/portada1-736.jpg);
-    background-repeat: no-repeat;
-    background-size: 100% auto;
-    display: flex;
-    justify-content: column;
-    box-sizing: border-box;
-    display: flex;
-    max-height: 660px;
-    max-width: 414px;
+
+
+  .bienvenida .welcome {
+    text-align: center;
+    padding-top: 50%;
   }
   .mainlogo {
-    width: 45vw;
+    width: 55vw;
     margin: auto;
   }
   .page.home h1 {
-    font-size: 11px;
+    font-size: 15px;
     padding: 0;
-    margin-left: 2em;
-    padding-bottom: 1em;
-    align-items: center;
   }
+
+  
   .button1 {
     display: inline-flex;
     width: 11em;
     height: 3em;
     border-radius: 30px;
-    margin-top: 2vw;
-    margin-left: 4vw;
     border: 2px solid #fff;
     text-align: center;
-    align-items: center;
-    justify-content: center;
     outline: none;
     text-decoration: none;
     background-color: rgba(255, 255, 255, 0.5);
@@ -214,7 +213,7 @@ div {
     background-size: 100% auto;
     display: flex;
     justify-content: center;
-    max-height: 736;
+ 
     background-attachment: unset;
   }
   .page.home .homesubt {
@@ -245,16 +244,23 @@ div {
     background-image: url(../images/coworkers4-736.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    text-align: center;
+    
   }
+
+ 
+
+
+
   .page.home li {
-    color: black;
+    color:white;
   }
   .why h2 {
     font-size: 2em;
+
   }
 }
