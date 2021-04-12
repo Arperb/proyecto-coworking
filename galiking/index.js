@@ -53,7 +53,8 @@ const { createCoworking,
         getCoworkingRating,
         getCoworkingIncidencia,
         getCoworkingSalas,
-        getCoworkingAvgRating } = require('./controllers/espacioCoworking');
+        getCoworkingAvgRating,
+        getCoworkingCoord } = require('./controllers/espacioCoworking');
 
 const { createFotoCoworking,
         getFotoCoworking,
@@ -231,6 +232,10 @@ app.get('/ver-foto-coworking/:id_coworking', getFotoCoworking)
 //borrar foto
 
 app.delete('/foto-coworking/:foto', isAuthenticated, coworkingOwner, deleteFotoCoworking)
+
+//borrar foto
+
+app.get('/coordenadas-coworking', getCoworkingCoord)
 
 //////////////////////////////////////////////////
 //////                SALA                   /////

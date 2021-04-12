@@ -575,7 +575,27 @@ const getCoworkingOwner = async (id_coworking) => {
 
 }
 
+const getCoworkingCoord = async () => {
+    let connection;
 
+    try {
+        connection = await getConnection();
+
+        // me quedo con el primer elemento (array destructuring)
+        const result = await connection.query(`
+        select nombre, direccion, lat, lng, provincia, id_coworking from coworking
+        `)
+
+        return [result]  // potential bug because connection is not released
+    } catch (e) {
+        throw new Error('database-error')
+
+    } finally {
+        if (connection) {
+            connection.release()
+        }
+    }
+}
 
 //////////////////////////////////////////////////
 //////                   SALA                /////
@@ -1331,5 +1351,6 @@ module.exports = {
     updateRating,
     deleteRating,
     buscador,
-    performQuery
+    performQuery,
+    getCoworkingCoord
 }

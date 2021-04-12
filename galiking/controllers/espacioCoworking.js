@@ -270,6 +270,23 @@ const getCoworkingAvgRating = async (req, res) => {
     }
 }
 
+const getCoworkingCoord = async (req, res) => {
+
+    try {
+        const [coworkingCoord] = await db.getCoworkingCoord([])
+
+        console.log(coworkingCoord)
+        if (!coworkingCoord.length) {
+            res.status(404).send()
+        } else {
+            res.send(coworkingCoord[0])
+
+        }
+    } catch (e) {
+        res.status(500).send()
+    }
+}
+
 module.exports = {
     createCoworking,
     getCoworking,
@@ -280,5 +297,6 @@ module.exports = {
     getCoworkingRating,
     getCoworkingIncidencia,
     getCoworkingSalas,
-    getCoworkingAvgRating
+    getCoworkingAvgRating,
+    getCoworkingCoord
 }
