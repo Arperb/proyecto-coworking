@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import "./UpdateIncidencia.css";
+import Swal from "sweetalert2";
 
 function UpdateIncidencia({ incidencia }) {
   const login = useSelector((s) => s.login);
@@ -18,6 +19,7 @@ function UpdateIncidencia({ incidencia }) {
   const [error, setError] = useState(false);
 
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,11 +41,18 @@ function UpdateIncidencia({ incidencia }) {
       }
     );
     if (res.ok) {
-      history.push(`/incidencia-actualizar/${id_incidencia}`);
+      history.push(`/`);
     } else {
       setError(true);
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Incidencia actualizada con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

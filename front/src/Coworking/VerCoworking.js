@@ -12,6 +12,8 @@ import "./VerCoworking.css";
 
 
 
+import useFetch from "../useFetch";
+import CarouselCwk from "./CarouselCwk";
 
 function VerCoworking() {
     const { id_coworking } = useParams()
@@ -93,7 +95,10 @@ function VerCoworking() {
                 </div>
             )}
 
+
         </div>
+
+
     )
 }
 

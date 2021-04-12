@@ -1,20 +1,19 @@
-
-import Reservar from '../Reserva/Reservar'
-import useFetch from '../useFetch'
-import { useParams, NavLink } from 'react-router-dom'
-import { useSelector } from "react-redux"
-
+import Reservar from "../Reserva/Reservar";
+import useFetch from "../useFetch";
+import { useParams, NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import "./VerSalas.css";
 
 function VerSalas() {
- 
-  const { id_coworking } = useParams()
-  const salas = useFetch(`http://localhost:9999/coworking/${id_coworking}/salas`) || []
- 
+  const { id_coworking } = useParams();
+  const salas =
+    useFetch(`http://localhost:9999/coworking/${id_coworking}/salas`) || [];
+
   return (
-    <div className="section salas">
+    <div className="section VerSalas">
       <h2>Salas</h2>
-      {!salas && 'Cargando...'}
-      {salas &&
+      {!salas && "Cargando..."}
+      {salas && (
         <table>
           <thead>
             <tr>
@@ -28,11 +27,9 @@ function VerSalas() {
             </tr>
           </thead>
           <tbody>
-            {salas.map(sala => {
-             
+            {salas.map((sala) => {
               return (
                 <tr key={sala.id_sala}>
-   
                   <td>{sala.tipo}</td>
                   <td>{sala.descripcion}</td>
                   <td>{sala.tarifa}</td>
@@ -40,16 +37,16 @@ function VerSalas() {
                   <td>{sala.disponibilidad}</td>
                   <td>{sala.proyector}</td>
                   <td>{sala.impresora}</td>
-                  <NavLink to = {`/reserva/${sala.id_sala}`}>Reservar</NavLink>
+
+                  <div className="buttonReservarSala">
+                    <NavLink to={`/reserva/${sala.id_sala}`}>Reservar</NavLink>
+                  </div>
                 </tr>
-              )
+              );
             })}
           </tbody>
         </table>
-        
-      }
-
-                
+      )}
     </div>
   );
 }

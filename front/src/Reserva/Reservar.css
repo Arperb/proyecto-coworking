@@ -1,0 +1,36 @@
+.Reservar {
+  padding: 1rem;
+  background: url(../images/fondocoronas.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 83vh;
+}
+.reservaContainer {
+  border: 10px solid gold;
+  background-color: gold;
+  border-radius: 10px;
+  width: 50vw;
+  padding: 20px;
+  margin-top: 40px;
+}
+
+.reservarLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.reservarLabel input {
+  height: 3vh;
+  width: 7vw;
+  margin: 10px;
+  border-radius: 5px;
+}
+
+.buttonReservar:hover {
+  background-color: rgb(215, 187, 81, 0.3);
+  filter: drop-shadow(2px 2px 5px gold);
+  color: black;
+  font-weight: bolder;
+}

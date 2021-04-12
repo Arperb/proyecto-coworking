@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import "./BorrarReserva.css";
+import Swal from "sweetalert2";
 
 function BorrarReserva({}) {
   const login = useSelector((s) => s.login);
   const { id_reserva } = useParams();
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleDelete = async (e) => {
     e.preventDefault();
@@ -17,10 +19,17 @@ function BorrarReserva({}) {
       }
     );
     if (res.ok) {
-      history.push(`/borrar-reserva/${id_reserva}`);
+      history.push(`/`);
     } else {
       console.log("Ha habido un error");
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Reserva borrada con éxito",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (

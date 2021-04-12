@@ -2,11 +2,12 @@ import { useState } from "react";
 // import {useDispatch,useSelector} from 'react-redux'
 // import { Redirect } rom 'react-router-dom'
 import "./Register.css";
+import Swal from "sweetalert2";
 
 function Registro() {
   const [usuario, setUsuario] = useState({});
   const [error, setError] = useState();
-
+  const Swal = require("sweetalert2");
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -20,6 +21,7 @@ function Registro() {
       console.warn(e);
       setError(true);
     }
+    Swal.fire("Revisa tu email para verificar el registro y poder coronarte");
   };
 
   return (

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Buscador.css";
-import BuscadorCard from './BuscadorCard'
+import BuscadorCard from "./BuscadorCard";
 
 function Buscador() {
   const [provincia, setProvincia] = useState("");
@@ -214,8 +214,12 @@ function Buscador() {
 
             {results.map((r) => (
               <div>
+<<<<<<< HEAD
                 < BuscadorCard r={r} key={r.SCoworking} />
 
+=======
+                <BuscadorCard r={r} key={r.id_coworking} />
+>>>>>>> 5510c20474aa53678785b63bfbe000a0bac05e32
               </div>
             ))}
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import "./CreateRating.css";
+import Swal from "sweetalert2";
 
 function CreateValoracion() {
   const [error, setError] = useState();
@@ -10,6 +11,7 @@ function CreateValoracion() {
   const [valoracion, setValoracion] = useState("");
   const login = useSelector((s) => s.login);
   const history = useHistory();
+  const Swal = require("sweetalert2");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,6 +31,13 @@ function CreateValoracion() {
       console.log("Error");
       setError(true);
     }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Valoración creada",
+      showConfirmButton: false,
+      timer: 1500,
+    });
   };
 
   return (
