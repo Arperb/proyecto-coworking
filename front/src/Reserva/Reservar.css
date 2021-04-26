@@ -29,7 +29,21 @@
   border-radius: 5px;
 }
 
-.buttonReservar:hover {
+.buttonReservarYa {
+  background-color: rgb(215, 187, 81, 0.3);
+  filter: drop-shadow(2px 2px 5px gold);
+  color: black;
+  font-weight: bolder;
+  margin: auto;
+  margin-left:41%;
+  margin-top:2%;
+  margin-bottom: 1%;
+}
+
+
+
+
+.buttonReservarYa:hover {
   background-color: rgb(215, 187, 81, 0.3);
   filter: drop-shadow(2px 2px 5px gold);
   color: black;

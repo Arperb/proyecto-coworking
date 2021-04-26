@@ -51,8 +51,7 @@
 }
 
 button.save {
-  width: 11vw;
-  height: 4vh;
+ 
   border-radius: 30px;
   margin-top: 2vw;
   margin-left: 1vw;
@@ -75,8 +74,7 @@ button.save:hover {
 }
 
 button.nuevafoto {
-  width: 11vw;
-  height: 4vh;
+
   border-radius: 30px;
   margin-top: 2vw;
   margin-left: 0vw;

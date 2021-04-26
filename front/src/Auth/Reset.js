@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useParams, NavLink } from "react-router-dom";
-import Swal from "sweetalert2";
+
 
 function Reset() {
   const { code } = useParams();
   const [newContrasena, setNewContrasena] = useState("");
   const [newContrasenaRepeat, setNewContrasenaRepeat] = useState("");
   const [sent, setSent] = useState(false);
-  const Swal = require("sweetalert2");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await fetch(
@@ -31,13 +31,7 @@ function Reset() {
         <NavLink to={`/login`}>LOGIN</NavLink>
       </div>
     );
-  Swal.fire({
-    position: "top-end",
-    icon: "success",
-    title: "Contraseña cambiada correctamente",
-    showConfirmButton: false,
-    timer: 1500,
-  });
+
   return (
     <form className="password reset" onSubmit={handleSubmit}>
       Introduce tu nueva contraseña

@@ -70,7 +70,7 @@ function Reservar() {
             />
           </label>
 
-          <button className="buttonReservar">Reservar</button>
+          <button className="buttonReservarYa">Reservar</button>
         </form>
       </div>
     </div>
